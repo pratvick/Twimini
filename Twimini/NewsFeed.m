@@ -1,0 +1,20 @@
+//
+//  NewsFeed.m
+//  Twimini
+//
+//  Created by Prateek Khandelwal on 9/24/13.
+//  Copyright (c) 2013 Directi. All rights reserved.
+//
+
+#import "NewsFeed.h"
+#import "User.h"
+
+
+@implementation NewsFeed
+
+@dynamic newsFeeder;
+@dynamic text;
+@dynamic unique;
+@dynamic whoseFeed;
+
+@end
