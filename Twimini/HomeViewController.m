@@ -98,7 +98,9 @@
         if ([urlResponse statusCode] == 200)
         {
             NSError *jsonError = nil;
-            NSArray *jsonResult = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
+            NSArray *jsonResult = [NSJSONSerialization JSONObjectWithData:responseData
+                                                                  options:0
+                                                                    error:&jsonError];
             if (jsonResult != nil)
             {
                 self.timeline = jsonResult;
@@ -144,8 +146,11 @@
     NSInteger currentOffset = scroll.contentOffset.y;
     NSInteger maximumOffset = scroll.contentSize.height - scroll.frame.size.height;
     
-    if (maximumOffset - currentOffset <= 5.0)
-        [self fetchTimelineDataIntoDocument:self.newsFeedDatabase];
+    if (maximumOffset - currentOffset <= 5.0){
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
+            [self fetchTimelineDataIntoDocument:self.newsFeedDatabase];
+        });
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

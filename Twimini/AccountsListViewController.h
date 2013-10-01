@@ -5,5 +5,6 @@
 
 @property (strong, nonatomic) ACAccountStore *accountStore; 
 @property (strong, nonatomic) NSArray *accounts;
+//@property (strong, nonatomic) NSArray *tweets;
 
 @end

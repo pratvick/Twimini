@@ -93,7 +93,7 @@ extern NSString * const FHSErrorDomain;
 - (NSError *)postTweet:(NSString *)tweetString inReplyTo:(NSString *)inReplyToString;
 
 // statuses/home_timeline
-- (id)getHomeTimelineSinceID:(NSString *)sinceID count:(int)count;
+- (id)getHomeTimelineWithSuccessBlock:(void(^)(BOOL success, id json))block count:(int)count;
 
 // help/test
 - (id)testService;
@@ -277,7 +277,7 @@ extern NSString * const FHSErrorDomain;
 - (id)listFollowersForUser:(NSString *)user isID:(BOOL)isID withCursor:(NSString *)cursor;
 
 // friends/ids
-- (id)getFriendsIDs;
+- (id)getFriendsIDs:(void (^)(BOOL success, id json))block;
 
 // friends/list
 - (id)listFriendsForUser:(NSString *)user isID:(BOOL)isID withCursor:(NSString *)cursor;

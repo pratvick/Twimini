@@ -32,6 +32,7 @@
 #import <sys/socket.h>
 #import <netinet/in.h>
 #import <ifaddrs.h>
+#import "AFNetworking/AFJSONRequestOperation.h"
 
 static NSString * const newPinJS = @"var d = document.getElementById('oauth-pin'); if (d == null) d = document.getElementById('oauth_pin'); if (d) { var d2 = d.getElementsByTagName('code'); if (d2.length > 0) d2[0].innerHTML; }";
 static NSString * const oldPinJS = @"var d = document.getElementById('oauth-pin'); if (d == null) d = document.getElementById('oauth_pin'); if (d) d = d.innerHTML; d;";
@@ -315,7 +316,7 @@ id removeNull(id rootObject) {
 @end
 
 @implementation FHSTwitterEngine
-
+/*
 - (id)listFollowersForUser:(NSString *)user isID:(BOOL)isID withCursor:(NSString *)cursor {
     
     if (user.length == 0) {
@@ -613,7 +614,7 @@ id removeNull(id rootObject) {
     
     return [self sendGETRequestForURL:baseURL andParams:params];
 }
-
+*/
 - (NSError *)postTweet:(NSString *)tweetString withImageData:(NSData *)theData {
     return [self postTweet:tweetString withImageData:theData inReplyTo:nil];
 }
@@ -651,7 +652,7 @@ id removeNull(id rootObject) {
     NSURL *baseURL = [NSURL URLWithString:url_statuses_destroy];
     return [self sendPOSTRequestForURL:baseURL andParams:@{@"id": identifier}];
 }
-
+/*
 - (id)getDetailsForTweet:(NSString *)identifier {
     
     if (identifier.length == 0) {
@@ -661,7 +662,7 @@ id removeNull(id rootObject) {
     NSURL *baseURL = [NSURL URLWithString:url_statuses_show];
     return [self sendGETRequestForURL:baseURL andParams:@{ @"id":identifier, @"include_my_retweet":@"true" }];
 }
-
+*/
 - (NSError *)retweet:(NSString *)identifier {
     
     if (identifier.length == 0) {
@@ -675,7 +676,7 @@ id removeNull(id rootObject) {
 - (id)getTimelineForUser:(NSString *)user isID:(BOOL)isID count:(int)count {
     return [self getTimelineForUser:user isID:isID count:count sinceID:nil maxID:nil];
 }
-
+/*
 - (id)getTimelineForUser:(NSString *)user isID:(BOOL)isID count:(int)count sinceID:(NSString *)sinceID maxID:(NSString *)maxID {
     
     if (count == 0) {
@@ -952,7 +953,7 @@ id removeNull(id rootObject) {
     NSURL *baseURL = [NSURL URLWithString:url_application_rate_limit_status];
     return [self sendGETRequestForURL:baseURL andParams:nil];
 }
-
+*/
 - (NSError *)updateProfileColorsWithDictionary:(NSDictionary *)dictionary {
     
     if (!dictionary) {
@@ -1031,12 +1032,12 @@ id removeNull(id rootObject) {
 - (NSError *)setProfileImageWithImageAtPath:(NSString *)file {
     return [self setProfileImageWithImageData:[NSData dataWithContentsOfFile:file]];
 }
-
+/*
 - (id)getUserSettings {
     NSURL *baseURL = [NSURL URLWithString:url_account_settings];
     return [self sendGETRequestForURL:baseURL andParams:nil];
 }
-
+*/
 - (NSError *)updateUserProfileWithDictionary:(NSDictionary *)settings {
     
     if (!settings) {
@@ -1125,7 +1126,7 @@ id removeNull(id rootObject) {
     
     return [self sendPOSTRequestForURL:baseURL andParams:params];
 }
-
+/*
 - (id)lookupUsers:(NSArray *)users areIDs:(BOOL)areIDs {
     
     if (users.count == 0) {
@@ -1163,8 +1164,8 @@ id removeNull(id rootObject) {
     NSURL *baseURL = [NSURL URLWithString:url_help_test];
     return [self sendGETRequestForURL:baseURL andParams:nil];
 }
-
-- (id)getHomeTimelineSinceID:(NSString *)sinceID count:(int)count {
+*/
+- (id)getHomeTimelineWithSuccessBlock:(void(^)(BOOL success, id json))block count:(int)count {
     
     if (count == 0) {
         return nil;
@@ -1172,16 +1173,13 @@ id removeNull(id rootObject) {
     
     NSURL *baseURL = [NSURL URLWithString:url_statuses_home_timeline];
     
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:2];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:1];
     params[@"count"] = [NSString stringWithFormat:@"%d",count];
     
-    if (sinceID.length > 0) {
-        params[@"since_id"] = sinceID;
-    }
     
-    return [self sendGETRequestForURL:baseURL andParams:params];
+    return [self sendGETRequestForURL:baseURL withSuccessBlock:block andParams:params];
 }
-
+/*
 - (NSError *)postTweet:(NSString *)tweetString inReplyTo:(NSString *)inReplyToString {
     if (tweetString.length == 0) {
         return [NSError badRequestError];
@@ -1207,10 +1205,10 @@ id removeNull(id rootObject) {
     NSURL *baseURL = [NSURL URLWithString:url_followers_ids];
     return [self sendGETRequestForURL:baseURL andParams:@{ @"screen_name": _loggedInUsername, @"stringify_ids":@"true"}];
 }
-
-- (id)getFriendsIDs {
+*/
+- (id)getFriendsIDs:(void (^)(BOOL success, id json))block{
     NSURL *baseURL = [NSURL URLWithString:url_friends_ids];
-    return [self sendGETRequestForURL:baseURL andParams:@{ @"screen_name": _loggedInUsername, @"stringify_ids":@"true"}];
+    return [self sendGETRequestForURL:baseURL withSuccessBlock:block andParams:@{ @"screen_name": _loggedInUsername, @"stringify_ids":@"true"}];
 }
 
 - (instancetype)init {
@@ -1279,6 +1277,29 @@ id removeNull(id rootObject) {
 //
 // sendRequest:
 //
+
+- (id)sendAFRequest:(NSURLRequest *)request withSuccessBlock:(void(^)(BOOL success, id json))block
+{
+    if (_shouldClearConsumer) {
+        self.shouldClearConsumer = NO;
+        self.consumer = nil;
+    }
+    
+    __block id Json  = nil;
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+                                                                                        success:^(NSURLRequest *request,NSHTTPURLResponse *response, id JSON) {
+        Json = JSON;
+        NSLog(@"Log from sendAFRequest: %@", Json);
+        if(block){
+            block(TRUE, Json);
+        }
+    }failure:nil];
+    
+    [operation start];
+    
+    return Json;
+}
 
 - (id)sendRequest:(NSURLRequest *)request {
     
@@ -1465,7 +1486,7 @@ id removeNull(id rootObject) {
     return nil; // eventually return the parsed response
 }
 
-- (id)sendGETRequestForURL:(NSURL *)url andParams:(NSDictionary *)params {
+- (id)sendGETRequestForURL:(NSURL *)url withSuccessBlock:(void(^)(BOOL success, id json))block andParams:(NSDictionary *)params {
     
     if (![self isAuthorized]) {
         [self loadAccessToken];
@@ -1490,7 +1511,7 @@ id removeNull(id rootObject) {
     [request setHTTPShouldHandleCookies:NO];
     [self signRequest:request];
 
-    id retobj = [self sendRequest:request];
+    id retobj = [self sendAFRequest:request withSuccessBlock:block];
     
     if (retobj == nil) {
         return [NSError noDataError];
