@@ -1,11 +1,3 @@
-//
-//  User+Info.m
-//  Twimini
-//
-//  Created by Prateek Khandelwal on 9/17/13.
-//  Copyright (c) 2013 Directi. All rights reserved.
-//
-
 #import "User+Info.h"
 
 @implementation User (Info)

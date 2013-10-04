@@ -1,7 +1,7 @@
 #import <UIKit/UIKit.h>
 #import <Accounts/Accounts.h>
 
-@class TweetComposeViewController;
+@class TMTweetComposeViewController;
 
 enum TweetComposeResult {
     TweetComposeResultCancelled,
@@ -10,12 +10,12 @@ enum TweetComposeResult {
 };
 typedef enum TweetComposeResult TweetComposeResult;
 
-@protocol TweetComposeViewControllerDelegate <NSObject>
-- (void)tweetComposeViewController:(TweetComposeViewController *)controller didFinishWithResult:(TweetComposeResult)result;
+@protocol TMTweetComposeViewControllerDelegate <NSObject>
+- (void)tweetComposeViewController:(TMTweetComposeViewController *)controller didFinishWithResult:(TweetComposeResult)result;
 @end
 
 
-@interface TweetComposeViewController : UIViewController
+@interface TMTweetComposeViewController : UIViewController
 
 @property (strong, nonatomic) ACAccount *account;
 
@@ -27,6 +27,6 @@ typedef enum TweetComposeResult TweetComposeResult;
 - (IBAction)sendTweet:(id)sender;
 - (IBAction)cancel:(id)sender;
 
-@property (nonatomic, assign) id<TweetComposeViewControllerDelegate> tweetComposeDelegate; 
+@property (nonatomic, assign) id<TMTweetComposeViewControllerDelegate> tweetComposeDelegate; 
 
 @end

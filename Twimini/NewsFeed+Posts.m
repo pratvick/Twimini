@@ -1,11 +1,3 @@
-//
-//  NewsFeed+Posts.m
-//  Twimini
-//
-//  Created by Prateek Khandelwal on 9/22/13.
-//  Copyright (c) 2013 Directi. All rights reserved.
-//
-
 #import "NewsFeed+Posts.h"
 
 @implementation NewsFeed (Posts)

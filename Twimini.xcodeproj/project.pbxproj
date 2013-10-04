@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6E112E8617EC4B5A00418B6B /* TweetDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E112E8517EC4B5A00418B6B /* TweetDetailViewController.m */; };
 		6E112E9B17EC8EB000418B6B /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E112E8917EC8EB000418B6B /* AFHTTPClient.m */; };
 		6E112E9C17EC8EB000418B6B /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E112E8B17EC8EB000418B6B /* AFHTTPRequestOperation.m */; };
 		6E112E9D17EC8EB000418B6B /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E112E8D17EC8EB000418B6B /* AFImageRequestOperation.m */; };
@@ -18,6 +17,7 @@
 		6E112EA217EC8EB000418B6B /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E112E9817EC8EB000418B6B /* AFXMLRequestOperation.m */; };
 		6E112EA317EC8EB000418B6B /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E112E9A17EC8EB000418B6B /* UIImageView+AFNetworking.m */; };
 		6E112EA617EC9C9100418B6B /* FHSTwitterEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E112EA517EC9C9100418B6B /* FHSTwitterEngine.m */; };
+		6E13870E17FC0E4C00FEC97A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E13870D17FC0E4C00FEC97A /* Images.xcassets */; };
 		6E1E765917E89D050050F25E /* Twimini.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6E1E765717E89D050050F25E /* Twimini.xcdatamodeld */; };
 		6E1E766217E8A42E0050F25E /* Tweet+Data.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E1E766117E8A42E0050F25E /* Tweet+Data.m */; };
 		6E1E766517E8A46E0050F25E /* User+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E1E766417E8A46E0050F25E /* User+Info.m */; };
@@ -25,6 +25,7 @@
 		6E22174B17F1794900418131 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E22174A17F1794900418131 /* Tweet.m */; };
 		6E22174E17F1794A00418131 /* NewsFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E22174D17F1794A00418131 /* NewsFeed.m */; };
 		6E22175117F1794A00418131 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E22175017F1794A00418131 /* User.m */; };
+		6E3653B317FD5A7800FC085B /* Images-5.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E3653B217FD5A7800FC085B /* Images-5.xcassets */; };
 		6E4389C717EF3E9400555D52 /* NewsFeed+Posts.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4389C617EF3E9400555D52 /* NewsFeed+Posts.m */; };
 		6E6795E717E72EB70077D857 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E6795E617E72EB70077D857 /* Social.framework */; };
 		6E74FC5F17EED79800832BB5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E74FC5E17EED79800832BB5 /* CFNetwork.framework */; };
@@ -46,20 +47,18 @@
 		6EE9F86217DC5D510087E19F /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EE9F86017DC5D510087E19F /* MainStoryboard.storyboard */; };
 		6EE9F86C17DC5DB40087E19F /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EE9F86B17DC5DB40087E19F /* Twitter.framework */; };
 		6EE9F86E17DC5DC00087E19F /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EE9F86D17DC5DC00087E19F /* Accounts.framework */; };
-		6EE9F87917DC64450087E19F /* AccountsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE9F87017DC64450087E19F /* AccountsListViewController.m */; };
-		6EE9F87A17DC64450087E19F /* FollowersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE9F87217DC64450087E19F /* FollowersViewController.m */; };
-		6EE9F87B17DC64450087E19F /* FriendsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE9F87417DC64450087E19F /* FriendsListViewController.m */; };
-		6EE9F87C17DC64450087E19F /* TweetComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE9F87617DC64450087E19F /* TweetComposeViewController.m */; };
-		6EE9F87D17DC64450087E19F /* TweetsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE9F87817DC64450087E19F /* TweetsListViewController.m */; };
-		6EE9F87F17DC72E30087E19F /* TweetComposeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6EE9F87E17DC72E30087E19F /* TweetComposeViewController.xib */; };
+		6EE9F87917DC64450087E19F /* TMAccountsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE9F87017DC64450087E19F /* TMAccountsListViewController.m */; };
+		6EE9F87A17DC64450087E19F /* TMFollowersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE9F87217DC64450087E19F /* TMFollowersViewController.m */; };
+		6EE9F87B17DC64450087E19F /* TMFriendsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE9F87417DC64450087E19F /* TMFriendsListViewController.m */; };
+		6EE9F87C17DC64450087E19F /* TMTweetComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE9F87617DC64450087E19F /* TMTweetComposeViewController.m */; };
+		6EE9F87D17DC64450087E19F /* TMProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE9F87817DC64450087E19F /* TMProfileViewController.m */; };
+		6EE9F87F17DC72E30087E19F /* TMTweetComposeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6EE9F87E17DC72E30087E19F /* TMTweetComposeViewController.xib */; };
 		6EE9F88117DC87E40087E19F /* friends.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EE9F88017DC87E40087E19F /* friends.png */; };
 		6EE9F88317DC87EA0087E19F /* friends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EE9F88217DC87EA0087E19F /* friends@2x.png */; };
-		6EE9F88817DC8BE00087E19F /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE9F88717DC8BE00087E19F /* HomeViewController.m */; };
+		6EE9F88817DC8BE00087E19F /* TMHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE9F88717DC8BE00087E19F /* TMHomeViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6E112E8417EC4B5A00418B6B /* TweetDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetDetailViewController.h; sourceTree = "<group>"; };
-		6E112E8517EC4B5A00418B6B /* TweetDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetDetailViewController.m; sourceTree = "<group>"; };
 		6E112E8817EC8EB000418B6B /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		6E112E8917EC8EB000418B6B /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
 		6E112E8A17EC8EB000418B6B /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -81,6 +80,7 @@
 		6E112E9A17EC8EB000418B6B /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		6E112EA417EC9C9100418B6B /* FHSTwitterEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FHSTwitterEngine.h; sourceTree = "<group>"; };
 		6E112EA517EC9C9100418B6B /* FHSTwitterEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FHSTwitterEngine.m; sourceTree = "<group>"; };
+		6E13870D17FC0E4C00FEC97A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6E1E765817E89D050050F25E /* Twimini.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Twimini.xcdatamodel; sourceTree = "<group>"; };
 		6E1E766017E8A42E0050F25E /* Tweet+Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tweet+Data.h"; sourceTree = "<group>"; };
 		6E1E766117E8A42E0050F25E /* Tweet+Data.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Tweet+Data.m"; sourceTree = "<group>"; };
@@ -93,6 +93,8 @@
 		6E22174D17F1794A00418131 /* NewsFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsFeed.m; sourceTree = "<group>"; };
 		6E22174F17F1794A00418131 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		6E22175017F1794A00418131 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		6E3653AB17FD579D00FC085B /* twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter.png; sourceTree = "<group>"; };
+		6E3653B217FD5A7800FC085B /* Images-5.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Images-5.xcassets"; sourceTree = "<group>"; };
 		6E4389C517EF3E9400555D52 /* NewsFeed+Posts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NewsFeed+Posts.h"; sourceTree = "<group>"; };
 		6E4389C617EF3E9400555D52 /* NewsFeed+Posts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NewsFeed+Posts.m"; sourceTree = "<group>"; };
 		6E6795E617E72EB70077D857 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
@@ -120,21 +122,21 @@
 		6EE9F86117DC5D510087E19F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		6EE9F86B17DC5DB40087E19F /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		6EE9F86D17DC5DC00087E19F /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
-		6EE9F86F17DC64450087E19F /* AccountsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountsListViewController.h; sourceTree = "<group>"; };
-		6EE9F87017DC64450087E19F /* AccountsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountsListViewController.m; sourceTree = "<group>"; };
-		6EE9F87117DC64450087E19F /* FollowersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FollowersViewController.h; sourceTree = "<group>"; };
-		6EE9F87217DC64450087E19F /* FollowersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FollowersViewController.m; sourceTree = "<group>"; };
-		6EE9F87317DC64450087E19F /* FriendsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsListViewController.h; sourceTree = "<group>"; };
-		6EE9F87417DC64450087E19F /* FriendsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsListViewController.m; sourceTree = "<group>"; };
-		6EE9F87517DC64450087E19F /* TweetComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetComposeViewController.h; sourceTree = "<group>"; };
-		6EE9F87617DC64450087E19F /* TweetComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetComposeViewController.m; sourceTree = "<group>"; };
-		6EE9F87717DC64450087E19F /* TweetsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetsListViewController.h; sourceTree = "<group>"; };
-		6EE9F87817DC64450087E19F /* TweetsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetsListViewController.m; sourceTree = "<group>"; };
-		6EE9F87E17DC72E30087E19F /* TweetComposeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TweetComposeViewController.xib; path = ../TweetComposeViewController.xib; sourceTree = "<group>"; };
+		6EE9F86F17DC64450087E19F /* TMAccountsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMAccountsListViewController.h; sourceTree = "<group>"; };
+		6EE9F87017DC64450087E19F /* TMAccountsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMAccountsListViewController.m; sourceTree = "<group>"; };
+		6EE9F87117DC64450087E19F /* TMFollowersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMFollowersViewController.h; sourceTree = "<group>"; };
+		6EE9F87217DC64450087E19F /* TMFollowersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMFollowersViewController.m; sourceTree = "<group>"; };
+		6EE9F87317DC64450087E19F /* TMFriendsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMFriendsListViewController.h; sourceTree = "<group>"; };
+		6EE9F87417DC64450087E19F /* TMFriendsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMFriendsListViewController.m; sourceTree = "<group>"; };
+		6EE9F87517DC64450087E19F /* TMTweetComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMTweetComposeViewController.h; sourceTree = "<group>"; };
+		6EE9F87617DC64450087E19F /* TMTweetComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMTweetComposeViewController.m; sourceTree = "<group>"; };
+		6EE9F87717DC64450087E19F /* TMProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMProfileViewController.h; sourceTree = "<group>"; };
+		6EE9F87817DC64450087E19F /* TMProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMProfileViewController.m; sourceTree = "<group>"; };
+		6EE9F87E17DC72E30087E19F /* TMTweetComposeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TMTweetComposeViewController.xib; path = ../TMTweetComposeViewController.xib; sourceTree = "<group>"; };
 		6EE9F88017DC87E40087E19F /* friends.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = friends.png; sourceTree = "<group>"; };
 		6EE9F88217DC87EA0087E19F /* friends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "friends@2x.png"; sourceTree = "<group>"; };
-		6EE9F88617DC8BE00087E19F /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
-		6EE9F88717DC8BE00087E19F /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		6EE9F88617DC8BE00087E19F /* TMHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMHomeViewController.h; sourceTree = "<group>"; };
+		6EE9F88717DC8BE00087E19F /* TMHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMHomeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,9 +197,74 @@
 			name = FHSTwitterEngine;
 			sourceTree = "<group>";
 		};
+		6EDDE4BB17FC05D600D3A1AA /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				6EE9F86F17DC64450087E19F /* TMAccountsListViewController.h */,
+				6EE9F87017DC64450087E19F /* TMAccountsListViewController.m */,
+				6EE9F87717DC64450087E19F /* TMProfileViewController.h */,
+				6EE9F87817DC64450087E19F /* TMProfileViewController.m */,
+				6EE9F88617DC8BE00087E19F /* TMHomeViewController.h */,
+				6EE9F88717DC8BE00087E19F /* TMHomeViewController.m */,
+				6EE9F87117DC64450087E19F /* TMFollowersViewController.h */,
+				6EE9F87217DC64450087E19F /* TMFollowersViewController.m */,
+				6EE9F87317DC64450087E19F /* TMFriendsListViewController.h */,
+				6EE9F87417DC64450087E19F /* TMFriendsListViewController.m */,
+				6EE9F87517DC64450087E19F /* TMTweetComposeViewController.h */,
+				6EE9F87617DC64450087E19F /* TMTweetComposeViewController.m */,
+				6E91464C17E1BCDA00F28269 /* CoreDataTableViewController.m */,
+				6E91464B17E1BCDA00F28269 /* CoreDataTableViewController.h */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		6EDDE4BC17FC064900D3A1AA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6EDDE4BF17FC068A00D3A1AA /* NewsFeed */,
+				6EDDE4BE17FC068200D3A1AA /* Tweet */,
+				6EDDE4BD17FC067900D3A1AA /* User */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		6EDDE4BD17FC067900D3A1AA /* User */ = {
+			isa = PBXGroup;
+			children = (
+				6E22175017F1794A00418131 /* User.m */,
+				6E22174F17F1794A00418131 /* User.h */,
+				6E1E766317E8A46E0050F25E /* User+Info.h */,
+				6E1E766417E8A46E0050F25E /* User+Info.m */,
+			);
+			name = User;
+			sourceTree = "<group>";
+		};
+		6EDDE4BE17FC068200D3A1AA /* Tweet */ = {
+			isa = PBXGroup;
+			children = (
+				6E22174917F1794900418131 /* Tweet.h */,
+				6E22174A17F1794900418131 /* Tweet.m */,
+				6E1E766017E8A42E0050F25E /* Tweet+Data.h */,
+				6E1E766117E8A42E0050F25E /* Tweet+Data.m */,
+			);
+			name = Tweet;
+			sourceTree = "<group>";
+		};
+		6EDDE4BF17FC068A00D3A1AA /* NewsFeed */ = {
+			isa = PBXGroup;
+			children = (
+				6E22174D17F1794A00418131 /* NewsFeed.m */,
+				6E22174C17F1794A00418131 /* NewsFeed.h */,
+				6E4389C517EF3E9400555D52 /* NewsFeed+Posts.h */,
+				6E4389C617EF3E9400555D52 /* NewsFeed+Posts.m */,
+			);
+			name = NewsFeed;
+			sourceTree = "<group>";
+		};
 		6EE9F83C17DC5D510087E19F = {
 			isa = PBXGroup;
 			children = (
+				6E3653AB17FD579D00FC085B /* twitter.png */,
 				6E91464E17E1CD5B00F28269 /* home.png */,
 				6EE9F88217DC87EA0087E19F /* friends@2x.png */,
 				6EE9F88017DC87E40087E19F /* friends.png */,
@@ -237,42 +304,18 @@
 		6EE9F84E17DC5D510087E19F /* Twimini */ = {
 			isa = PBXGroup;
 			children = (
+				6EDDE4BC17FC064900D3A1AA /* Models */,
+				6EDDE4BB17FC05D600D3A1AA /* View Controllers */,
 				6E74FC6217EED87300832BB5 /* FHSTwitterEngine */,
 				6E112E8717EC8EB000418B6B /* AFNetworking */,
-				6E91464B17E1BCDA00F28269 /* CoreDataTableViewController.h */,
-				6E91464C17E1BCDA00F28269 /* CoreDataTableViewController.m */,
-				6EE9F86F17DC64450087E19F /* AccountsListViewController.h */,
-				6EE9F87017DC64450087E19F /* AccountsListViewController.m */,
-				6EE9F87117DC64450087E19F /* FollowersViewController.h */,
-				6EE9F87217DC64450087E19F /* FollowersViewController.m */,
-				6EE9F87317DC64450087E19F /* FriendsListViewController.h */,
-				6EE9F87417DC64450087E19F /* FriendsListViewController.m */,
-				6EE9F87517DC64450087E19F /* TweetComposeViewController.h */,
-				6EE9F87617DC64450087E19F /* TweetComposeViewController.m */,
-				6EE9F87717DC64450087E19F /* TweetsListViewController.h */,
-				6EE9F87817DC64450087E19F /* TweetsListViewController.m */,
-				6E1E766017E8A42E0050F25E /* Tweet+Data.h */,
-				6E1E766117E8A42E0050F25E /* Tweet+Data.m */,
-				6E1E766317E8A46E0050F25E /* User+Info.h */,
-				6E1E766417E8A46E0050F25E /* User+Info.m */,
-				6E1E765717E89D050050F25E /* Twimini.xcdatamodeld */,
-				6E22174917F1794900418131 /* Tweet.h */,
-				6E22174A17F1794900418131 /* Tweet.m */,
-				6E22174C17F1794A00418131 /* NewsFeed.h */,
-				6E22174D17F1794A00418131 /* NewsFeed.m */,
-				6E22174F17F1794A00418131 /* User.h */,
-				6E22175017F1794A00418131 /* User.m */,
-				6E4389C517EF3E9400555D52 /* NewsFeed+Posts.h */,
-				6E4389C617EF3E9400555D52 /* NewsFeed+Posts.m */,
-				6EE9F88617DC8BE00087E19F /* HomeViewController.h */,
-				6EE9F88717DC8BE00087E19F /* HomeViewController.m */,
-				6EE9F87E17DC72E30087E19F /* TweetComposeViewController.xib */,
-				6E112E8417EC4B5A00418B6B /* TweetDetailViewController.h */,
-				6E112E8517EC4B5A00418B6B /* TweetDetailViewController.m */,
 				6EE9F84F17DC5D510087E19F /* Supporting Files */,
 				6EE9F85717DC5D510087E19F /* AppDelegate.h */,
 				6EE9F85817DC5D510087E19F /* AppDelegate.m */,
+				6E1E765717E89D050050F25E /* Twimini.xcdatamodeld */,
 				6EE9F86017DC5D510087E19F /* MainStoryboard.storyboard */,
+				6EE9F87E17DC72E30087E19F /* TMTweetComposeViewController.xib */,
+				6E13870D17FC0E4C00FEC97A /* Images.xcassets */,
+				6E3653B217FD5A7800FC085B /* Images-5.xcassets */,
 			);
 			path = Twimini;
 			sourceTree = "<group>";
@@ -319,6 +362,11 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = Directi;
+				TargetAttributes = {
+					6EE9F84417DC5D510087E19F = {
+						DevelopmentTeam = B4X8EQS24E;
+					};
+				};
 			};
 			buildConfigurationList = 6EE9F84017DC5D510087E19F /* Build configuration list for PBXProject "Twimini" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -343,11 +391,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				6EE9F85317DC5D510087E19F /* InfoPlist.strings in Resources */,
+				6E13870E17FC0E4C00FEC97A /* Images.xcassets in Resources */,
 				6EE9F85B17DC5D510087E19F /* Default.png in Resources */,
 				6EE9F85D17DC5D510087E19F /* Default@2x.png in Resources */,
 				6EE9F85F17DC5D510087E19F /* Default-568h@2x.png in Resources */,
+				6E3653B317FD5A7800FC085B /* Images-5.xcassets in Resources */,
 				6EE9F86217DC5D510087E19F /* MainStoryboard.storyboard in Resources */,
-				6EE9F87F17DC72E30087E19F /* TweetComposeViewController.xib in Resources */,
+				6EE9F87F17DC72E30087E19F /* TMTweetComposeViewController.xib in Resources */,
 				6EE9F88117DC87E40087E19F /* friends.png in Resources */,
 				6EE9F88317DC87EA0087E19F /* friends@2x.png in Resources */,
 				6E91464F17E1CD5B00F28269 /* home.png in Resources */,
@@ -363,17 +413,16 @@
 			files = (
 				6EE9F85517DC5D510087E19F /* main.m in Sources */,
 				6EE9F85917DC5D510087E19F /* AppDelegate.m in Sources */,
-				6EE9F87917DC64450087E19F /* AccountsListViewController.m in Sources */,
-				6EE9F87A17DC64450087E19F /* FollowersViewController.m in Sources */,
-				6EE9F87B17DC64450087E19F /* FriendsListViewController.m in Sources */,
-				6EE9F87C17DC64450087E19F /* TweetComposeViewController.m in Sources */,
-				6EE9F87D17DC64450087E19F /* TweetsListViewController.m in Sources */,
-				6EE9F88817DC8BE00087E19F /* HomeViewController.m in Sources */,
+				6EE9F87917DC64450087E19F /* TMAccountsListViewController.m in Sources */,
+				6EE9F87A17DC64450087E19F /* TMFollowersViewController.m in Sources */,
+				6EE9F87B17DC64450087E19F /* TMFriendsListViewController.m in Sources */,
+				6EE9F87C17DC64450087E19F /* TMTweetComposeViewController.m in Sources */,
+				6EE9F87D17DC64450087E19F /* TMProfileViewController.m in Sources */,
+				6EE9F88817DC8BE00087E19F /* TMHomeViewController.m in Sources */,
 				6E91464D17E1BCDA00F28269 /* CoreDataTableViewController.m in Sources */,
 				6E1E765917E89D050050F25E /* Twimini.xcdatamodeld in Sources */,
 				6E1E766217E8A42E0050F25E /* Tweet+Data.m in Sources */,
 				6E1E766517E8A46E0050F25E /* User+Info.m in Sources */,
-				6E112E8617EC4B5A00418B6B /* TweetDetailViewController.m in Sources */,
 				6E112E9B17EC8EB000418B6B /* AFHTTPClient.m in Sources */,
 				6E112E9C17EC8EB000418B6B /* AFHTTPRequestOperation.m in Sources */,
 				6E112E9D17EC8EB000418B6B /* AFImageRequestOperation.m in Sources */,
@@ -438,7 +487,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -462,7 +511,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -472,11 +521,16 @@
 		6EE9F86917DC5D510087E19F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Twimini/Twimini-Prefix.pch";
 				INFOPLIST_FILE = "Twimini/Twimini-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -484,11 +538,16 @@
 		6EE9F86A17DC5D510087E19F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Twimini/Twimini-Prefix.pch";
 				INFOPLIST_FILE = "Twimini/Twimini-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

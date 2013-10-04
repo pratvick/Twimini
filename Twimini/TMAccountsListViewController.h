@@ -1,7 +1,7 @@
 #import <UIKit/UIKit.h>
 #import <Accounts/Accounts.h>
 
-@interface AccountsListViewController : UITableViewController
+@interface TMAccountsListViewController : UITableViewController
 
 @property (strong, nonatomic) ACAccountStore *accountStore; 
 @property (strong, nonatomic) NSArray *accounts;

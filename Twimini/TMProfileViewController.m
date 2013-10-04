@@ -1,55 +1,47 @@
-#import "TweetsListViewController.h"
-#import "TweetComposeViewController.h"
-#import "FriendsListViewController.h"
-#import "FollowersViewController.h"
-#import "HomeViewController.h"
-#import "TweetDetailViewController.h"
+#import "TMProfileViewController.h"
+#import "TMTweetComposeViewController.h"
+#import "TMFriendsListViewController.h"
+#import "TMFollowersViewController.h"
+#import "TMHomeViewController.h"
 #import "Tweet.h"
 #import "User.h"
 #import "Tweet+Data.h"
 #import "User+Info.h"
 
-@interface TweetsListViewController()
+@interface TMProfileViewController()
 
 @property (strong, nonatomic) UIActivityIndicatorView *spinner;
 
 @end
 
-@implementation TweetsListViewController
+@implementation TMProfileViewController
 
-@synthesize account = _account;
-@synthesize tweets = _tweets;
 @synthesize tweetDatabase = _tweetDatabase;
-@synthesize maxId = _maxId;
-@synthesize username = _username;
-@synthesize name = _name;
 
-#pragma mark - Compose Tweet
 - (void)composeTweet
 {
-    TweetComposeViewController *tweetComposeViewController = [[TweetComposeViewController alloc] init];
+    TMTweetComposeViewController *tweetComposeViewController = [[TMTweetComposeViewController alloc] init];
     tweetComposeViewController.account = self.account;
     tweetComposeViewController.tweetComposeDelegate = self;
     [self presentViewController:tweetComposeViewController animated:YES completion:nil];
 }
 
-- (void)tweetComposeViewController:(TweetComposeViewController *)controller didFinishWithResult:(TweetComposeResult)result
+- (void)tweetComposeViewController:(TMTweetComposeViewController *)controller didFinishWithResult:(TweetComposeResult)result
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
     [self fetchTweetDataIntoDocument:self.tweetDatabase];
 }
 
-#pragma mark - Get Friends
 - (void)getFriends
 {
-    FriendsListViewController *friendsListViewController = [[FriendsListViewController alloc] init];
+    TMFriendsListViewController *friendsListViewController = [[TMFriendsListViewController alloc] init];
     friendsListViewController.account = self.account;
     [self.navigationController pushViewController:friendsListViewController animated:TRUE];
 }
 
 - (void)getHome
 {
-    HomeViewController *homeViewController = [[HomeViewController alloc] init];
+    TMHomeViewController *homeViewController = [[TMHomeViewController alloc] init];
     homeViewController.account = self.account;
     homeViewController.name = self.name;
     homeViewController.username = self.username;
@@ -59,7 +51,7 @@
 
 -(void)getFollowers
 {
-    FollowersViewController *followersViewController = [[FollowersViewController alloc] init];
+    TMFollowersViewController *followersViewController = [[TMFollowersViewController alloc] init];
     followersViewController.account = self.account;
     followersViewController.username = self.username;
     followersViewController.name = self.name;
@@ -67,7 +59,6 @@
     [self.navigationController pushViewController:followersViewController animated:TRUE];
 }
 
-#pragma mark - View lifecycle
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -141,6 +132,8 @@
                     [document saveToURL:document.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success){
                         if(success)
                             NSLog(@"Document saved successfully");
+                        else
+                            NSLog(@"Document is not saved");
                     }];
                 }];
             }
@@ -160,16 +153,21 @@
 {
     if (![[NSFileManager defaultManager] fileExistsAtPath:[self.tweetDatabase.fileURL path]]) {
         [self.tweetDatabase saveToURL:self.tweetDatabase.fileURL forSaveOperation:UIDocumentSaveForCreating completionHandler:^(BOOL success) {
-            [self setupFetchedResultsController];
-            [self fetchTweetDataIntoDocument:self.tweetDatabase];
+            if(success){
+                [self setupFetchedResultsController];
+                [self fetchTweetDataIntoDocument:self.tweetDatabase];
+            }
         }];
     } else if (self.tweetDatabase.documentState == UIDocumentStateClosed) {
         [self.tweetDatabase openWithCompletionHandler:^(BOOL success) {
-            [self setupFetchedResultsController];
-            [self fetchTweetDataIntoDocument:self.tweetDatabase];
-        }];
-    } else if (self.tweetDatabase.documentState == UIDocumentStateNormal) {
+            if(success){
+                [self setupFetchedResultsController];
+                [self fetchTweetDataIntoDocument:self.tweetDatabase];
+            }
+    }];
+    }else{
         [self setupFetchedResultsController];
+        [self fetchTweetDataIntoDocument:self.tweetDatabase];
     }
 }
 
@@ -192,15 +190,9 @@
     if (!self.tweetDatabase)
     {
         NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-        url = [url URLByAppendingPathComponent:@"Default Tweet Database"];
+        url = [url URLByAppendingPathComponent:@"Default Twitter Database"];
         self.tweetDatabase = [[UIManagedDocument alloc] initWithFileURL:url];
     }
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [self.spinner stopAnimating];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -225,9 +217,11 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
         __block NSData *imageData;
-        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{                                         imageData = [NSData dataWithContentsOfURL:url];
+        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
+            imageData = [NSData dataWithContentsOfURL:url];
             dispatch_sync(dispatch_get_main_queue(), ^{
                 cell.imageView.image = [UIImage imageWithData:imageData];
+                [self.tableView reloadData];
             });
         });
     });
@@ -242,43 +236,14 @@
     NSString *title = tweet.text;
     NSString *subtitle = tweet.whoWrote.name;
     
-    CGSize cellBounds = CGSizeMake(tableView.bounds.size.width - 100.0, 1000.0);
+    CGSize cellBounds = CGSizeMake(tableView.bounds.size.width - 120.0, 1000.0);
     CGSize titleSize = [title sizeWithFont:[UIFont systemFontOfSize: 14.0] constrainedToSize:cellBounds lineBreakMode:UILineBreakModeWordWrap];
     CGSize subtitleSize = [subtitle sizeWithFont:[UIFont systemFontOfSize: 14.0] constrainedToSize:cellBounds lineBreakMode:UILineBreakModeWordWrap];
     
     CGFloat height = titleSize.height + subtitleSize.height;
-    
+
+    [self.spinner stopAnimating];
     return height < 44.0 ? 44.0 : height;
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scroll
-{
-    NSInteger currentOffset = scroll.contentOffset.y;
-    NSInteger maximumOffset = scroll.contentSize.height - scroll.frame.size.height;
-    
-    if (maximumOffset - currentOffset <= 5.0){
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
-            [self fetchTweetDataIntoDocument:self.tweetDatabase];
-        });
-    }
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if([segue.identifier isEqualToString:@"tweet detail"])
-    {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        Tweet *tweet = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        TweetDetailViewController *tweetDetailViewController = segue.destinationViewController;
-        tweetDetailViewController.tweet = tweet;
-    }
-}
-/*
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row%2 == 0) {
-        UIColor *altCellColor = [UIColor colorWithWhite:0.7 alpha:0.1];
-        cell.backgroundColor = altCellColor;
-    }
-}
-*/
 @end

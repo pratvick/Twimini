@@ -1,15 +1,7 @@
-//
-//  Tweet+Data.m
-//  Twimini
-//
-//  Created by Prateek Khandelwal on 9/17/13.
-//  Copyright (c) 2013 Directi. All rights reserved.
-//
-
 #import "Tweet+Data.h"
 #import "User.h"
 #import "User+Info.h"
-#import "TweetsListViewController.h"
+#import "TMProfileViewController.h"
 
 @implementation Tweet (Data)
 

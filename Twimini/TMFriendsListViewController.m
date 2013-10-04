@@ -1,17 +1,14 @@
-#import "FriendsListViewController.h"
+#import "TMFriendsListViewController.h"
 
-@interface FriendsListViewController()
+@interface TMFriendsListViewController()
 
 - (void)fetchData;
 @property (strong, nonatomic) UIActivityIndicatorView *spinner;
 
 @end
 
-@implementation FriendsListViewController
+@implementation TMFriendsListViewController
 
-@synthesize account = _account;
-@synthesize friends = _friends;
-@synthesize friendIds = _friendIds;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -21,21 +18,6 @@
         [self fetchData];
     }
     return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -54,7 +36,6 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark - Data management
 - (void)fetchData
 {
     NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/friends/list.json"];
@@ -80,7 +61,6 @@
     }];
 }
 
-#pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -108,10 +88,6 @@
     [self.spinner stopAnimating];
     
     return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
 }
 
 @end

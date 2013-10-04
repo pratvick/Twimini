@@ -1,7 +1,7 @@
-#import "TweetComposeViewController.h"
+#import "TMTweetComposeViewController.h"
 #import <Twitter/Twitter.h>
 
-@implementation TweetComposeViewController
+@implementation TMTweetComposeViewController
 
 @synthesize account = _account;
 @synthesize tweetComposeDelegate = _tweetComposeDelegate;
@@ -11,18 +11,11 @@
 @synthesize textView;
 @synthesize titleView;
 
-#pragma mark - View lifecycle
-
 - (void)viewWillAppear:(BOOL)animated
 {
     self.titleView.title = [NSString stringWithFormat:@"@%@", self.account.username];
     [textView setKeyboardType:UIKeyboardTypeTwitter];
     [textView becomeFirstResponder];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
 }
 
 - (void)viewDidUnload
@@ -38,8 +31,6 @@
 {
     return YES;
 }
-
-#pragma mark - Actions
 
 - (IBAction)sendTweet:(id)sender
 {

@@ -5,10 +5,9 @@
 #include "User+Info.h"
 #include "User.h"
 
-@interface FollowersViewController : CoreDataTableViewController
+@interface TMFollowersViewController : CoreDataTableViewController
 
 @property (strong, nonatomic) ACAccount *account;
-@property (strong, nonatomic) NSArray *followerIds;
 @property (strong, nonatomic) NSMutableArray *followers;
 @property (strong, nonatomic) UIManagedDocument *followersDatabase;
 @property (strong, nonatomic) NSString *username;

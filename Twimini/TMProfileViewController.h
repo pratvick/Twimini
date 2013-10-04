@@ -1,10 +1,10 @@
 #import <UIKit/UIKit.h>
 #import <Twitter/Twitter.h>
 #import <Accounts/Accounts.h>
-#import "TweetComposeViewController.h"
+#import "TMTweetComposeViewController.h"
 #import "CoreDataTableViewController.h"
 
-@interface TweetsListViewController : CoreDataTableViewController <TweetComposeViewControllerDelegate>
+@interface TMProfileViewController : CoreDataTableViewController <TMTweetComposeViewControllerDelegate>
 
 @property (strong, nonatomic) ACAccount *account;
 @property (strong, nonatomic) NSArray *tweets;

@@ -1,17 +1,12 @@
-#import "FollowersViewController.h"
+#import "TMFollowersViewController.h"
 
-@interface FollowersViewController ()
+@interface TMFollowersViewController ()
 @property (strong, nonatomic) UIActivityIndicatorView *spinner;
 @end
 
-@implementation FollowersViewController
+@implementation TMFollowersViewController
 
-@synthesize account = _account;
-@synthesize followers = _followers;
-@synthesize followerIds = _followerIds;
 @synthesize followersDatabase = _followersDatabase;
-@synthesize username = _username;
-@synthesize name = _name;
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -21,11 +16,6 @@
     self.spinner.center = CGPointMake(160, 240);
     [self.view addSubview:self.spinner];
     [self.spinner startAnimating];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
     [self setupFetchedResultsController];
     [self fetchFollowersDataIntoDocument:self.followersDatabase];
 }
@@ -65,6 +55,8 @@
                     [document saveToURL:document.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success){
                         if(success)
                             NSLog(@"Document saved successfully");
+                        else
+                            NSLog(@"Document is not saved");
                     }];
                 }];
             }

@@ -1,21 +1,18 @@
-#import "AccountsListViewController.h"
-#import "TweetsListViewController.h"
+#import "TMAccountsListViewController.h"
+#import "TMProfileViewController.h"
 #import "FHSTwitterEngine.h"
 #import <Twitter/Twitter.h>
 #import <Accounts/Accounts.h>
 #import <Social/Social.h>
 
-@interface AccountsListViewController ()// <FHSTwitterEngineAccessTokenDelegate>
+@interface TMAccountsListViewController () // <FHSTwitterEngineAccessTokenDelegate>
 
 - (void)fetchData;
 
 @end
 
-@implementation AccountsListViewController
+@implementation TMAccountsListViewController
 
-@synthesize accounts = _accounts;
-@synthesize accountStore = _accountStore;
-//@synthesize tweets = _tweets;
 /*
 - (void)storeAccessToken:(NSString *)accessToken {
     [[NSUserDefaults standardUserDefaults]setObject:accessToken forKey:@"SavedAccessHTTPBody"];
@@ -25,17 +22,34 @@
     return [[NSUserDefaults standardUserDefaults]objectForKey:@"SavedAccessHTTPBody"];
 }
 */
+
 - (void)viewDidLoad
 {
+    [self fetchData];
     /*
     [[FHSTwitterEngine sharedEngine]permanentlySetConsumerKey:@"2arkQ9UTBOa79fdcgaig" andSecret:@"X5N00w9MsEgXTj59hJpAfSgBMLpFD73vXhq0ZtnQA"];
     [[FHSTwitterEngine sharedEngine]setDelegate:self];
     */
-    [self fetchData];
 }
 
 - (void)fetchData
 {
+    self.accountStore = [[ACAccountStore alloc] init];
+    ACAccountType *accountType = [self.accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+    
+    [self.accountStore requestAccessToAccountsWithType:accountType
+                                               options:nil
+                                            completion:^(BOOL granted, NSError *error){
+                                                if (granted) {
+                                                    self.accounts = [self.accountStore accountsWithAccountType:accountType];
+                                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                                        [self.tableView reloadData];
+                                                    });
+                                                }else
+                                                {
+                                                    NSLog(@"No access granted");
+                                                }
+                                            }];
     /*
     [[FHSTwitterEngine sharedEngine] showOAuthLoginControllerFromViewController:self withCompletion:^(BOOL success) {
         NSLog(success?@"L0L success":@"O noes!!! Loggen faylur!!!");
@@ -47,22 +61,6 @@
         } count:20];
     }];
     */
-    
-    self.accountStore = [[ACAccountStore alloc] init];
-    ACAccountType *accountType = [self.accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-    [self.accountStore requestAccessToAccountsWithType:accountType
-                                               options:nil
-                                            completion:^(BOOL granted, NSError *error){
-        if (granted) {
-            self.accounts = [self.accountStore accountsWithAccountType:accountType];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.tableView reloadData];
-            });
-        }else
-        {
-            NSLog(@"No access granted");
-        }
-    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -89,10 +87,10 @@
 {
     if([segue.identifier isEqualToString:@"Account"])
     {
-        TweetsListViewController *tweetsListViewController = [segue destinationViewController];
+        TMProfileViewController *profileViewController = [segue destinationViewController];
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         ACAccount *account = [self.accounts objectAtIndex:indexPath.row];
-        tweetsListViewController.account = account;
+        profileViewController.account = account;
     }
 }
 
