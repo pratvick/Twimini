@@ -5,7 +5,6 @@
 
 @synthesize account = _account;
 @synthesize tweetComposeDelegate = _tweetComposeDelegate;
-
 @synthesize closeButton;
 @synthesize sendButton;
 @synthesize textView;
@@ -36,7 +35,7 @@
 {
     NSString *status = self.textView.text;
     
-    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1/statuses/update.json"];
+    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/statuses/update.json"];
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:status, @"status", nil];
     
     TWRequest *sendTweet = [[TWRequest alloc]

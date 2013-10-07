@@ -206,10 +206,10 @@
     
     Tweet *tweet = [self.fetchedResultsController objectAtIndexPath:indexPath];
     [[cell textLabel] setNumberOfLines:0];
-    [[cell textLabel] setLineBreakMode:UILineBreakModeWordWrap];
+    [[cell textLabel] setLineBreakMode:NSLineBreakByWordWrapping];
     [[cell textLabel] setFont:[UIFont systemFontOfSize: 14.0]];
     [[cell detailTextLabel] setNumberOfLines:0];
-    [[cell detailTextLabel] setLineBreakMode:UILineBreakModeWordWrap];
+    [[cell detailTextLabel] setLineBreakMode:NSLineBreakByWordWrapping];
     [[cell detailTextLabel] setFont:[UIFont systemFontOfSize: 14.0]];
     cell.textLabel.text = tweet.text;
     cell.detailTextLabel.text = tweet.whoWrote.username;
@@ -221,10 +221,10 @@
             imageData = [NSData dataWithContentsOfURL:url];
             dispatch_sync(dispatch_get_main_queue(), ^{
                 cell.imageView.image = [UIImage imageWithData:imageData];
-                [self.tableView reloadData];
             });
         });
     });
+    [self.spinner stopAnimating];
     
     return cell;
 }
@@ -237,12 +237,11 @@
     NSString *subtitle = tweet.whoWrote.name;
     
     CGSize cellBounds = CGSizeMake(tableView.bounds.size.width - 120.0, 1000.0);
-    CGSize titleSize = [title sizeWithFont:[UIFont systemFontOfSize: 14.0] constrainedToSize:cellBounds lineBreakMode:UILineBreakModeWordWrap];
-    CGSize subtitleSize = [subtitle sizeWithFont:[UIFont systemFontOfSize: 14.0] constrainedToSize:cellBounds lineBreakMode:UILineBreakModeWordWrap];
+    CGSize titleSize = [title sizeWithFont:[UIFont systemFontOfSize: 14.0] constrainedToSize:cellBounds lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize subtitleSize = [subtitle sizeWithFont:[UIFont systemFontOfSize: 14.0] constrainedToSize:cellBounds lineBreakMode:NSLineBreakByWordWrapping];
     
     CGFloat height = titleSize.height + subtitleSize.height;
 
-    [self.spinner stopAnimating];
     return height < 44.0 ? 44.0 : height;
 }
 

@@ -18,7 +18,6 @@ typedef enum TweetComposeResult TweetComposeResult;
 @interface TMTweetComposeViewController : UIViewController
 
 @property (strong, nonatomic) ACAccount *account;
-
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *closeButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sendButton;
 @property (strong, nonatomic) IBOutlet UITextView *textView;

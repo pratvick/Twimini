@@ -35,6 +35,7 @@
 		6E74FC6B17EED9E400832BB5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E74FC6917EED9C200832BB5 /* Security.framework */; };
 		6E91464D17E1BCDA00F28269 /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E91464C17E1BCDA00F28269 /* CoreDataTableViewController.m */; };
 		6E91464F17E1CD5B00F28269 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E91464E17E1CD5B00F28269 /* home.png */; };
+		6EB54B8A1802DB5C00582652 /* Images-6.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EB54B891802DB5C00582652 /* Images-6.xcassets */; };
 		6EE9F84917DC5D510087E19F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EE9F84817DC5D510087E19F /* UIKit.framework */; };
 		6EE9F84B17DC5D510087E19F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EE9F84A17DC5D510087E19F /* Foundation.framework */; };
 		6EE9F84D17DC5D510087E19F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EE9F84C17DC5D510087E19F /* CoreGraphics.framework */; };
@@ -106,6 +107,7 @@
 		6E91464B17E1BCDA00F28269 /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
 		6E91464C17E1BCDA00F28269 /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
 		6E91464E17E1CD5B00F28269 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
+		6EB54B891802DB5C00582652 /* Images-6.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Images-6.xcassets"; sourceTree = "<group>"; };
 		6EE9F84517DC5D510087E19F /* Twimini.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twimini.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EE9F84817DC5D510087E19F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6EE9F84A17DC5D510087E19F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -316,6 +318,7 @@
 				6EE9F87E17DC72E30087E19F /* TMTweetComposeViewController.xib */,
 				6E13870D17FC0E4C00FEC97A /* Images.xcassets */,
 				6E3653B217FD5A7800FC085B /* Images-5.xcassets */,
+				6EB54B891802DB5C00582652 /* Images-6.xcassets */,
 			);
 			path = Twimini;
 			sourceTree = "<group>";
@@ -400,6 +403,7 @@
 				6EE9F87F17DC72E30087E19F /* TMTweetComposeViewController.xib in Resources */,
 				6EE9F88117DC87E40087E19F /* friends.png in Resources */,
 				6EE9F88317DC87EA0087E19F /* friends@2x.png in Resources */,
+				6EB54B8A1802DB5C00582652 /* Images-6.xcassets in Resources */,
 				6E91464F17E1CD5B00F28269 /* home.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -521,8 +525,6 @@
 		6EE9F86917DC5D510087E19F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -538,8 +540,6 @@
 		6EE9F86A17DC5D510087E19F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
