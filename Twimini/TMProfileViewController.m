@@ -18,29 +18,27 @@
 
 @synthesize tweetDatabase = _tweetDatabase;
 
-- (void)composeTweet
-{
-    TMTweetComposeViewController *tweetComposeViewController = [[TMTweetComposeViewController alloc] init];
+- (void)composeTweet {
+    TMTweetComposeViewController *tweetComposeViewController = [[TMTweetComposeViewController alloc]
+                                                                init];
     tweetComposeViewController.account = self.account;
     tweetComposeViewController.tweetComposeDelegate = self;
     [self presentViewController:tweetComposeViewController animated:YES completion:nil];
 }
 
-- (void)tweetComposeViewController:(TMTweetComposeViewController *)controller didFinishWithResult:(TweetComposeResult)result
-{
+- (void)tweetComposeViewController:(TMTweetComposeViewController *)controller didFinishWithResult:(TweetComposeResult)result {
     [self dismissViewControllerAnimated:YES completion:nil];
     [self fetchTweetDataIntoDocument:self.tweetDatabase];
 }
 
-- (void)getFriends
-{
-    TMFriendsListViewController *friendsListViewController = [[TMFriendsListViewController alloc] init];
+- (void)getFriends {
+    TMFriendsListViewController *friendsListViewController = [[TMFriendsListViewController alloc]
+                                                              init];
     friendsListViewController.account = self.account;
     [self.navigationController pushViewController:friendsListViewController animated:TRUE];
 }
 
-- (void)getHome
-{
+- (void)getHome {
     TMHomeViewController *homeViewController = [[TMHomeViewController alloc] init];
     homeViewController.account = self.account;
     homeViewController.name = self.name;
@@ -49,8 +47,7 @@
     [self.navigationController pushViewController:homeViewController animated:TRUE];
 }
 
--(void)getFollowers
-{
+-(void)getFollowers {
     TMFollowersViewController *followersViewController = [[TMFollowersViewController alloc] init];
     followersViewController.account = self.account;
     followersViewController.username = self.username;
@@ -59,8 +56,7 @@
     [self.navigationController pushViewController:followersViewController animated:TRUE];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     UIBarButtonItem *compose = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
@@ -88,11 +84,12 @@
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:friends, compose, followers, home, nil];
 }
 
-- (void)setupFetchedResultsController
-{
+- (void)setupFetchedResultsController {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tweet"];
     request.predicate = [NSPredicate predicateWithFormat:@"whoWrote.username = %@", self.account.username];
-    request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"text" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+    request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"text"
+                                                                                     ascending:YES
+                                                                                      selector:@selector(localizedCaseInsensitiveCompare:)]];
     
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                         managedObjectContext:self.tweetDatabase.managedObjectContext
@@ -100,8 +97,7 @@
                                                                                    cacheName:nil];
 }
 
-- (void)fetchTweetDataIntoDocument:(UIManagedDocument *)document
-{
+- (void)fetchTweetDataIntoDocument:(UIManagedDocument *)document {
     self.tweets = [[NSArray alloc] init];
     NSString *urlString = nil;
     if(self.maxId)
@@ -116,20 +112,22 @@
     [request performRequestWithHandler:^(NSData *responseData,
                                         NSHTTPURLResponse *urlResponse,
                                         NSError *error) {
-        if ([urlResponse statusCode] == 200)
-        {
+        if ([urlResponse statusCode] == 200) {
             NSError *jsonError = nil;
-            NSArray *jsonResult = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
-            if (jsonResult != nil)
-            {
+            NSArray *jsonResult = [NSJSONSerialization JSONObjectWithData:responseData
+                                                                  options:0
+                                                                    error:&jsonError];
+            if (jsonResult != nil) {
                 self.tweets = jsonResult;
                 [document.managedObjectContext performBlock:^{
                     for (NSDictionary *tweetInfo in self.tweets) {
                         self.username = [[tweetInfo objectForKey:@"user"] objectForKey:@"screen_name"];
-                        self.name = [[tweetInfo objectForKey:@"user"] objectForKey:@"name"];;
+                        self.name = [[tweetInfo objectForKey:@"user"] objectForKey:@"name"];
                         [Tweet tweetWithInfo:tweetInfo inManagedObjectContext:document.managedObjectContext];
                     }
-                    [document saveToURL:document.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success){
+                    [document saveToURL:document.fileURL
+                       forSaveOperation:UIDocumentSaveForOverwriting
+                      completionHandler:^(BOOL success){
                         if(success)
                             NSLog(@"Document saved successfully");
                         else
@@ -137,22 +135,21 @@
                     }];
                 }];
             }
-            else
-            {
+            else {
                 NSLog(@"Could not parse your timeline: %@", [jsonError localizedDescription]);
             }
         }
-        else
-        {
+        else {
             NSLog(@"The response received an unexpected status code of %d", urlResponse.statusCode);
         }
     }];
 }
 
-- (void)useDocument
-{
+- (void)useDocument {
     if (![[NSFileManager defaultManager] fileExistsAtPath:[self.tweetDatabase.fileURL path]]) {
-        [self.tweetDatabase saveToURL:self.tweetDatabase.fileURL forSaveOperation:UIDocumentSaveForCreating completionHandler:^(BOOL success) {
+        [self.tweetDatabase saveToURL:self.tweetDatabase.fileURL
+                     forSaveOperation:UIDocumentSaveForCreating
+                    completionHandler:^(BOOL success) {
             if(success){
                 [self setupFetchedResultsController];
                 [self fetchTweetDataIntoDocument:self.tweetDatabase];
@@ -165,43 +162,41 @@
                 [self fetchTweetDataIntoDocument:self.tweetDatabase];
             }
     }];
-    }else{
+    } else {
         [self setupFetchedResultsController];
         [self fetchTweetDataIntoDocument:self.tweetDatabase];
     }
 }
 
-- (void)setTweetDatabase:(UIManagedDocument *)tweetDatabase
-{
+- (void)setTweetDatabase:(UIManagedDocument *)tweetDatabase {
     if (_tweetDatabase != tweetDatabase) {
         _tweetDatabase = tweetDatabase;
         [self useDocument];
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.spinner.center = CGPointMake(160, 240);
     [self.view addSubview:self.spinner];
     [self.spinner startAnimating];
     
-    if (!self.tweetDatabase)
-    {
-        NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    if (!self.tweetDatabase) {
+        NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory
+                                                             inDomains:NSUserDomainMask] lastObject];
         url = [url URLByAppendingPathComponent:@"Default Twitter Database"];
         self.tweetDatabase = [[UIManagedDocument alloc] initWithFileURL:url];
     }
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"News Feed";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
+                                      reuseIdentifier:CellIdentifier];
     }
     
     Tweet *tweet = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -221,6 +216,7 @@
             imageData = [NSData dataWithContentsOfURL:url];
             dispatch_sync(dispatch_get_main_queue(), ^{
                 cell.imageView.image = [UIImage imageWithData:imageData];
+                [self.tableView setNeedsDisplay];
             });
         });
     });
@@ -229,16 +225,30 @@
     return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scroll {
+    NSInteger currentOffset = scroll.contentOffset.y;
+    NSInteger maximumOffset = scroll.contentSize.height - scroll.frame.size.height;
+    
+    if (maximumOffset - currentOffset <= 5.0) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
+            [self fetchTweetDataIntoDocument:self.tweetDatabase];
+        });
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Tweet *tweet = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     NSString *title = tweet.text;
     NSString *subtitle = tweet.whoWrote.name;
     
     CGSize cellBounds = CGSizeMake(tableView.bounds.size.width - 120.0, 1000.0);
-    CGSize titleSize = [title sizeWithFont:[UIFont systemFontOfSize: 14.0] constrainedToSize:cellBounds lineBreakMode:NSLineBreakByWordWrapping];
-    CGSize subtitleSize = [subtitle sizeWithFont:[UIFont systemFontOfSize: 14.0] constrainedToSize:cellBounds lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize titleSize = [title sizeWithFont:[UIFont systemFontOfSize: 14.0]
+                         constrainedToSize:cellBounds
+                             lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize subtitleSize = [subtitle sizeWithFont:[UIFont systemFontOfSize: 14.0]
+                               constrainedToSize:cellBounds
+                                   lineBreakMode:NSLineBreakByWordWrapping];
     
     CGFloat height = titleSize.height + subtitleSize.height;
 

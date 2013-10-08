@@ -3,6 +3,7 @@
 @interface TMFriendsListViewController()
 
 - (void)fetchData;
+
 @property (strong, nonatomic) UIActivityIndicatorView *spinner;
 
 @end
@@ -10,8 +11,7 @@
 @implementation TMFriendsListViewController
 
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
+- (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
     if (self) {
         _friends = [[NSMutableArray alloc] init];
@@ -20,8 +20,7 @@
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     self.title = @"Friends";
     self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.spinner.center = CGPointMake(160, 240);
@@ -31,13 +30,11 @@
     [super viewWillAppear:animated];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return YES;
 }
 
-- (void)fetchData
-{
+- (void)fetchData {
     NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/friends/list.json"];
     TWRequest *request = [[TWRequest alloc] initWithURL:url
                                              parameters:nil
@@ -46,9 +43,11 @@
     [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
         if ([urlResponse statusCode] == 200) {
             NSError *jsonError = nil;
-            id jsonResult = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
-            if (jsonResult != nil)
-            {
+            id jsonResult = [NSJSONSerialization
+                             JSONObjectWithData:responseData
+                             options:0
+                             error:&jsonError];
+            if (jsonResult != nil){
                 [self.friends addObjectsFromArray:[jsonResult objectForKey:@"users"]];
                 dispatch_sync(dispatch_get_main_queue(), ^{
                     [self.tableView reloadData];
@@ -61,23 +60,21 @@
     }];
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.friends count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
+                                      reuseIdentifier:CellIdentifier];
     }
     
     id friend = [self.friends objectAtIndex:[indexPath row]];

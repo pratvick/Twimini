@@ -23,8 +23,7 @@
 }
 */
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [self fetchData];
     /*
     [[FHSTwitterEngine sharedEngine]permanentlySetConsumerKey:@"2arkQ9UTBOa79fdcgaig" andSecret:@"X5N00w9MsEgXTj59hJpAfSgBMLpFD73vXhq0ZtnQA"];
@@ -32,8 +31,7 @@
     */
 }
 
-- (void)fetchData
-{
+- (void)fetchData {
     self.accountStore = [[ACAccountStore alloc] init];
     ACAccountType *accountType = [self.accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     
@@ -63,17 +61,16 @@
     */
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.accounts count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Accounts List";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
+                                      reuseIdentifier:CellIdentifier];
     }
     
     ACAccount *account = [self.accounts objectAtIndex:indexPath.row];
@@ -83,10 +80,8 @@
     return cell;
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if([segue.identifier isEqualToString:@"Account"])
-    {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"Account"]) {
         TMProfileViewController *profileViewController = [segue destinationViewController];
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         ACAccount *account = [self.accounts objectAtIndex:indexPath.row];

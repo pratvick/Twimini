@@ -11,7 +11,9 @@ enum TweetComposeResult {
 typedef enum TweetComposeResult TweetComposeResult;
 
 @protocol TMTweetComposeViewControllerDelegate <NSObject>
+
 - (void)tweetComposeViewController:(TMTweetComposeViewController *)controller didFinishWithResult:(TweetComposeResult)result;
+
 @end
 
 

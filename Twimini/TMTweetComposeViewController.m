@@ -10,15 +10,13 @@
 @synthesize textView;
 @synthesize titleView;
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     self.titleView.title = [NSString stringWithFormat:@"@%@", self.account.username];
     [textView setKeyboardType:UIKeyboardTypeTwitter];
     [textView becomeFirstResponder];
 }
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
     [self setCloseButton:nil];
     [self setSendButton:nil];
     [self setTextView:nil];
@@ -26,13 +24,11 @@
     [super viewDidUnload];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
 }
 
-- (IBAction)sendTweet:(id)sender
-{
+- (IBAction)sendTweet:(id)sender {
     NSString *status = self.textView.text;
     
     NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/statuses/update.json"];
@@ -59,8 +55,7 @@
     }];
 }
 
-- (IBAction)cancel:(id)sender
-{
+- (IBAction)cancel:(id)sender {
     [self.tweetComposeDelegate tweetComposeViewController:self didFinishWithResult:TweetComposeResultCancelled];
 }
 

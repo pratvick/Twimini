@@ -6,14 +6,14 @@
 #import "NewsFeed+Posts.h"
 
 @interface TMHomeViewController ()
+
 @end
 
 @implementation TMHomeViewController
 
 @synthesize newsFeedDatabase = _newsFeedDatabase;
 
-- (void)setupFetchedResultsController
-{
+- (void)setupFetchedResultsController {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"NewsFeed"];
     request.predicate = [NSPredicate predicateWithFormat:@"whoseFeed.username = %@", self.account.username];
     request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"text"
@@ -26,30 +26,30 @@
                                                                                    cacheName:nil];
 }
 
-- (void)fetchTimelineDataIntoDocument:(UIManagedDocument *)document
-{
+- (void)fetchTimelineDataIntoDocument:(UIManagedDocument *)document {
     self.timeline = [[NSArray alloc] init];
     NSString *urlString = nil;
+    
     if(self.maxId)
         urlString = [[NSString alloc] initWithFormat:@"https://api.twitter.com/1.1/statuses/home_timeline.json?max_id=%@", self.maxId];
     else
         urlString = [[NSString alloc] initWithFormat:@"https://api.twitter.com/1.1/statuses/home_timeline.json"];
+    
     NSURL *url = [NSURL URLWithString:urlString];
     TWRequest *request = [[TWRequest alloc] initWithURL:url
                                              parameters:nil
                                           requestMethod:TWRequestMethodGET];
     [request setAccount:self.account];
+    
     [request performRequestWithHandler:^(NSData *responseData,
                                          NSHTTPURLResponse *urlResponse,
                                          NSError *error) {
-        if ([urlResponse statusCode] == 200)
-        {
+        if ([urlResponse statusCode] == 200) {
             NSError *jsonError = nil;
             NSArray *jsonResult = [NSJSONSerialization JSONObjectWithData:responseData
                                                                   options:0
                                                                     error:&jsonError];
-            if (jsonResult != nil)
-            {
+            if (jsonResult != nil) {
                 self.timeline = jsonResult;
                 [document.managedObjectContext performBlock:^{
                     for (NSDictionary *timelineInfo in self.timeline) {
@@ -58,9 +58,14 @@
                         if(self.maxId < Id){
                             self.maxId = Id;
                         }
-                        [NewsFeed timelineWithInfo:timelineInfo whoseFeedUsername:self.username whoseFeedName:self.name inManagedObjectContext:document.managedObjectContext];
+                        [NewsFeed timelineWithInfo:timelineInfo
+                                 whoseFeedUsername:self.username
+                                     whoseFeedName:self.name
+                            inManagedObjectContext:document.managedObjectContext];
                     }
-                    [document saveToURL:document.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success){
+                    [document saveToURL:document.fileURL
+                       forSaveOperation:UIDocumentSaveForOverwriting
+                      completionHandler:^(BOOL success){
                         if(success)
                             NSLog(@"Document saved successfully");
                         else
@@ -68,49 +73,44 @@
                     }];
                 }];
             }
-            else
-            {
+            else {
                 NSLog(@"Could not parse your timeline: %@", [jsonError localizedDescription]);
             }
         }
-        else
-        {
+        else {
             NSLog(@"The response received an unexpected status code of %d", urlResponse.statusCode);
         }
     }];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self setupFetchedResultsController];
     [self fetchTimelineDataIntoDocument:self.newsFeedDatabase];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scroll
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scroll {
     NSInteger currentOffset = scroll.contentOffset.y;
     NSInteger maximumOffset = scroll.contentSize.height - scroll.frame.size.height;
     
-    if (maximumOffset - currentOffset <= 10.0){
+    if (maximumOffset - currentOffset <= 5.0) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
             [self fetchTimelineDataIntoDocument:self.newsFeedDatabase];
         });
     }
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"News Feed";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
+                                      reuseIdentifier:CellIdentifier];
     }
     
     NewsFeed *timeline = [self.fetchedResultsController objectAtIndexPath:indexPath];
