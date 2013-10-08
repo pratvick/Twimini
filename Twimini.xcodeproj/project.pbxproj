@@ -35,7 +35,6 @@
 		6E74FC6B17EED9E400832BB5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E74FC6917EED9C200832BB5 /* Security.framework */; };
 		6E91464D17E1BCDA00F28269 /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E91464C17E1BCDA00F28269 /* CoreDataTableViewController.m */; };
 		6E91464F17E1CD5B00F28269 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E91464E17E1CD5B00F28269 /* home.png */; };
-		6EB54B8A1802DB5C00582652 /* Images-6.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EB54B891802DB5C00582652 /* Images-6.xcassets */; };
 		6EE7F4801803F14800F2570B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7F47F1803F14800F2570B /* Constants.m */; };
 		6EE9F84917DC5D510087E19F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EE9F84817DC5D510087E19F /* UIKit.framework */; };
 		6EE9F84B17DC5D510087E19F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EE9F84A17DC5D510087E19F /* Foundation.framework */; };
@@ -95,7 +94,7 @@
 		6E22174D17F1794A00418131 /* NewsFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsFeed.m; sourceTree = "<group>"; };
 		6E22174F17F1794A00418131 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		6E22175017F1794A00418131 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
-		6E3653AB17FD579D00FC085B /* twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter.png; sourceTree = "<group>"; };
+		6E3653AB17FD579D00FC085B /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
 		6E3653B217FD5A7800FC085B /* Images-5.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Images-5.xcassets"; sourceTree = "<group>"; };
 		6E4389C517EF3E9400555D52 /* NewsFeed+Posts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NewsFeed+Posts.h"; sourceTree = "<group>"; };
 		6E4389C617EF3E9400555D52 /* NewsFeed+Posts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NewsFeed+Posts.m"; sourceTree = "<group>"; };
@@ -107,8 +106,7 @@
 		6E74FC6917EED9C200832BB5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		6E91464B17E1BCDA00F28269 /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
 		6E91464C17E1BCDA00F28269 /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
-		6E91464E17E1CD5B00F28269 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
-		6EB54B891802DB5C00582652 /* Images-6.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Images-6.xcassets"; sourceTree = "<group>"; };
+		6E91464E17E1CD5B00F28269 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home.png; path = ../home.png; sourceTree = "<group>"; };
 		6EE7F47E1803F14800F2570B /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		6EE7F47F1803F14800F2570B /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		6EE9F84517DC5D510087E19F /* Twimini.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twimini.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -138,8 +136,8 @@
 		6EE9F87717DC64450087E19F /* TMProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMProfileViewController.h; sourceTree = "<group>"; };
 		6EE9F87817DC64450087E19F /* TMProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMProfileViewController.m; sourceTree = "<group>"; };
 		6EE9F87E17DC72E30087E19F /* TMTweetComposeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TMTweetComposeViewController.xib; path = ../TMTweetComposeViewController.xib; sourceTree = "<group>"; };
-		6EE9F88017DC87E40087E19F /* friends.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = friends.png; sourceTree = "<group>"; };
-		6EE9F88217DC87EA0087E19F /* friends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "friends@2x.png"; sourceTree = "<group>"; };
+		6EE9F88017DC87E40087E19F /* friends.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = friends.png; path = ../friends.png; sourceTree = "<group>"; };
+		6EE9F88217DC87EA0087E19F /* friends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "friends@2x.png"; path = "../friends@2x.png"; sourceTree = "<group>"; };
 		6EE9F88617DC8BE00087E19F /* TMHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMHomeViewController.h; sourceTree = "<group>"; };
 		6EE9F88717DC8BE00087E19F /* TMHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMHomeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -202,15 +200,26 @@
 			name = FHSTwitterEngine;
 			sourceTree = "<group>";
 		};
+		6E753C2E180422CF00351098 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				6EE9F88017DC87E40087E19F /* friends.png */,
+				6E91464E17E1CD5B00F28269 /* home.png */,
+				6EE9F88217DC87EA0087E19F /* friends@2x.png */,
+				6E3653AB17FD579D00FC085B /* icon.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
 		6EDDE4BB17FC05D600D3A1AA /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				6EE9F87E17DC72E30087E19F /* TMTweetComposeViewController.xib */,
+				6EE9F86017DC5D510087E19F /* MainStoryboard.storyboard */,
 				6EE9F86F17DC64450087E19F /* TMAccountsListViewController.h */,
 				6EE9F87017DC64450087E19F /* TMAccountsListViewController.m */,
 				6EE9F87717DC64450087E19F /* TMProfileViewController.h */,
 				6EE9F87817DC64450087E19F /* TMProfileViewController.m */,
-				6EE7F47E1803F14800F2570B /* Constants.h */,
-				6EE7F47F1803F14800F2570B /* Constants.m */,
 				6EE9F88617DC8BE00087E19F /* TMHomeViewController.h */,
 				6EE9F88717DC8BE00087E19F /* TMHomeViewController.m */,
 				6EE9F87117DC64450087E19F /* TMFollowersViewController.h */,
@@ -219,8 +228,6 @@
 				6EE9F87417DC64450087E19F /* TMFriendsListViewController.m */,
 				6EE9F87517DC64450087E19F /* TMTweetComposeViewController.h */,
 				6EE9F87617DC64450087E19F /* TMTweetComposeViewController.m */,
-				6E91464C17E1BCDA00F28269 /* CoreDataTableViewController.m */,
-				6E91464B17E1BCDA00F28269 /* CoreDataTableViewController.h */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -228,6 +235,9 @@
 		6EDDE4BC17FC064900D3A1AA /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6E91464B17E1BCDA00F28269 /* CoreDataTableViewController.h */,
+				6E91464C17E1BCDA00F28269 /* CoreDataTableViewController.m */,
+				6E1E765717E89D050050F25E /* Twimini.xcdatamodeld */,
 				6EDDE4BF17FC068A00D3A1AA /* NewsFeed */,
 				6EDDE4BE17FC068200D3A1AA /* Tweet */,
 				6EDDE4BD17FC067900D3A1AA /* User */,
@@ -271,10 +281,6 @@
 		6EE9F83C17DC5D510087E19F = {
 			isa = PBXGroup;
 			children = (
-				6E3653AB17FD579D00FC085B /* twitter.png */,
-				6E91464E17E1CD5B00F28269 /* home.png */,
-				6EE9F88217DC87EA0087E19F /* friends@2x.png */,
-				6EE9F88017DC87E40087E19F /* friends.png */,
 				6EE9F84E17DC5D510087E19F /* Twimini */,
 				6EE9F84717DC5D510087E19F /* Frameworks */,
 				6EE9F84617DC5D510087E19F /* Products */,
@@ -311,6 +317,7 @@
 		6EE9F84E17DC5D510087E19F /* Twimini */ = {
 			isa = PBXGroup;
 			children = (
+				6E753C2E180422CF00351098 /* images */,
 				6EDDE4BC17FC064900D3A1AA /* Models */,
 				6EDDE4BB17FC05D600D3A1AA /* View Controllers */,
 				6E74FC6217EED87300832BB5 /* FHSTwitterEngine */,
@@ -318,12 +325,8 @@
 				6EE9F84F17DC5D510087E19F /* Supporting Files */,
 				6EE9F85717DC5D510087E19F /* AppDelegate.h */,
 				6EE9F85817DC5D510087E19F /* AppDelegate.m */,
-				6E1E765717E89D050050F25E /* Twimini.xcdatamodeld */,
-				6EE9F86017DC5D510087E19F /* MainStoryboard.storyboard */,
-				6EE9F87E17DC72E30087E19F /* TMTweetComposeViewController.xib */,
 				6E13870D17FC0E4C00FEC97A /* Images.xcassets */,
 				6E3653B217FD5A7800FC085B /* Images-5.xcassets */,
-				6EB54B891802DB5C00582652 /* Images-6.xcassets */,
 			);
 			path = Twimini;
 			sourceTree = "<group>";
@@ -331,6 +334,8 @@
 		6EE9F84F17DC5D510087E19F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6EE7F47F1803F14800F2570B /* Constants.m */,
+				6EE7F47E1803F14800F2570B /* Constants.h */,
 				6EE9F85017DC5D510087E19F /* Twimini-Info.plist */,
 				6EE9F85117DC5D510087E19F /* InfoPlist.strings */,
 				6EE9F85417DC5D510087E19F /* main.m */,
@@ -408,7 +413,6 @@
 				6EE9F87F17DC72E30087E19F /* TMTweetComposeViewController.xib in Resources */,
 				6EE9F88117DC87E40087E19F /* friends.png in Resources */,
 				6EE9F88317DC87EA0087E19F /* friends@2x.png in Resources */,
-				6EB54B8A1802DB5C00582652 /* Images-6.xcassets in Resources */,
 				6E91464F17E1CD5B00F28269 /* home.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

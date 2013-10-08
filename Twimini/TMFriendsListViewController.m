@@ -10,17 +10,8 @@
 
 @implementation TMFriendsListViewController
 
-
-- (id)initWithStyle:(UITableViewStyle)style {
-    self = [super initWithStyle:style];
-    if (self) {
-        _friends = [[NSMutableArray alloc] init];
-        [self fetchData];
-    }
-    return self;
-}
-
 - (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
     self.title = @"Friends";
     self.spinner = [[UIActivityIndicatorView alloc]
                     initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -28,7 +19,6 @@
     [self.view addSubview:self.spinner];
     [self.spinner startAnimating];
     [self fetchData];
-    [super viewWillAppear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -36,6 +26,8 @@
 }
 
 - (void)fetchData {
+  self.friends = [[NSMutableArray alloc] init];
+  
     NSURL *url = [NSURL URLWithString:FETCH_FRIENDS_URL];
     TWRequest *request = [[TWRequest alloc] initWithURL:url
                                              parameters:nil
@@ -52,7 +44,7 @@
                              error:&jsonError];
             if (jsonResult != nil){
                 [self.friends addObjectsFromArray:[jsonResult objectForKey:@"users"]];
-                dispatch_sync(dispatch_get_main_queue(), ^{
+                dispatch_async(dispatch_get_main_queue(), ^{
                     [self.tableView reloadData];
                 });
             }
@@ -87,10 +79,18 @@
                                  [friend objectForKey:@"screen_name"]];
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",
                                        [friend objectForKey:@"profile_image_url"]]];
-    cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
-    [self.spinner stopAnimating];
+  
+  dispatch_queue_t imageLoader = dispatch_queue_create("imageLoader", NULL);
+  
+  dispatch_async(imageLoader, ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
+      cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
+    });
+  });
+  
+  [self.spinner stopAnimating];
     
-    return cell;
+  return cell;
 }
 
 @end

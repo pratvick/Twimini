@@ -211,19 +211,17 @@
     cell.detailTextLabel.text = tweet.whoWrote.username;
     NSURL *url = [NSURL URLWithString:tweet.imageURL];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
-        __block NSData *imageData;
-        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
-            imageData = [NSData dataWithContentsOfURL:url];
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                cell.imageView.image = [UIImage imageWithData:imageData];
-                [self.tableView setNeedsDisplay];
-            });
-        });
+  dispatch_queue_t imageLoader = dispatch_queue_create("imageLoader", NULL);
+  dispatch_async(imageLoader, ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
+      NSData *imageData = [NSData dataWithContentsOfURL:url];
+      cell.imageView.image = [UIImage imageWithData:imageData];
     });
-    [self.spinner stopAnimating];
+  });
+  
+  [self.spinner stopAnimating];
     
-    return cell;
+  return cell;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scroll {
