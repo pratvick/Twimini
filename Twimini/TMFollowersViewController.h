@@ -2,8 +2,9 @@
 #import <Twitter/Twitter.h>
 #import <Accounts/Accounts.h>
 #import "CoreDataTableViewController.h"
-#include "User+Info.h"
-#include "User.h"
+#import "User+Info.h"
+#import "User.h"
+#import "Constants.h"
 
 @interface TMFollowersViewController : CoreDataTableViewController
 

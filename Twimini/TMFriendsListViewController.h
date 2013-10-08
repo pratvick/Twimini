@@ -1,6 +1,7 @@
 #import <UIKit/UIKit.h>
 #import <Twitter/Twitter.h>
 #import <Accounts/Accounts.h>
+#import "Constants.h"
 
 @interface TMFriendsListViewController : UITableViewController
 

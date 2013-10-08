@@ -1,12 +1,4 @@
 #import "TMProfileViewController.h"
-#import "TMTweetComposeViewController.h"
-#import "TMFriendsListViewController.h"
-#import "TMFollowersViewController.h"
-#import "TMHomeViewController.h"
-#import "Tweet.h"
-#import "User.h"
-#import "Tweet+Data.h"
-#import "User+Info.h"
 
 @interface TMProfileViewController()
 
@@ -26,7 +18,8 @@
     [self presentViewController:tweetComposeViewController animated:YES completion:nil];
 }
 
-- (void)tweetComposeViewController:(TMTweetComposeViewController *)controller didFinishWithResult:(TweetComposeResult)result {
+- (void)tweetComposeViewController:(TMTweetComposeViewController *)controller
+               didFinishWithResult:(TweetComposeResult)result {
     [self dismissViewControllerAnimated:YES completion:nil];
     [self fetchTweetDataIntoDocument:self.tweetDatabase];
 }
@@ -81,7 +74,11 @@
                                                                target:self
                                                                action:@selector(getHome)];
 
-    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:friends, compose, followers, home, nil];
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:friends,
+                                                                        compose,
+                                                                      followers,
+                                                                           home,
+                                                                            nil];
 }
 
 - (void)setupFetchedResultsController {
@@ -91,19 +88,20 @@
                                                                                      ascending:YES
                                                                                       selector:@selector(localizedCaseInsensitiveCompare:)]];
     
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
-                                                                        managedObjectContext:self.tweetDatabase.managedObjectContext
-                                                                          sectionNameKeyPath:nil
-                                                                                   cacheName:nil];
+    self.fetchedResultsController = [[NSFetchedResultsController alloc]
+                                     initWithFetchRequest:request
+                                     managedObjectContext:self.tweetDatabase.managedObjectContext
+                                       sectionNameKeyPath:nil
+                                                cacheName:nil];
 }
 
 - (void)fetchTweetDataIntoDocument:(UIManagedDocument *)document {
     self.tweets = [[NSArray alloc] init];
     NSString *urlString = nil;
     if(self.maxId)
-        urlString = [[NSString alloc] initWithFormat:@"https://api.twitter.com/1.1/statuses/user_timeline.json?max_id=%@", self.maxId];
+        urlString = [[NSString alloc] initWithFormat:@"%@?max_id=%@", FETCH_USER_PROFILE_URL, self.maxId];
     else
-        urlString = [[NSString alloc] initWithFormat:@"https://api.twitter.com/1.1/statuses/user_timeline.json"];
+        urlString = [[NSString alloc] initWithFormat:@"%@", FETCH_USER_PROFILE_URL];
     NSURL *url = [NSURL URLWithString:urlString];
     TWRequest *request = [[TWRequest alloc] initWithURL:url
                                              parameters:nil
@@ -123,7 +121,8 @@
                     for (NSDictionary *tweetInfo in self.tweets) {
                         self.username = [[tweetInfo objectForKey:@"user"] objectForKey:@"screen_name"];
                         self.name = [[tweetInfo objectForKey:@"user"] objectForKey:@"name"];
-                        [Tweet tweetWithInfo:tweetInfo inManagedObjectContext:document.managedObjectContext];
+                        [Tweet tweetWithInfo:tweetInfo
+                      inManagedObjectContext:document.managedObjectContext];
                     }
                     [document saveToURL:document.fileURL
                        forSaveOperation:UIDocumentSaveForOverwriting
@@ -177,7 +176,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.spinner = [[UIActivityIndicatorView alloc]
+                    initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.spinner.center = CGPointMake(160, 240);
     [self.view addSubview:self.spinner];
     [self.spinner startAnimating];
@@ -190,7 +190,8 @@
     }
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"News Feed";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];

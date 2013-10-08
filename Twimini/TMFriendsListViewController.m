@@ -22,7 +22,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     self.title = @"Friends";
-    self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.spinner = [[UIActivityIndicatorView alloc]
+                    initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.spinner.center = CGPointMake(160, 240);
     [self.view addSubview:self.spinner];
     [self.spinner startAnimating];
@@ -35,12 +36,14 @@
 }
 
 - (void)fetchData {
-    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/friends/list.json"];
+    NSURL *url = [NSURL URLWithString:FETCH_FRIENDS_URL];
     TWRequest *request = [[TWRequest alloc] initWithURL:url
                                              parameters:nil
                                           requestMethod:TWRequestMethodGET];
     [request setAccount:self.account];
-    [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
+    [request performRequestWithHandler:^(NSData *responseData,
+                                         NSHTTPURLResponse *urlResponse,
+                                         NSError *error) {
         if ([urlResponse statusCode] == 200) {
             NSError *jsonError = nil;
             id jsonResult = [NSJSONSerialization
@@ -68,7 +71,8 @@
     return [self.friends count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -79,8 +83,10 @@
     
     id friend = [self.friends objectAtIndex:[indexPath row]];
     cell.textLabel.text = [friend objectForKey:@"name"];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"@%@", [friend objectForKey:@"screen_name"]];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@", [friend objectForKey:@"profile_image_url"]]];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"@%@",
+                                 [friend objectForKey:@"screen_name"]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",
+                                       [friend objectForKey:@"profile_image_url"]]];
     cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
     [self.spinner stopAnimating];
     

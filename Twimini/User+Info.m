@@ -2,14 +2,16 @@
 
 @implementation User (Info)
 
-+ (User *)userWithUsername:(NSString *)username name:(NSString *)name
-                inManagedObjectContext:(NSManagedObjectContext *)context
++ (User *)userWithUsername:(NSString *)username
+                      name:(NSString *)name
+    inManagedObjectContext:(NSManagedObjectContext *)context
 {
     User *user = nil;
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
     request.predicate = [NSPredicate predicateWithFormat:@"username = %@", username];
-    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"username" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"username"
+                                                                     ascending:YES];
     request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     
     NSError *error = nil;
@@ -19,7 +21,7 @@
         NSLog(@"Error occurred");
     } else if (![users count]) {
         user = [NSEntityDescription insertNewObjectForEntityForName:@"User"
-                                                     inManagedObjectContext:context];
+                                             inManagedObjectContext:context];
         user.username = username;
         user.name = name;
     } else {
@@ -30,13 +32,17 @@
 }
 
 
-+ (User *)userWithUsername:(NSString *)username name:(NSString *)name followerOf:(User *)user
++ (User *)userWithUsername:(NSString *)username
+                      name:(NSString *)name
+                followerOf:(User *)user
     inManagedObjectContext:(NSManagedObjectContext *)context
 {
     User *person = nil;
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    request.predicate = [NSPredicate predicateWithFormat:@"username = %@ AND followerOf.username = %@", username, user.username];
-    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"username" ascending:YES];
+    request.predicate = [NSPredicate
+                         predicateWithFormat:@"username = %@ AND followerOf.username = %@", username, user.username];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"username"
+                                                                     ascending:YES];
     request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     
     NSError *error = nil;
@@ -46,7 +52,7 @@
         NSLog(@"Error occurred");
     } else if (![persons count]) {
         person = [NSEntityDescription insertNewObjectForEntityForName:@"User"
-                                             inManagedObjectContext:context];
+                                               inManagedObjectContext:context];
         person.username = username;
         person.followerOf = user;
         person.name = name;

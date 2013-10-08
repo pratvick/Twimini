@@ -1,5 +1,4 @@
 #import "TMTweetComposeViewController.h"
-#import <Twitter/Twitter.h>
 
 @implementation TMTweetComposeViewController
 
@@ -31,7 +30,7 @@
 - (IBAction)sendTweet:(id)sender {
     NSString *status = self.textView.text;
     
-    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/statuses/update.json"];
+    NSURL *url = [NSURL URLWithString:POST_TWEET_URL];
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:status, @"status", nil];
     
     TWRequest *sendTweet = [[TWRequest alloc]
@@ -46,7 +45,8 @@
                                            NSError *error) {
         if ([urlResponse statusCode] == 200) {
             dispatch_sync(dispatch_get_main_queue(), ^{
-                [self.tweetComposeDelegate tweetComposeViewController:self didFinishWithResult:TweetComposeResultSent];
+                [self.tweetComposeDelegate tweetComposeViewController:self
+                                                  didFinishWithResult:TweetComposeResultSent];
             });
         }
         else {
@@ -56,7 +56,8 @@
 }
 
 - (IBAction)cancel:(id)sender {
-    [self.tweetComposeDelegate tweetComposeViewController:self didFinishWithResult:TweetComposeResultCancelled];
+    [self.tweetComposeDelegate tweetComposeViewController:self
+                                      didFinishWithResult:TweetComposeResultCancelled];
 }
 
 @end

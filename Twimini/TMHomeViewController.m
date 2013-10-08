@@ -1,9 +1,4 @@
 #import "TMHomeViewController.h"
-#import "TMTweetComposeViewController.h"
-#import "TMFriendsListViewController.h"
-#import "TMFollowersViewController.h"
-#import "NewsFeed.h"
-#import "NewsFeed+Posts.h"
 
 @interface TMHomeViewController ()
 
@@ -15,15 +10,17 @@
 
 - (void)setupFetchedResultsController {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"NewsFeed"];
-    request.predicate = [NSPredicate predicateWithFormat:@"whoseFeed.username = %@", self.account.username];
+    request.predicate = [NSPredicate predicateWithFormat:@"whoseFeed.username = %@",
+                                                                            self.account.username];
     request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"text"
                                                                                      ascending:YES
                                                                                       selector:@selector(localizedCaseInsensitiveCompare:)]];
     
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
-                                                                        managedObjectContext:self.newsFeedDatabase.managedObjectContext
-                                                                          sectionNameKeyPath:nil
-                                                                                   cacheName:nil];
+    self.fetchedResultsController = [[NSFetchedResultsController alloc]
+                                     initWithFetchRequest:request
+                                     managedObjectContext:self.newsFeedDatabase.managedObjectContext
+                                     sectionNameKeyPath:nil
+                                     cacheName:nil];
 }
 
 - (void)fetchTimelineDataIntoDocument:(UIManagedDocument *)document {
@@ -31,9 +28,9 @@
     NSString *urlString = nil;
     
     if(self.maxId)
-        urlString = [[NSString alloc] initWithFormat:@"https://api.twitter.com/1.1/statuses/home_timeline.json?max_id=%@", self.maxId];
+        urlString = [[NSString alloc] initWithFormat:@"%@?max_id=%@", FETCH_HOME_TIMELINE_URL, self.maxId];
     else
-        urlString = [[NSString alloc] initWithFormat:@"https://api.twitter.com/1.1/statuses/home_timeline.json"];
+        urlString = [[NSString alloc] initWithFormat:@"%@", FETCH_HOME_TIMELINE_URL];
     
     NSURL *url = [NSURL URLWithString:urlString];
     TWRequest *request = [[TWRequest alloc] initWithURL:url

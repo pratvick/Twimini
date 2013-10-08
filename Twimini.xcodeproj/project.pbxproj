@@ -36,6 +36,7 @@
 		6E91464D17E1BCDA00F28269 /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E91464C17E1BCDA00F28269 /* CoreDataTableViewController.m */; };
 		6E91464F17E1CD5B00F28269 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E91464E17E1CD5B00F28269 /* home.png */; };
 		6EB54B8A1802DB5C00582652 /* Images-6.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EB54B891802DB5C00582652 /* Images-6.xcassets */; };
+		6EE7F4801803F14800F2570B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7F47F1803F14800F2570B /* Constants.m */; };
 		6EE9F84917DC5D510087E19F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EE9F84817DC5D510087E19F /* UIKit.framework */; };
 		6EE9F84B17DC5D510087E19F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EE9F84A17DC5D510087E19F /* Foundation.framework */; };
 		6EE9F84D17DC5D510087E19F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EE9F84C17DC5D510087E19F /* CoreGraphics.framework */; };
@@ -108,6 +109,8 @@
 		6E91464C17E1BCDA00F28269 /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
 		6E91464E17E1CD5B00F28269 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
 		6EB54B891802DB5C00582652 /* Images-6.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Images-6.xcassets"; sourceTree = "<group>"; };
+		6EE7F47E1803F14800F2570B /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		6EE7F47F1803F14800F2570B /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		6EE9F84517DC5D510087E19F /* Twimini.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twimini.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EE9F84817DC5D510087E19F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6EE9F84A17DC5D510087E19F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -206,6 +209,8 @@
 				6EE9F87017DC64450087E19F /* TMAccountsListViewController.m */,
 				6EE9F87717DC64450087E19F /* TMProfileViewController.h */,
 				6EE9F87817DC64450087E19F /* TMProfileViewController.m */,
+				6EE7F47E1803F14800F2570B /* Constants.h */,
+				6EE7F47F1803F14800F2570B /* Constants.m */,
 				6EE9F88617DC8BE00087E19F /* TMHomeViewController.h */,
 				6EE9F88717DC8BE00087E19F /* TMHomeViewController.m */,
 				6EE9F87117DC64450087E19F /* TMFollowersViewController.h */,
@@ -441,6 +446,7 @@
 				6E22174B17F1794900418131 /* Tweet.m in Sources */,
 				6E22174E17F1794A00418131 /* NewsFeed.m in Sources */,
 				6E22175117F1794A00418131 /* User.m in Sources */,
+				6EE7F4801803F14800F2570B /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

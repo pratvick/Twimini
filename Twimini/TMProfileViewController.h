@@ -3,6 +3,15 @@
 #import <Accounts/Accounts.h>
 #import "TMTweetComposeViewController.h"
 #import "CoreDataTableViewController.h"
+#import "TMTweetComposeViewController.h"
+#import "TMFriendsListViewController.h"
+#import "TMFollowersViewController.h"
+#import "TMHomeViewController.h"
+#import "Tweet.h"
+#import "User.h"
+#import "Tweet+Data.h"
+#import "User+Info.h"
+#import "Constants.h"
 
 @interface TMProfileViewController : CoreDataTableViewController <TMTweetComposeViewControllerDelegate>
 

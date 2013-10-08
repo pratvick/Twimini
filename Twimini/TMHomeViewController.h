@@ -3,6 +3,11 @@
 #import <Accounts/Accounts.h>
 #import "TMTweetComposeViewController.h"
 #import "CoreDataTableViewController.h"
+#import "TMFriendsListViewController.h"
+#import "TMFollowersViewController.h"
+#import "NewsFeed.h"
+#import "NewsFeed+Posts.h"
+#import "Constants.h"
 
 @interface TMHomeViewController : CoreDataTableViewController
 

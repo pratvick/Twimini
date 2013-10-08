@@ -3,6 +3,6 @@
 @interface Tweet (Data)
 
 + (Tweet *)tweetWithInfo:(NSDictionary *)tweetInfo
-        inManagedObjectContext:(NSManagedObjectContext *)context;
+  inManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end

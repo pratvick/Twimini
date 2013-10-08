@@ -1,9 +1,4 @@
 #import "TMAccountsListViewController.h"
-#import "TMProfileViewController.h"
-#import "FHSTwitterEngine.h"
-#import <Twitter/Twitter.h>
-#import <Accounts/Accounts.h>
-#import <Social/Social.h>
 
 @interface TMAccountsListViewController () // <FHSTwitterEngineAccessTokenDelegate>
 
@@ -33,13 +28,15 @@
 
 - (void)fetchData {
     self.accountStore = [[ACAccountStore alloc] init];
-    ACAccountType *accountType = [self.accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+    ACAccountType *accountType = [self.accountStore
+                                  accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     
     [self.accountStore requestAccessToAccountsWithType:accountType
                                                options:nil
                                             completion:^(BOOL granted, NSError *error){
                                                 if (granted) {
-                                                    self.accounts = [self.accountStore accountsWithAccountType:accountType];
+                                                    self.accounts = [self.accountStore
+                                                                     accountsWithAccountType:accountType];
                                                     dispatch_async(dispatch_get_main_queue(), ^{
                                                         [self.tableView reloadData];
                                                     });
@@ -49,7 +46,8 @@
                                                 }
                                             }];
     /*
-    [[FHSTwitterEngine sharedEngine] showOAuthLoginControllerFromViewController:self withCompletion:^(BOOL success) {
+    [[FHSTwitterEngine sharedEngine] showOAuthLoginControllerFromViewController:self 
+                                                                 withCompletion:^(BOOL success) {
         NSLog(success?@"L0L success":@"O noes!!! Loggen faylur!!!");
         [[FHSTwitterEngine sharedEngine] getHomeTimelineWithSuccessBlock:^(BOOL success, id json){
             self.tweets = json;
@@ -65,7 +63,8 @@
     return [self.accounts count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Accounts List";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {

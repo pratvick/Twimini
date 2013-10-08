@@ -1,5 +1,7 @@
 #import <UIKit/UIKit.h>
 #import <Accounts/Accounts.h>
+#import <Twitter/Twitter.h>
+#import "Constants.h"
 
 @class TMTweetComposeViewController;
 
@@ -12,7 +14,8 @@ typedef enum TweetComposeResult TweetComposeResult;
 
 @protocol TMTweetComposeViewControllerDelegate <NSObject>
 
-- (void)tweetComposeViewController:(TMTweetComposeViewController *)controller didFinishWithResult:(TweetComposeResult)result;
+- (void)tweetComposeViewController:(TMTweetComposeViewController *)controller
+               didFinishWithResult:(TweetComposeResult)result;
 
 @end
 

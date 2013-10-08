@@ -1,7 +1,6 @@
 #import "NewsFeed.h"
 #import "User.h"
 
-
 @implementation NewsFeed
 
 @dynamic newsFeeder;

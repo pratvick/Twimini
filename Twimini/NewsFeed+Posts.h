@@ -3,7 +3,9 @@
 
 @interface NewsFeed (Posts)
 
-+ (NewsFeed *)timelineWithInfo:(NSDictionary *)timelineInfo whoseFeedUsername:(NSString *)username whoseFeedName:(NSString *)name
++ (NewsFeed *)timelineWithInfo:(NSDictionary *)timelineInfo
+             whoseFeedUsername:(NSString *)username
+                 whoseFeedName:(NSString *)name
         inManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end

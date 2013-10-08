@@ -13,7 +13,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.title = @"Followers";
-    self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.spinner = [[UIActivityIndicatorView alloc]
+                    initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.spinner.center = CGPointMake(160, 240);
     [self.view addSubview:self.spinner];
     [self.spinner startAnimating];
@@ -24,22 +25,27 @@
 - (void)setupFetchedResultsController {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
     request.predicate = [NSPredicate predicateWithFormat:@"followerOf.username = %@", self.username];
-    request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"username" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+    request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"username"
+                                                                                     ascending:YES
+                                                                                      selector:@selector(localizedCaseInsensitiveCompare:)]];
     
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
-                                                                        managedObjectContext:self.followersDatabase.managedObjectContext
-                                                                          sectionNameKeyPath:nil
-                                                                                   cacheName:nil];
+    self.fetchedResultsController = [[NSFetchedResultsController alloc]
+                                     initWithFetchRequest:request
+                                     managedObjectContext:self.followersDatabase.managedObjectContext
+                                       sectionNameKeyPath:nil
+                                                cacheName:nil];
 }
 
 - (void)fetchFollowersDataIntoDocument:(UIManagedDocument *)document {
     self.followers = [[NSMutableArray alloc] init];
-    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/followers/list.json"];
+    NSURL *url = [NSURL URLWithString:FETCH_FOLLOWERS_URL];
     TWRequest *request = [[TWRequest alloc] initWithURL:url
                                              parameters:nil
                                           requestMethod:TWRequestMethodGET];
     [request setAccount:self.account];
-    [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
+    [request performRequestWithHandler:^(NSData *responseData,
+                                         NSHTTPURLResponse *urlResponse,
+                                         NSError *error) {
         if ([urlResponse statusCode] == 200) {
             NSError *jsonError = nil;
             id jsonResult = [NSJSONSerialization JSONObjectWithData:responseData
@@ -70,7 +76,8 @@
     }];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"Cell";
 
