@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>4A9A58DE-F59D-44E4-A619-DE5AE8DBC7E1</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Twimini</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>133261DA-BF1F-4C88-8B9E-734B3C10C3BC</key>
+		<string>ssh://github.com/pratvick/Twimini.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Twimini.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>133261DA-BF1F-4C88-8B9E-734B3C10C3BC</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/pratvick/Twimini.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>133261DA-BF1F-4C88-8B9E-734B3C10C3BC</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>133261DA-BF1F-4C88-8B9E-734B3C10C3BC</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Twimini</string>
+		</dict>
+	</array>
+</dict>
+</plist>

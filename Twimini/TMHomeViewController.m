@@ -51,10 +51,8 @@
                 [document.managedObjectContext performBlock:^{
                     for (NSDictionary *timelineInfo in self.timeline) {
                         NSString *Id = [timelineInfo objectForKey:@"id"];
-                        NSLog(@"%@", Id);
-                        if(self.maxId < Id){
+                        if(self.maxId < Id)
                             self.maxId = Id;
-                        }
                         [NewsFeed timelineWithInfo:timelineInfo
                                  whoseFeedUsername:self.username
                                      whoseFeedName:self.name
@@ -62,7 +60,7 @@
                     }
                     [document saveToURL:document.fileURL
                        forSaveOperation:UIDocumentSaveForOverwriting
-                      completionHandler:^(BOOL success){
+                      completionHandler:^(BOOL success) {
                         if(success)
                             NSLog(@"Document saved successfully");
                         else

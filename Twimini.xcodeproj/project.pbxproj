@@ -33,6 +33,8 @@
 		6E74FC6517EED94700832BB5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E74FC6317EED90700832BB5 /* SystemConfiguration.framework */; };
 		6E74FC6817EED99B00832BB5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E74FC6617EED97F00832BB5 /* AVFoundation.framework */; };
 		6E74FC6B17EED9E400832BB5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E74FC6917EED9C200832BB5 /* Security.framework */; };
+		6E753C311804395C00351098 /* TweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E753C301804395C00351098 /* TweetCell.m */; };
+		6E753C3318043DEF00351098 /* TweetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E753C3218043DEF00351098 /* TweetCell.xib */; };
 		6E91464D17E1BCDA00F28269 /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E91464C17E1BCDA00F28269 /* CoreDataTableViewController.m */; };
 		6E91464F17E1CD5B00F28269 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E91464E17E1CD5B00F28269 /* home.png */; };
 		6EE7F4801803F14800F2570B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7F47F1803F14800F2570B /* Constants.m */; };
@@ -104,6 +106,9 @@
 		6E74FC6317EED90700832BB5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		6E74FC6617EED97F00832BB5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		6E74FC6917EED9C200832BB5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		6E753C2F1804395C00351098 /* TweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetCell.h; sourceTree = "<group>"; };
+		6E753C301804395C00351098 /* TweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetCell.m; sourceTree = "<group>"; };
+		6E753C3218043DEF00351098 /* TweetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetCell.xib; sourceTree = "<group>"; };
 		6E91464B17E1BCDA00F28269 /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
 		6E91464C17E1BCDA00F28269 /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
 		6E91464E17E1CD5B00F28269 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home.png; path = ../home.png; sourceTree = "<group>"; };
@@ -216,6 +221,9 @@
 			children = (
 				6EE9F87E17DC72E30087E19F /* TMTweetComposeViewController.xib */,
 				6EE9F86017DC5D510087E19F /* MainStoryboard.storyboard */,
+				6E753C3218043DEF00351098 /* TweetCell.xib */,
+				6E753C2F1804395C00351098 /* TweetCell.h */,
+				6E753C301804395C00351098 /* TweetCell.m */,
 				6EE9F86F17DC64450087E19F /* TMAccountsListViewController.h */,
 				6EE9F87017DC64450087E19F /* TMAccountsListViewController.m */,
 				6EE9F87717DC64450087E19F /* TMProfileViewController.h */,
@@ -414,6 +422,7 @@
 				6EE9F88117DC87E40087E19F /* friends.png in Resources */,
 				6EE9F88317DC87EA0087E19F /* friends@2x.png in Resources */,
 				6E91464F17E1CD5B00F28269 /* home.png in Resources */,
+				6E753C3318043DEF00351098 /* TweetCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,6 +460,7 @@
 				6E22174E17F1794A00418131 /* NewsFeed.m in Sources */,
 				6E22175117F1794A00418131 /* User.m in Sources */,
 				6EE7F4801803F14800F2570B /* Constants.m in Sources */,
+				6E753C311804395C00351098 /* TweetCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

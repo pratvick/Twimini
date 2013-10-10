@@ -12,6 +12,8 @@
 #import "Tweet+Data.h"
 #import "User+Info.h"
 #import "Constants.h"
+#import "TweetCell.h"
+#import <UIKit/UIRefreshControl.h>
 
 @interface TMProfileViewController : CoreDataTableViewController <TMTweetComposeViewControllerDelegate>
 
