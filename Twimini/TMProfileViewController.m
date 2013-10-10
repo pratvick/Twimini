@@ -103,6 +103,7 @@
                                      managedObjectContext:self.tweetDatabase.managedObjectContext
                                        sectionNameKeyPath:nil
                                                 cacheName:nil];
+  [self.spinner stopAnimating];
 }
 
 - (void)fetchTweetDataIntoDocument:(UIManagedDocument *)document {
@@ -125,7 +126,7 @@
             NSArray *jsonResult = [NSJSONSerialization JSONObjectWithData:responseData
                                                                   options:0
                                                                     error:&jsonError];
-            if (jsonResult != nil) {
+          if (jsonResult != nil) {
                 self.tweets = jsonResult;
                 [document.managedObjectContext performBlock:^{
                     for (NSDictionary *tweetInfo in self.tweets) {
@@ -189,10 +190,12 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+  
     self.spinner = [[UIActivityIndicatorView alloc]
                     initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.spinner.center = CGPointMake(160, 240);
     [self.view addSubview:self.spinner];
+  
     [self.spinner startAnimating];
     
     if (!self.tweetDatabase) {
@@ -216,13 +219,6 @@
     
     Tweet *tweet = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
-    [[cell textLabel] setNumberOfLines:0];
-    [[cell textLabel] setLineBreakMode:NSLineBreakByWordWrapping];
-    [[cell textLabel] setFont:[UIFont systemFontOfSize: 16.0]];
-    [[cell detailTextLabel] setNumberOfLines:0];
-    [[cell detailTextLabel] setLineBreakMode:NSLineBreakByWordWrapping];
-    [[cell detailTextLabel] setFont:[UIFont systemFontOfSize: 12.0]];
-  
     cell.textLabel.text = tweet.text;
     cell.detailTextLabel.text = tweet.whoWrote.username;
     NSURL *url = [NSURL URLWithString:tweet.imageURL];
@@ -231,83 +227,26 @@
     dispatch_async(imageLoader, ^{
       NSData *imageData = [NSData dataWithContentsOfURL:url];
       dispatch_async(dispatch_get_main_queue(), ^{
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         cell.imageView.image = [UIImage imageWithData:imageData];
       });
     });
   
-    [self.spinner stopAnimating];
-    
     return cell;
-   /*
-  static NSString *CellIdentifier = @"ImageOnRightCell";
-  
-  UILabel *mainLabel, *secondLabel;
-  UIImageView *photo;
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-  if (cell == nil) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    
-    mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 220.0, 15.0)];
-    mainLabel.tag = MAINLABEL_TAG;
-    mainLabel.numberOfLines = 0;
-    mainLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    mainLabel.font = [UIFont systemFontOfSize:14.0];
-    mainLabel.textAlignment = NSTextAlignmentRight;
-    mainLabel.textColor = [UIColor blackColor];
-    mainLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;
-    [cell.contentView addSubview:mainLabel];
-    
-    secondLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 20.0, 220.0, 25.0)];
-    secondLabel.tag = SECONDLABEL_TAG;
-    secondLabel.font = [UIFont systemFontOfSize:12.0];
-    secondLabel.textAlignment = NSTextAlignmentRight;
-    secondLabel.textColor = [UIColor darkGrayColor];
-    secondLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;
-    [cell.contentView addSubview:secondLabel];
-    
-    photo = [[UIImageView alloc] initWithFrame:CGRectMake(225.0, 0.0, 80.0, 45.0)];
-    photo.tag = PHOTO_TAG;
-    photo.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;
-    [cell.contentView addSubview:photo];
-  } else {
-    mainLabel = (UILabel *)[cell.contentView viewWithTag:MAINLABEL_TAG];
-    secondLabel = (UILabel *)[cell.contentView viewWithTag:SECONDLABEL_TAG];
-    photo = (UIImageView *)[cell.contentView viewWithTag:PHOTO_TAG];
-  }
-  Tweet *tweet = [self.fetchedResultsController objectAtIndexPath:indexPath];
-  mainLabel.text = tweet.text;
-  secondLabel.text = tweet.whoWrote.username;
-  NSURL *url = [NSURL URLWithString:tweet.imageURL];
-  
-  dispatch_queue_t imageLoader = dispatch_queue_create("imageLoader", NULL);
-  dispatch_async(imageLoader, ^{
-    dispatch_async(dispatch_get_main_queue(), ^{
-      NSData *imageData = [NSData dataWithContentsOfURL:url];
-      photo.image = [UIImage imageWithData:imageData];
-    });
-  });
-  
-  return cell;
-   */
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Tweet *tweet = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     NSString *title = tweet.text;
-    NSString *subtitle = tweet.whoWrote.name;
-    
-    CGSize cellBounds = CGSizeMake(tableView.bounds.size.width - 120.0, 1000.0);
-    CGSize titleSize = [title sizeWithFont:[UIFont systemFontOfSize: 16.0]
-                         constrainedToSize:cellBounds
+    CGFloat maxWidth = self.tableView.bounds.size.width - 74;
+    CGSize titleSize = [title sizeWithFont:[UIFont systemFontOfSize:16]
+                         constrainedToSize:CGSizeMake(maxWidth, CGFLOAT_MAX)
                              lineBreakMode:NSLineBreakByWordWrapping];
-    CGSize subtitleSize = [subtitle sizeWithFont:[UIFont systemFontOfSize: 12.0]
-                               constrainedToSize:cellBounds
-                                   lineBreakMode:NSLineBreakByWordWrapping];
-    
-    CGFloat height = titleSize.height + subtitleSize.height;
+  
+    CGFloat finalHeight = ceil(titleSize.height + 37.0);
 
-    return height < 44.0 ? 44.0 : height;
+    return finalHeight;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scroll {
