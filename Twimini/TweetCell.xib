@@ -52,12 +52,12 @@
                     <constraint firstItem="rGY-DW-YGR" firstAttribute="top" secondItem="YJW-Do-dP5" secondAttribute="top" constant="10" id="9JY-WH-6ZA"/>
                     <constraint firstAttribute="trailing" secondItem="abn-0S-SBS" secondAttribute="trailing" constant="18" id="Ihu-xq-TnT"/>
                     <constraint firstItem="B93-gD-kEm" firstAttribute="leading" secondItem="abn-0S-SBS" secondAttribute="leading" id="JmP-I2-lZO"/>
-                    <constraint firstItem="B93-gD-kEm" firstAttribute="top" secondItem="abn-0S-SBS" secondAttribute="bottom" id="NHO-eX-xeI"/>
                     <constraint firstItem="abn-0S-SBS" firstAttribute="top" secondItem="YJW-Do-dP5" secondAttribute="top" constant="10" id="VfJ-Wq-biJ"/>
                     <constraint firstAttribute="bottom" secondItem="B93-gD-kEm" secondAttribute="bottom" constant="10" id="lFI-is-aqc"/>
                     <constraint firstItem="abn-0S-SBS" firstAttribute="leading" secondItem="rGY-DW-YGR" secondAttribute="trailing" constant="10" id="px8-B1-AtY"/>
                     <constraint firstItem="rGY-DW-YGR" firstAttribute="leading" secondItem="YJW-Do-dP5" secondAttribute="leading" constant="10" id="rvs-a8-BQs"/>
                     <constraint firstItem="DlT-fy-zXn" firstAttribute="trailing" secondItem="abn-0S-SBS" secondAttribute="trailing" id="uhl-gz-Jlh"/>
+                    <constraint firstItem="B93-gD-kEm" firstAttribute="top" secondItem="abn-0S-SBS" secondAttribute="bottom" id="xYR-XD-MKK"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

@@ -60,6 +60,7 @@
 		6EE9F88117DC87E40087E19F /* friends.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EE9F88017DC87E40087E19F /* friends.png */; };
 		6EE9F88317DC87EA0087E19F /* friends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EE9F88217DC87EA0087E19F /* friends@2x.png */; };
 		6EE9F88817DC8BE00087E19F /* TMHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE9F88717DC8BE00087E19F /* TMHomeViewController.m */; };
+		6EEE81D61807FC1D0086EDB8 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EEE81D51807FC1D0086EDB8 /* Reveal.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -146,6 +147,7 @@
 		6EE9F88217DC87EA0087E19F /* friends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "friends@2x.png"; path = "../friends@2x.png"; sourceTree = "<group>"; };
 		6EE9F88617DC8BE00087E19F /* TMHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMHomeViewController.h; sourceTree = "<group>"; };
 		6EE9F88717DC8BE00087E19F /* TMHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMHomeViewController.m; sourceTree = "<group>"; };
+		6EEE81D51807FC1D0086EDB8 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 				6E74FC6B17EED9E400832BB5 /* Security.framework in Frameworks */,
 				6E74FC6817EED99B00832BB5 /* AVFoundation.framework in Frameworks */,
 				6E74FC6517EED94700832BB5 /* SystemConfiguration.framework in Frameworks */,
+				6EEE81D61807FC1D0086EDB8 /* Reveal.framework in Frameworks */,
 				6E74FC6117EED7A000832BB5 /* QuartzCore.framework in Frameworks */,
 				6E74FC5F17EED79800832BB5 /* CFNetwork.framework in Frameworks */,
 				6E1E766817E8A9830050F25E /* CoreData.framework in Frameworks */,
@@ -305,6 +308,7 @@
 		6EE9F84717DC5D510087E19F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6EEE81D51807FC1D0086EDB8 /* Reveal.framework */,
 				6E74FC6917EED9C200832BB5 /* Security.framework */,
 				6E74FC6617EED97F00832BB5 /* AVFoundation.framework */,
 				6E74FC6317EED90700832BB5 /* SystemConfiguration.framework */,
@@ -515,6 +519,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -539,6 +544,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -549,6 +555,10 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/prateek/Documents/Twimini,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Twimini/Twimini-Prefix.pch";
 				INFOPLIST_FILE = "Twimini/Twimini-Info.plist";
@@ -564,6 +574,10 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/prateek/Documents/Twimini,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Twimini/Twimini-Prefix.pch";
 				INFOPLIST_FILE = "Twimini/Twimini-Info.plist";
