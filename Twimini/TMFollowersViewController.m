@@ -13,18 +13,20 @@
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   self.title = @"Followers";
+  /*
   self.spinner = [[UIActivityIndicatorView alloc]
                   initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
   self.spinner.center = CGPointMake(160, 240);
   [self.view addSubview:self.spinner];
   [self.spinner startAnimating];
+   */
   [self setupFetchedResultsController];
   [self fetchFollowersDataIntoDocument:self.followersDatabase];
 }
 
 - (void)setupFetchedResultsController {
   NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-  request.predicate = [NSPredicate predicateWithFormat:@"followerOf.username = %@", self.username];
+  request.predicate = [NSPredicate predicateWithFormat:@"username != %@", self.username];
   request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"username"
                                                                                    ascending:YES
                                                                                     selector:@selector(localizedCaseInsensitiveCompare:)]];
@@ -51,15 +53,14 @@
       id jsonResult = [NSJSONSerialization JSONObjectWithData:responseData
                                                       options:0
                                                         error:&jsonError];
+      //[self.spinner stopAnimating];
       if (jsonResult != nil) {
         [self.followers addObjectsFromArray:[jsonResult objectForKey:@"users"]];
         [document.managedObjectContext performBlock:^{
-          User *user = [User userWithUsername:self.username name:self.name
-                       inManagedObjectContext:document.managedObjectContext];
           for (NSDictionary *followers in self.followers) {
             [User userWithUsername:[followers objectForKey:@"screen_name"]
                               name:[followers objectForKey:@"name"]
-                        followerOf:user
+                          imageURL:[followers objectForKey:@"profile_image_url"]
             inManagedObjectContext:document.managedObjectContext];
           }
           [document saveToURL:document.fileURL
@@ -78,22 +79,46 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  static NSString *CellIdentifier = @"TweetCell";
   
-  static NSString *CellIdentifier = @"Cell";
+  TweetCell *cell = (TweetCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
   
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
   if (cell == nil) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
-                                  reuseIdentifier:CellIdentifier];
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TweetCell" owner:self options:nil];
+    cell = [nib objectAtIndex:0];
   }
   
   User *user = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  
   cell.textLabel.text = user.name;
   cell.detailTextLabel.text = user.username;
   
-  [self.spinner stopAnimating];
+  NSURL *url = [NSURL URLWithString:user.imageURL];
+  
+  dispatch_queue_t imageLoader = dispatch_queue_create("imageLoader", NULL);
+  dispatch_async(imageLoader, ^{
+    NSData *imageData = [NSData dataWithContentsOfURL:url];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+      cell.imageView.image = [UIImage imageWithData:imageData];
+    });
+  });
   
   return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  User *user = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  
+  NSString *title = user.name;
+  CGFloat maxWidth = self.tableView.bounds.size.width - 74;
+  CGSize titleSize = [title sizeWithFont:[UIFont systemFontOfSize:16]
+                       constrainedToSize:CGSizeMake(maxWidth, CGFLOAT_MAX)
+                           lineBreakMode:NSLineBreakByWordWrapping];
+  
+  CGFloat cellHeight = ceil(titleSize.height + 37.0);
+  
+  return cellHeight;
 }
 
 @end

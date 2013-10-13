@@ -5,15 +5,17 @@
 #import "CoreDataTableViewController.h"
 #import "TMFriendsListViewController.h"
 #import "TMFollowersViewController.h"
-#import "NewsFeed.h"
-#import "NewsFeed+Posts.h"
 #import "Constants.h"
+#import "Tweet+Data.h"
+#import "TweetCell.h"
+#import <UIKit/UIRefreshControl.h>
 
 @interface TMHomeViewController : CoreDataTableViewController
 
 @property (strong, nonatomic) ACAccount *account;
 @property (strong, nonatomic) NSArray *timeline;
 @property (strong, nonatomic) NSString *maxId;
+@property (strong, nonatomic) NSString *previousMaxId;
 @property (strong, nonatomic) UIManagedDocument *newsFeedDatabase;
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSString *name;

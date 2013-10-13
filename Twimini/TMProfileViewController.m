@@ -43,6 +43,7 @@
   followersViewController.account = self.account;
   followersViewController.username = self.username;
   followersViewController.name = self.name;
+  followersViewController.imageURL = self.imageURL;
   followersViewController.followersDatabase = self.tweetDatabase;
   [self.navigationController pushViewController:followersViewController animated:TRUE];
 }
@@ -88,9 +89,9 @@
 - (void)setupFetchedResultsController {
   NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tweet"];
   request.predicate = [NSPredicate predicateWithFormat:@"whoWrote.username = %@", self.account.username];
-  request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"text"
-                                                                                   ascending:YES
-                                                                                    selector:@selector(localizedCaseInsensitiveCompare:)]];
+  request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"timestamp"
+                                                                                   ascending:NO
+                                                                                    selector:nil]];
   
   self.fetchedResultsController = [[NSFetchedResultsController alloc]
                                    initWithFetchRequest:request
@@ -102,8 +103,10 @@
 - (void)fetchTweetDataIntoDocument:(UIManagedDocument *)document {
   self.tweets = [[NSArray alloc] init];
   NSString *urlString = nil;
+  
   urlString = [[NSString alloc] initWithFormat:@"%@", FETCH_USER_PROFILE_URL];
   NSURL *url = [NSURL URLWithString:urlString];
+  
   TWRequest *request = [[TWRequest alloc] initWithURL:url
                                            parameters:nil
                                         requestMethod:TWRequestMethodGET];
@@ -125,6 +128,7 @@
               self.maxId = Id;
             self.username = [[tweetInfo objectForKey:@"user"] objectForKey:@"screen_name"];
             self.name = [[tweetInfo objectForKey:@"user"] objectForKey:@"name"];
+            self.imageURL = [[tweetInfo objectForKey:@"user"] objectForKey:@"profile_image_url"];
             [Tweet tweetWithInfo:tweetInfo
           inManagedObjectContext:document.managedObjectContext];
           }
@@ -138,22 +142,22 @@
             }];
         }];
       }
-      else {
+      else
         NSLog(@"Could not parse your timeline: %@", [jsonError localizedDescription]);
-      }
     }
-    else {
+    else
       NSLog(@"The response received an unexpected status code of %d", urlResponse.statusCode);
-    }
   }];
 }
 
 - (void)fetchPreviousTweetDataIntoDocument:(UIManagedDocument *)document {
   self.tweets = [[NSArray alloc] init];
   NSString *urlString = nil;
+  
   if(self.maxId > self.previousMaxId){
     self.previousMaxId = self.maxId;
     urlString = [[NSString alloc] initWithFormat:@"%@?max_id=%@", FETCH_USER_PROFILE_URL, self.maxId];
+    
     NSURL *url = [NSURL URLWithString:urlString];
     TWRequest *request = [[TWRequest alloc] initWithURL:url
                                              parameters:nil
@@ -176,6 +180,7 @@
                 self.maxId = Id;
               self.username = [[tweetInfo objectForKey:@"user"] objectForKey:@"screen_name"];
               self.name = [[tweetInfo objectForKey:@"user"] objectForKey:@"name"];
+              self.imageURL = [[tweetInfo objectForKey:@"user"] objectForKey:@"profile_image_url"];
               [Tweet tweetWithInfo:tweetInfo
             inManagedObjectContext:document.managedObjectContext];
             }
@@ -189,13 +194,11 @@
               }];
           }];
         }
-        else {
+        else
           NSLog(@"Could not parse your timeline: %@", [jsonError localizedDescription]);
-        }
       }
-      else {
+      else
         NSLog(@"The response received an unexpected status code of %d", urlResponse.statusCode);
-      }
     }];
   }
 }
@@ -236,7 +239,7 @@
   if (!self.tweetDatabase) {
     NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory
                                                          inDomains:NSUserDomainMask]lastObject];
-    url = [url URLByAppendingPathComponent:@"Default Twimini Database"];
+    url = [url URLByAppendingPathComponent:@"Twitter Database"];
     self.tweetDatabase = [[UIManagedDocument alloc] initWithFileURL:url];
   }
 }
@@ -256,8 +259,9 @@
   
   cell.textLabel.text = tweet.text;
   cell.detailTextLabel.text = tweet.whoWrote.username;
+  cell.timeLabel.text = [tweet.timestamp stringValue];
   
-  NSURL *url = [NSURL URLWithString:tweet.imageURL];
+  NSURL *url = [NSURL URLWithString:tweet.whoWrote.imageURL];
   
   dispatch_queue_t imageLoader = dispatch_queue_create("imageLoader", NULL);
   dispatch_async(imageLoader, ^{
@@ -286,10 +290,16 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scroll {
-  NSInteger currentOffset = scroll.contentOffset.y;
-  NSInteger maximumOffset = scroll.contentSize.height - scroll.frame.size.height;
+  CGPoint offset = scroll.contentOffset;
+  CGRect bounds = scroll.bounds;
+  CGSize size = scroll.contentSize;
+  UIEdgeInsets inset = scroll.contentInset;
+  float y = offset.y + bounds.size.height - inset.bottom;
+  float h = size.height;
   
-  if (maximumOffset - currentOffset <= 5.0) {
+  float reload_distance = 10;
+  
+  if(y > h + reload_distance) {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
       [self fetchPreviousTweetDataIntoDocument:self.tweetDatabase];
     });

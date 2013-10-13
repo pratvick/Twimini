@@ -4,11 +4,7 @@
 
 + (User *)userWithUsername:(NSString *)username
                       name:(NSString *)name
-    inManagedObjectContext:(NSManagedObjectContext *)context;
-
-+ (User *)userWithUsername:(NSString *)username
-                      name:(NSString *)name
-                followerOf:(User *)user
+                  imageURL:(NSString *)imageURL
     inManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end

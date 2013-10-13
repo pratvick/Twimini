@@ -24,5 +24,6 @@
 @property (nonatomic, strong) UIManagedDocument *tweetDatabase;
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *imageURL;
 
 @end

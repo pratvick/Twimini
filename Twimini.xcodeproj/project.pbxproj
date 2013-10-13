@@ -22,11 +22,7 @@
 		6E1E766217E8A42E0050F25E /* Tweet+Data.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E1E766117E8A42E0050F25E /* Tweet+Data.m */; };
 		6E1E766517E8A46E0050F25E /* User+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E1E766417E8A46E0050F25E /* User+Info.m */; };
 		6E1E766817E8A9830050F25E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1E766617E8A9660050F25E /* CoreData.framework */; };
-		6E22174B17F1794900418131 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E22174A17F1794900418131 /* Tweet.m */; };
-		6E22174E17F1794A00418131 /* NewsFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E22174D17F1794A00418131 /* NewsFeed.m */; };
-		6E22175117F1794A00418131 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E22175017F1794A00418131 /* User.m */; };
 		6E3653B317FD5A7800FC085B /* Images-5.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E3653B217FD5A7800FC085B /* Images-5.xcassets */; };
-		6E4389C717EF3E9400555D52 /* NewsFeed+Posts.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4389C617EF3E9400555D52 /* NewsFeed+Posts.m */; };
 		6E6795E717E72EB70077D857 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E6795E617E72EB70077D857 /* Social.framework */; };
 		6E74FC5F17EED79800832BB5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E74FC5E17EED79800832BB5 /* CFNetwork.framework */; };
 		6E74FC6117EED7A000832BB5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E74FC6017EED7A000832BB5 /* QuartzCore.framework */; };
@@ -37,6 +33,8 @@
 		6E753C3318043DEF00351098 /* TweetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E753C3218043DEF00351098 /* TweetCell.xib */; };
 		6E91464D17E1BCDA00F28269 /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E91464C17E1BCDA00F28269 /* CoreDataTableViewController.m */; };
 		6E91464F17E1CD5B00F28269 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E91464E17E1CD5B00F28269 /* home.png */; };
+		6E9467521809348C005CB664 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9467511809348C005CB664 /* User.m */; };
+		6E9467551809348C005CB664 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9467541809348C005CB664 /* Tweet.m */; };
 		6EDDC0921806C511001509DF /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EDDC0911806C511001509DF /* icon.png */; };
 		6EE7F4801803F14800F2570B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7F47F1803F14800F2570B /* Constants.m */; };
 		6EE9F84917DC5D510087E19F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EE9F84817DC5D510087E19F /* UIKit.framework */; };
@@ -92,15 +90,7 @@
 		6E1E766317E8A46E0050F25E /* User+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+Info.h"; sourceTree = "<group>"; };
 		6E1E766417E8A46E0050F25E /* User+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+Info.m"; sourceTree = "<group>"; };
 		6E1E766617E8A9660050F25E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		6E22174917F1794900418131 /* Tweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tweet.h; sourceTree = "<group>"; };
-		6E22174A17F1794900418131 /* Tweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tweet.m; sourceTree = "<group>"; };
-		6E22174C17F1794A00418131 /* NewsFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsFeed.h; sourceTree = "<group>"; };
-		6E22174D17F1794A00418131 /* NewsFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsFeed.m; sourceTree = "<group>"; };
-		6E22174F17F1794A00418131 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		6E22175017F1794A00418131 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		6E3653B217FD5A7800FC085B /* Images-5.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Images-5.xcassets"; sourceTree = "<group>"; };
-		6E4389C517EF3E9400555D52 /* NewsFeed+Posts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NewsFeed+Posts.h"; sourceTree = "<group>"; };
-		6E4389C617EF3E9400555D52 /* NewsFeed+Posts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NewsFeed+Posts.m"; sourceTree = "<group>"; };
 		6E6795E617E72EB70077D857 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		6E74FC5E17EED79800832BB5 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		6E74FC6017EED7A000832BB5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -113,6 +103,10 @@
 		6E91464B17E1BCDA00F28269 /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
 		6E91464C17E1BCDA00F28269 /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
 		6E91464E17E1CD5B00F28269 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home.png; path = ../home.png; sourceTree = "<group>"; };
+		6E9467501809348C005CB664 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		6E9467511809348C005CB664 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		6E9467531809348C005CB664 /* Tweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tweet.h; sourceTree = "<group>"; };
+		6E9467541809348C005CB664 /* Tweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tweet.m; sourceTree = "<group>"; };
 		6EDDC0911806C511001509DF /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
 		6EE7F47E1803F14800F2570B /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		6EE7F47F1803F14800F2570B /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
@@ -248,7 +242,6 @@
 				6E91464B17E1BCDA00F28269 /* CoreDataTableViewController.h */,
 				6E91464C17E1BCDA00F28269 /* CoreDataTableViewController.m */,
 				6E1E765717E89D050050F25E /* Twimini.xcdatamodeld */,
-				6EDDE4BF17FC068A00D3A1AA /* NewsFeed */,
 				6EDDE4BE17FC068200D3A1AA /* Tweet */,
 				6EDDE4BD17FC067900D3A1AA /* User */,
 			);
@@ -258,8 +251,8 @@
 		6EDDE4BD17FC067900D3A1AA /* User */ = {
 			isa = PBXGroup;
 			children = (
-				6E22175017F1794A00418131 /* User.m */,
-				6E22174F17F1794A00418131 /* User.h */,
+				6E9467501809348C005CB664 /* User.h */,
+				6E9467511809348C005CB664 /* User.m */,
 				6E1E766317E8A46E0050F25E /* User+Info.h */,
 				6E1E766417E8A46E0050F25E /* User+Info.m */,
 			);
@@ -269,23 +262,12 @@
 		6EDDE4BE17FC068200D3A1AA /* Tweet */ = {
 			isa = PBXGroup;
 			children = (
-				6E22174917F1794900418131 /* Tweet.h */,
-				6E22174A17F1794900418131 /* Tweet.m */,
+				6E9467531809348C005CB664 /* Tweet.h */,
+				6E9467541809348C005CB664 /* Tweet.m */,
 				6E1E766017E8A42E0050F25E /* Tweet+Data.h */,
 				6E1E766117E8A42E0050F25E /* Tweet+Data.m */,
 			);
 			name = Tweet;
-			sourceTree = "<group>";
-		};
-		6EDDE4BF17FC068A00D3A1AA /* NewsFeed */ = {
-			isa = PBXGroup;
-			children = (
-				6E22174D17F1794A00418131 /* NewsFeed.m */,
-				6E22174C17F1794A00418131 /* NewsFeed.h */,
-				6E4389C517EF3E9400555D52 /* NewsFeed+Posts.h */,
-				6E4389C617EF3E9400555D52 /* NewsFeed+Posts.m */,
-			);
-			name = NewsFeed;
 			sourceTree = "<group>";
 		};
 		6EE9F83C17DC5D510087E19F = {
@@ -439,6 +421,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E9467521809348C005CB664 /* User.m in Sources */,
+				6E9467551809348C005CB664 /* Tweet.m in Sources */,
 				6EE9F85517DC5D510087E19F /* main.m in Sources */,
 				6EE9F85917DC5D510087E19F /* AppDelegate.m in Sources */,
 				6EE9F87917DC64450087E19F /* TMAccountsListViewController.m in Sources */,
@@ -461,10 +445,6 @@
 				6E112EA217EC8EB000418B6B /* AFXMLRequestOperation.m in Sources */,
 				6E112EA317EC8EB000418B6B /* UIImageView+AFNetworking.m in Sources */,
 				6E112EA617EC9C9100418B6B /* FHSTwitterEngine.m in Sources */,
-				6E4389C717EF3E9400555D52 /* NewsFeed+Posts.m in Sources */,
-				6E22174B17F1794900418131 /* Tweet.m in Sources */,
-				6E22174E17F1794A00418131 /* NewsFeed.m in Sources */,
-				6E22175117F1794A00418131 /* User.m in Sources */,
 				6EE7F4801803F14800F2570B /* Constants.m in Sources */,
 				6E753C311804395C00351098 /* TweetCell.m in Sources */,
 			);

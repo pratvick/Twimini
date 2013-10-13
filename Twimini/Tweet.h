@@ -1,3 +1,11 @@
+//
+//  Tweet.h
+//  Twimini
+//
+//  Created by Prateek Khandelwal on 10/12/13.
+//  Copyright (c) 2013 Directi. All rights reserved.
+//
+
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
@@ -5,9 +13,9 @@
 
 @interface Tweet : NSManagedObject
 
-@property (nonatomic, retain) NSString * imageURL;
 @property (nonatomic, retain) NSString * text;
-@property (nonatomic, retain) NSString * unique;
+@property (nonatomic, retain) NSString * tweetId;
+@property (nonatomic, retain) NSNumber * timestamp;
 @property (nonatomic, retain) User *whoWrote;
 
 @end
