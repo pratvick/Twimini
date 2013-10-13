@@ -26,6 +26,8 @@
   TMFriendsListViewController *friendsListViewController = [[TMFriendsListViewController alloc]
                                                             init];
   friendsListViewController.account = self.account;
+  friendsListViewController.username = self.username;
+  friendsListViewController.friendsDatabase = self.tweetDatabase;
   [self.navigationController pushViewController:friendsListViewController animated:TRUE];
 }
 
@@ -42,8 +44,6 @@
   TMFollowersViewController *followersViewController = [[TMFollowersViewController alloc] init];
   followersViewController.account = self.account;
   followersViewController.username = self.username;
-  followersViewController.name = self.name;
-  followersViewController.imageURL = self.imageURL;
   followersViewController.followersDatabase = self.tweetDatabase;
   [self.navigationController pushViewController:followersViewController animated:TRUE];
 }

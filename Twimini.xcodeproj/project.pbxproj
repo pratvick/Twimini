@@ -33,8 +33,6 @@
 		6E753C3318043DEF00351098 /* TweetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E753C3218043DEF00351098 /* TweetCell.xib */; };
 		6E91464D17E1BCDA00F28269 /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E91464C17E1BCDA00F28269 /* CoreDataTableViewController.m */; };
 		6E91464F17E1CD5B00F28269 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E91464E17E1CD5B00F28269 /* home.png */; };
-		6E9467521809348C005CB664 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9467511809348C005CB664 /* User.m */; };
-		6E9467551809348C005CB664 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9467541809348C005CB664 /* Tweet.m */; };
 		6EDDC0921806C511001509DF /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EDDC0911806C511001509DF /* icon.png */; };
 		6EE7F4801803F14800F2570B /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7F47F1803F14800F2570B /* Constants.m */; };
 		6EE9F84917DC5D510087E19F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EE9F84817DC5D510087E19F /* UIKit.framework */; };
@@ -59,6 +57,10 @@
 		6EE9F88317DC87EA0087E19F /* friends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EE9F88217DC87EA0087E19F /* friends@2x.png */; };
 		6EE9F88817DC8BE00087E19F /* TMHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE9F88717DC8BE00087E19F /* TMHomeViewController.m */; };
 		6EEE81D61807FC1D0086EDB8 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EEE81D51807FC1D0086EDB8 /* Reveal.framework */; };
+		6EF878A5180AE83F0059DCB9 /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6EF878A4180AE83F0059DCB9 /* UserCell.xib */; };
+		6EF878A8180AEAF50059DCB9 /* UserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EF878A7180AEAF50059DCB9 /* UserCell.m */; };
+		6EF878B1180B04B90059DCB9 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EF878B0180B04B90059DCB9 /* Tweet.m */; };
+		6EF878B4180B04B90059DCB9 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EF878B3180B04B90059DCB9 /* User.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -103,10 +105,6 @@
 		6E91464B17E1BCDA00F28269 /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
 		6E91464C17E1BCDA00F28269 /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
 		6E91464E17E1CD5B00F28269 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home.png; path = ../home.png; sourceTree = "<group>"; };
-		6E9467501809348C005CB664 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		6E9467511809348C005CB664 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
-		6E9467531809348C005CB664 /* Tweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tweet.h; sourceTree = "<group>"; };
-		6E9467541809348C005CB664 /* Tweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tweet.m; sourceTree = "<group>"; };
 		6EDDC0911806C511001509DF /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
 		6EE7F47E1803F14800F2570B /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		6EE7F47F1803F14800F2570B /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
@@ -142,6 +140,13 @@
 		6EE9F88617DC8BE00087E19F /* TMHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMHomeViewController.h; sourceTree = "<group>"; };
 		6EE9F88717DC8BE00087E19F /* TMHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMHomeViewController.m; sourceTree = "<group>"; };
 		6EEE81D51807FC1D0086EDB8 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
+		6EF878A4180AE83F0059DCB9 /* UserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
+		6EF878A6180AEAF50059DCB9 /* UserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCell.h; sourceTree = "<group>"; };
+		6EF878A7180AEAF50059DCB9 /* UserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCell.m; sourceTree = "<group>"; };
+		6EF878AF180B04B90059DCB9 /* Tweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tweet.h; sourceTree = "<group>"; };
+		6EF878B0180B04B90059DCB9 /* Tweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tweet.m; sourceTree = "<group>"; };
+		6EF878B2180B04B90059DCB9 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		6EF878B3180B04B90059DCB9 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,9 +222,10 @@
 		6EDDE4BB17FC05D600D3A1AA /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				6EE9F87E17DC72E30087E19F /* TMTweetComposeViewController.xib */,
 				6EE9F86017DC5D510087E19F /* MainStoryboard.storyboard */,
+				6EE9F87E17DC72E30087E19F /* TMTweetComposeViewController.xib */,
 				6E753C3218043DEF00351098 /* TweetCell.xib */,
+				6EF878A4180AE83F0059DCB9 /* UserCell.xib */,
 				6EE9F86F17DC64450087E19F /* TMAccountsListViewController.h */,
 				6EE9F87017DC64450087E19F /* TMAccountsListViewController.m */,
 				6EE9F87717DC64450087E19F /* TMProfileViewController.h */,
@@ -251,8 +257,8 @@
 		6EDDE4BD17FC067900D3A1AA /* User */ = {
 			isa = PBXGroup;
 			children = (
-				6E9467501809348C005CB664 /* User.h */,
-				6E9467511809348C005CB664 /* User.m */,
+				6EF878B2180B04B90059DCB9 /* User.h */,
+				6EF878B3180B04B90059DCB9 /* User.m */,
 				6E1E766317E8A46E0050F25E /* User+Info.h */,
 				6E1E766417E8A46E0050F25E /* User+Info.m */,
 			);
@@ -262,8 +268,8 @@
 		6EDDE4BE17FC068200D3A1AA /* Tweet */ = {
 			isa = PBXGroup;
 			children = (
-				6E9467531809348C005CB664 /* Tweet.h */,
-				6E9467541809348C005CB664 /* Tweet.m */,
+				6EF878AF180B04B90059DCB9 /* Tweet.h */,
+				6EF878B0180B04B90059DCB9 /* Tweet.m */,
 				6E1E766017E8A42E0050F25E /* Tweet+Data.h */,
 				6E1E766117E8A42E0050F25E /* Tweet+Data.m */,
 			);
@@ -327,6 +333,8 @@
 		6EE9F84F17DC5D510087E19F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6EF878A6180AEAF50059DCB9 /* UserCell.h */,
+				6EF878A7180AEAF50059DCB9 /* UserCell.m */,
 				6E753C301804395C00351098 /* TweetCell.m */,
 				6E753C2F1804395C00351098 /* TweetCell.h */,
 				6EE7F47F1803F14800F2570B /* Constants.m */,
@@ -402,6 +410,7 @@
 				6EE9F85317DC5D510087E19F /* InfoPlist.strings in Resources */,
 				6E13870E17FC0E4C00FEC97A /* Images.xcassets in Resources */,
 				6EE9F85B17DC5D510087E19F /* Default.png in Resources */,
+				6EF878A5180AE83F0059DCB9 /* UserCell.xib in Resources */,
 				6EE9F85D17DC5D510087E19F /* Default@2x.png in Resources */,
 				6EE9F85F17DC5D510087E19F /* Default-568h@2x.png in Resources */,
 				6E3653B317FD5A7800FC085B /* Images-5.xcassets in Resources */,
@@ -421,9 +430,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E9467521809348C005CB664 /* User.m in Sources */,
-				6E9467551809348C005CB664 /* Tweet.m in Sources */,
 				6EE9F85517DC5D510087E19F /* main.m in Sources */,
+				6EF878B1180B04B90059DCB9 /* Tweet.m in Sources */,
+				6EF878B4180B04B90059DCB9 /* User.m in Sources */,
 				6EE9F85917DC5D510087E19F /* AppDelegate.m in Sources */,
 				6EE9F87917DC64450087E19F /* TMAccountsListViewController.m in Sources */,
 				6EE9F87A17DC64450087E19F /* TMFollowersViewController.m in Sources */,
@@ -434,6 +443,7 @@
 				6E91464D17E1BCDA00F28269 /* CoreDataTableViewController.m in Sources */,
 				6E1E765917E89D050050F25E /* Twimini.xcdatamodeld in Sources */,
 				6E1E766217E8A42E0050F25E /* Tweet+Data.m in Sources */,
+				6EF878A8180AEAF50059DCB9 /* UserCell.m in Sources */,
 				6E1E766517E8A46E0050F25E /* User+Info.m in Sources */,
 				6E112E9B17EC8EB000418B6B /* AFHTTPClient.m in Sources */,
 				6E112E9C17EC8EB000418B6B /* AFHTTPRequestOperation.m in Sources */,

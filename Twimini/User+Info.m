@@ -5,6 +5,8 @@
 + (User *)userWithUsername:(NSString *)username
                       name:(NSString *)name
                   imageURL:(NSString *)imageURL
+                followerOf:(User *)followerOfUser
+                  friendOf:(User *)friendOfUser
     inManagedObjectContext:(NSManagedObjectContext *)context
 {
   User *user = nil;
@@ -25,6 +27,8 @@
                                          inManagedObjectContext:context];
     user.name = name;
     user.username = username;
+    user.followerOf = followerOfUser;
+    user.friendOf = friendOfUser;
     user.imageURL = imageURL;
   } else {
     user = [users lastObject];

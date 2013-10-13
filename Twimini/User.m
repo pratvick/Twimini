@@ -2,7 +2,7 @@
 //  User.m
 //  Twimini
 //
-//  Created by Prateek Khandelwal on 10/12/13.
+//  Created by Prateek Khandelwal on 10/13/13.
 //  Copyright (c) 2013 Directi. All rights reserved.
 //
 
@@ -13,16 +13,16 @@
 
 @implementation User
 
-@dynamic name;
-@dynamic username;
 @dynamic imageURL;
+@dynamic name;
 @dynamic noOfFollowers;
-@dynamic noOfTweets;
 @dynamic noOfFriends;
+@dynamic noOfTweets;
+@dynamic username;
 @dynamic followerOf;
 @dynamic followers;
-@dynamic tweets;
 @dynamic friendOf;
 @dynamic friends;
+@dynamic tweets;
 
 @end

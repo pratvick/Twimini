@@ -26,7 +26,7 @@
 
 - (void)setupFetchedResultsController {
   NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-  request.predicate = [NSPredicate predicateWithFormat:@"username != %@", self.username];
+  request.predicate = [NSPredicate predicateWithFormat:@"username != %@ AND followerOf.username = %@", self.username, self.username];
   request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"username"
                                                                                    ascending:YES
                                                                                     selector:@selector(localizedCaseInsensitiveCompare:)]];
@@ -57,10 +57,18 @@
       if (jsonResult != nil) {
         [self.followers addObjectsFromArray:[jsonResult objectForKey:@"users"]];
         [document.managedObjectContext performBlock:^{
+          User *user = [User userWithUsername:self.username
+                                         name:nil
+                                     imageURL:nil
+                                   followerOf:Nil
+                                     friendOf:Nil
+                       inManagedObjectContext:document.managedObjectContext];
           for (NSDictionary *followers in self.followers) {
             [User userWithUsername:[followers objectForKey:@"screen_name"]
                               name:[followers objectForKey:@"name"]
                           imageURL:[followers objectForKey:@"profile_image_url"]
+                        followerOf:user
+                          friendOf:Nil
             inManagedObjectContext:document.managedObjectContext];
           }
           [document saveToURL:document.fileURL
@@ -79,21 +87,21 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  static NSString *CellIdentifier = @"TweetCell";
+  static NSString *CellIdentifier = @"UserCell";
   
-  TweetCell *cell = (TweetCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+  UserCell *cell = (UserCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
   
   if (cell == nil) {
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TweetCell" owner:self options:nil];
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"UserCell" owner:self options:nil];
     cell = [nib objectAtIndex:0];
   }
   
-  User *user = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  User *follower = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
-  cell.textLabel.text = user.name;
-  cell.detailTextLabel.text = user.username;
+  cell.name.text = follower.name;
+  cell.username.text = follower.username;
   
-  NSURL *url = [NSURL URLWithString:user.imageURL];
+  NSURL *url = [NSURL URLWithString:follower.imageURL];
   
   dispatch_queue_t imageLoader = dispatch_queue_create("imageLoader", NULL);
   dispatch_async(imageLoader, ^{

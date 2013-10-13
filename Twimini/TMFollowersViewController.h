@@ -5,7 +5,7 @@
 #import "User+Info.h"
 #import "User.h"
 #import "Constants.h"
-#import "TweetCell.h"
+#import "UserCell.h"
 
 @interface TMFollowersViewController : CoreDataTableViewController
 
@@ -13,7 +13,5 @@
 @property (strong, nonatomic) NSMutableArray *followers;
 @property (strong, nonatomic) UIManagedDocument *followersDatabase;
 @property (strong, nonatomic) NSString *username;
-@property (strong, nonatomic) NSString *name;
-@property (nonatomic, strong) NSString *imageURL;
 
 @end

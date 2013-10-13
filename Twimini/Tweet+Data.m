@@ -47,6 +47,8 @@
                                              objectForKey:@"name"]
                                    imageURL:[[tweetInfo objectForKey:@"user"]
                                              objectForKey:@"profile_image_url"]
+                                 followerOf:Nil
+                                   friendOf:Nil
                      inManagedObjectContext:context];
   } else {
     tweet = [matches lastObject];
