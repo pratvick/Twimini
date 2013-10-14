@@ -24,6 +24,7 @@
 		6E1E766817E8A9830050F25E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1E766617E8A9660050F25E /* CoreData.framework */; };
 		6E3653B317FD5A7800FC085B /* Images-5.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E3653B217FD5A7800FC085B /* Images-5.xcassets */; };
 		6E6795E717E72EB70077D857 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E6795E617E72EB70077D857 /* Social.framework */; };
+		6E732F6F180B2F6F00660746 /* defaultAvatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E732F6E180B2F6F00660746 /* defaultAvatar.png */; };
 		6E74FC5F17EED79800832BB5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E74FC5E17EED79800832BB5 /* CFNetwork.framework */; };
 		6E74FC6117EED7A000832BB5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E74FC6017EED7A000832BB5 /* QuartzCore.framework */; };
 		6E74FC6517EED94700832BB5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E74FC6317EED90700832BB5 /* SystemConfiguration.framework */; };
@@ -94,6 +95,7 @@
 		6E1E766617E8A9660050F25E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		6E3653B217FD5A7800FC085B /* Images-5.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Images-5.xcassets"; sourceTree = "<group>"; };
 		6E6795E617E72EB70077D857 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		6E732F6E180B2F6F00660746 /* defaultAvatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultAvatar.png; sourceTree = "<group>"; };
 		6E74FC5E17EED79800832BB5 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		6E74FC6017EED7A000832BB5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6E74FC6317EED90700832BB5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -211,6 +213,7 @@
 		6E753C2E180422CF00351098 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				6E732F6E180B2F6F00660746 /* defaultAvatar.png */,
 				6EDDC0911806C511001509DF /* icon.png */,
 				6EE9F88017DC87E40087E19F /* friends.png */,
 				6E91464E17E1CD5B00F28269 /* home.png */,
@@ -420,6 +423,7 @@
 				6EE9F88317DC87EA0087E19F /* friends@2x.png in Resources */,
 				6E91464F17E1CD5B00F28269 /* home.png in Resources */,
 				6E753C3318043DEF00351098 /* TweetCell.xib in Resources */,
+				6E732F6F180B2F6F00660746 /* defaultAvatar.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

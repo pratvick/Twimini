@@ -2,6 +2,8 @@
 
 @interface TMProfileViewController()
 
+@property (nonatomic, strong) NSCache *imageCache;
+
 @end
 
 @implementation TMProfileViewController
@@ -28,6 +30,7 @@
   friendsListViewController.account = self.account;
   friendsListViewController.username = self.username;
   friendsListViewController.friendsDatabase = self.tweetDatabase;
+  friendsListViewController.imageCache = self.imageCache;
   [self.navigationController pushViewController:friendsListViewController animated:TRUE];
 }
 
@@ -36,6 +39,7 @@
   homeViewController.account = self.account;
   homeViewController.name = self.name;
   homeViewController.username = self.username;
+  homeViewController.imageCache = self.imageCache;
   homeViewController.newsFeedDatabase = self.tweetDatabase;
   [self.navigationController pushViewController:homeViewController animated:TRUE];
 }
@@ -44,6 +48,7 @@
   TMFollowersViewController *followersViewController = [[TMFollowersViewController alloc] init];
   followersViewController.account = self.account;
   followersViewController.username = self.username;
+  followersViewController.imageCache = self.imageCache;
   followersViewController.followersDatabase = self.tweetDatabase;
   [self.navigationController pushViewController:followersViewController animated:TRUE];
 }
@@ -51,6 +56,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  self.imageCache = [[NSCache alloc] init];
+
   UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
   refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"Pull to Refresh"];
   [refreshControl addTarget:self action:@selector(refresh)
@@ -92,7 +99,7 @@
   request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"timestamp"
                                                                                    ascending:NO
                                                                                     selector:nil]];
-  
+    
   self.fetchedResultsController = [[NSFetchedResultsController alloc]
                                    initWithFetchRequest:request
                                    managedObjectContext:self.tweetDatabase.managedObjectContext
@@ -131,6 +138,7 @@
             self.imageURL = [[tweetInfo objectForKey:@"user"] objectForKey:@"profile_image_url"];
             [Tweet tweetWithInfo:tweetInfo
           inManagedObjectContext:document.managedObjectContext];
+            self.previousRequestDone = @"DONE";
           }
           [document saveToURL:document.fileURL
              forSaveOperation:UIDocumentSaveForOverwriting
@@ -153,9 +161,10 @@
 - (void)fetchPreviousTweetDataIntoDocument:(UIManagedDocument *)document {
   self.tweets = [[NSArray alloc] init];
   NSString *urlString = nil;
-  
-  if(self.maxId > self.previousMaxId){
-    self.previousMaxId = self.maxId;
+  NSString *done = @"DONE";
+  NSLog(@"%@", self.previousRequestDone);
+  if([self.previousRequestDone isEqualToString:done]){
+    self.previousRequestDone = @"NOT DONE";
     urlString = [[NSString alloc] initWithFormat:@"%@?max_id=%@", FETCH_USER_PROFILE_URL, self.maxId];
     
     NSURL *url = [NSURL URLWithString:urlString];
@@ -183,6 +192,7 @@
               self.imageURL = [[tweetInfo objectForKey:@"user"] objectForKey:@"profile_image_url"];
               [Tweet tweetWithInfo:tweetInfo
             inManagedObjectContext:document.managedObjectContext];
+              self.previousRequestDone = @"DONE";
             }
             [document saveToURL:document.fileURL
                forSaveOperation:UIDocumentSaveForOverwriting
@@ -262,15 +272,25 @@
   cell.timeLabel.text = [tweet.timestamp stringValue];
   
   NSURL *url = [NSURL URLWithString:tweet.whoWrote.imageURL];
+  UIImage *image = [self.imageCache objectForKey:url];
   
-  dispatch_queue_t imageLoader = dispatch_queue_create("imageLoader", NULL);
-  dispatch_async(imageLoader, ^{
-    NSData *imageData = [NSData dataWithContentsOfURL:url];
-    dispatch_async(dispatch_get_main_queue(), ^{
-      UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-      cell.imageView.image = [UIImage imageWithData:imageData];
+  if(image) {
+    cell.imageView.image = image;
+  }
+  else {
+    dispatch_queue_t imageLoader = dispatch_queue_create("imageLoader", NULL);
+    dispatch_async(imageLoader, ^{
+      NSData *imageData = [NSData dataWithContentsOfURL:url];
+      if(imageData) {
+        UIImage *image = [UIImage imageWithData:imageData];
+        [self.imageCache setObject:image forKey:url];
+      }
+      dispatch_async(dispatch_get_main_queue(), ^{
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        cell.imageView.image = [UIImage imageWithData:imageData];
+      });
     });
-  });
+  }
   
   return cell;
 }
@@ -297,7 +317,7 @@
   float y = offset.y + bounds.size.height - inset.bottom;
   float h = size.height;
   
-  float reload_distance = 10;
+  float reload_distance = 3.0;
   
   if(y > h + reload_distance) {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{

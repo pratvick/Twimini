@@ -14,7 +14,7 @@
   request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"timestamp"
                                                                                    ascending:NO
                                                                                     selector:nil]];
-  
+
   self.fetchedResultsController = [[NSFetchedResultsController alloc]
                                    initWithFetchRequest:request
                                    managedObjectContext:self.newsFeedDatabase.managedObjectContext
@@ -51,6 +51,7 @@
               self.maxId = Id;
             [Tweet tweetWithInfo:timelineInfo
                 inManagedObjectContext:document.managedObjectContext];
+            self.previousRequestDone = @"DONE";
           }
           [document saveToURL:document.fileURL
              forSaveOperation:UIDocumentSaveForOverwriting
@@ -73,9 +74,10 @@
 - (void)fetchPreviousTimelineDataIntoDocument:(UIManagedDocument *)document {
   self.timeline = [[NSArray alloc] init];
   NSString *urlString = nil;
+  NSString *done = @"DONE";
   
-  if(self.maxId > self.previousMaxId) {
-    self.previousMaxId = self.maxId;
+  if([self.previousRequestDone isEqualToString:done]) {
+    self.previousRequestDone = @"NOT DONE";
     urlString = [[NSString alloc] initWithFormat:@"%@?max_id=%@", FETCH_HOME_TIMELINE_URL, self.maxId];
   
     NSURL *url = [NSURL URLWithString:urlString];
@@ -101,6 +103,7 @@
                 self.maxId = Id;
               [Tweet tweetWithInfo:timelineInfo
             inManagedObjectContext:document.managedObjectContext];
+              self.previousRequestDone = @"DONE";
             }
             [document saveToURL:document.fileURL
                forSaveOperation:UIDocumentSaveForOverwriting
@@ -124,10 +127,12 @@
 -(void)viewDidLoad
 {
   [super viewDidLoad];
+  
   UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
   refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"Pull to Refresh"];
   [refreshControl addTarget:self action:@selector(refresh)
            forControlEvents:UIControlEventValueChanged];
+  
   self.refreshControl = refreshControl;
 }
 
@@ -157,17 +162,29 @@
   cell.textLabel.text = tweet.text;
   cell.detailTextLabel.text = tweet.whoWrote.username;
   cell.timeLabel.text = [tweet.timestamp stringValue];
-  
+
   NSURL *url = [NSURL URLWithString:tweet.whoWrote.imageURL];
+  UIImage *image = [self.imageCache objectForKey:url];
   
-  dispatch_queue_t imageLoader = dispatch_queue_create("imageLoader", NULL);
-  dispatch_async(imageLoader, ^{
-    NSData *imageData = [NSData dataWithContentsOfURL:url];
-    dispatch_async(dispatch_get_main_queue(), ^{
-      UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-      cell.imageView.image = [UIImage imageWithData:imageData];
+  if(image) {
+    cell.imageView.image = image;
+    NSLog(@"image from cache");
+  }
+  else {
+    NSLog(@"image from network");
+    dispatch_queue_t imageLoader = dispatch_queue_create("imageLoader", NULL);
+    dispatch_async(imageLoader, ^{
+      NSData *imageData = [NSData dataWithContentsOfURL:url];
+      if(imageData) {
+        UIImage *image = [UIImage imageWithData:imageData];
+        [self.imageCache setObject:image forKey:url];
+      }
+      dispatch_async(dispatch_get_main_queue(), ^{
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        cell.imageView.image = [UIImage imageWithData:imageData];
+      });
     });
-  });
+  }
   
   return cell;
 }
@@ -194,7 +211,7 @@
   float y = offset.y + bounds.size.height - inset.bottom;
   float h = size.height;
   
-  float reload_distance = 10;
+  float reload_distance = 3.0;
   
   if(y > h + reload_distance) {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{

@@ -12,12 +12,13 @@
 
 @interface TMHomeViewController : CoreDataTableViewController
 
-@property (strong, nonatomic) ACAccount *account;
-@property (strong, nonatomic) NSArray *timeline;
-@property (strong, nonatomic) NSString *maxId;
-@property (strong, nonatomic) NSString *previousMaxId;
-@property (strong, nonatomic) UIManagedDocument *newsFeedDatabase;
-@property (strong, nonatomic) NSString *username;
-@property (strong, nonatomic) NSString *name;
+@property (nonatomic, strong) ACAccount *account;
+@property (nonatomic, strong) NSArray *timeline;
+@property (nonatomic, strong) NSString *maxId;
+@property (nonatomic, strong) UIManagedDocument *newsFeedDatabase;
+@property (nonatomic, strong) NSString *username;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, assign) NSString *previousRequestDone;
+@property (nonatomic, strong) NSCache *imageCache;
 
 @end

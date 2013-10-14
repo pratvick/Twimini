@@ -30,7 +30,7 @@
   request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"username"
                                                                                    ascending:YES
                                                                                     selector:@selector(localizedCaseInsensitiveCompare:)]];
-  
+    
   self.fetchedResultsController = [[NSFetchedResultsController alloc]
                                    initWithFetchRequest:request
                                    managedObjectContext:self.friendsDatabase.managedObjectContext
@@ -100,18 +100,28 @@
   
   cell.name.text = friend.name;
   cell.username.text = friend.username;
-  
+
   NSURL *url = [NSURL URLWithString:friend.imageURL];
+  UIImage *image = [self.imageCache objectForKey:url];
   
-  dispatch_queue_t imageLoader = dispatch_queue_create("imageLoader", NULL);
-  dispatch_async(imageLoader, ^{
-    NSData *imageData = [NSData dataWithContentsOfURL:url];
-    dispatch_async(dispatch_get_main_queue(), ^{
-      UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-      cell.imageView.image = [UIImage imageWithData:imageData];
+  if(image) {
+    cell.imageView.image = image;
+  }
+  else {
+    dispatch_queue_t imageLoader = dispatch_queue_create("imageLoader", NULL);
+    dispatch_async(imageLoader, ^{
+      NSData *imageData = [NSData dataWithContentsOfURL:url];
+      if(imageData) {
+        UIImage *image = [UIImage imageWithData:imageData];
+        [self.imageCache setObject:image forKey:url];
+      }
+      dispatch_async(dispatch_get_main_queue(), ^{
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        cell.imageView.image = [UIImage imageWithData:imageData];
+      });
     });
-  });
-  
+  }
+
   return cell;
 }
 

@@ -13,5 +13,6 @@
 @property (strong, nonatomic) NSMutableArray *friends;
 @property (strong, nonatomic) UIManagedDocument *friendsDatabase;
 @property (strong, nonatomic) NSString *username;
+@property (nonatomic, strong) NSCache *imageCache;
 
 @end
