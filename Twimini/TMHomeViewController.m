@@ -161,8 +161,14 @@
   
   cell.textLabel.text = tweet.text;
   cell.detailTextLabel.text = tweet.whoWrote.username;
-  cell.timeLabel.text = [tweet.timestamp stringValue];
-
+  
+  NSTimeInterval interval = [tweet.timestamp doubleValue];
+  NSDate *date = [NSDate date];
+  date = [NSDate dateWithTimeIntervalSince1970:interval];
+  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+  [dateFormatter setDateFormat:@"dd/MM/yyyy HH:mm"];
+  
+  cell.timeLabel.text = [dateFormatter stringFromDate:date];
   NSURL *url = [NSURL URLWithString:tweet.whoWrote.imageURL];
   UIImage *image = [self.imageCache objectForKey:url];
   
