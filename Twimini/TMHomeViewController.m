@@ -8,6 +8,27 @@
 
 @synthesize newsFeedDatabase = _newsFeedDatabase;
 
+-(void)viewDidLoad {
+  [super viewDidLoad];
+  
+  UINib *tweetNib = [UINib nibWithNibName:@"TweetCell" bundle:nil];
+  [self.tableView registerNib:tweetNib forCellReuseIdentifier:@"TweetCell"];
+  
+  UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+  refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"Pull to Refresh"];
+  [refreshControl addTarget:self action:@selector(refresh)
+           forControlEvents:UIControlEventValueChanged];
+  
+  self.refreshControl = refreshControl;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  
+  [self setupFetchedResultsController];
+  [self fetchTimelineDataIntoDocument:self.newsFeedDatabase];
+}
+
 - (void)setupFetchedResultsController {
   NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tweet"];
   request.predicate = [NSPredicate predicateWithFormat:@"whoWrote.username != %@", self.account.username];
@@ -22,13 +43,28 @@
                                    cacheName:nil];
 }
 
+
 - (void)fetchTimelineDataIntoDocument:(UIManagedDocument *)document {
+  NSString *urlString = [[NSString alloc] initWithFormat:@"%@", FETCH_HOME_TIMELINE_URL];
+  [self fetchTimelineFromURL:urlString withDocument:document];
+}
+
+- (void)fetchPreviousTimelineDataIntoDocument:(UIManagedDocument *)document {
+  NSString *done = @"DONE";
+  
+  NSLog(@"%@  %@", self.previousRequestDone, self.maxId);
+  
+  if([self.previousRequestDone isEqualToString:done]) {
+    self.previousRequestDone = @"NOT DONE";
+    NSString *urlString = [[NSString alloc] initWithFormat:@"%@?max_id=%@&count=%d", FETCH_HOME_TIMELINE_URL, self.maxId, 20];
+    [self fetchTimelineFromURL:urlString withDocument:document];
+  }
+}
+
+- (void)fetchTimelineFromURL:(NSString *)urlString withDocument:(UIManagedDocument *)document {
   self.timeline = [[NSArray alloc] init];
-  NSString *urlString = nil;
-  
-  urlString = [[NSString alloc] initWithFormat:@"%@", FETCH_HOME_TIMELINE_URL];
-  
   NSURL *url = [NSURL URLWithString:urlString];
+  
   TWRequest *request = [[TWRequest alloc] initWithURL:url
                                            parameters:nil
                                         requestMethod:TWRequestMethodGET];
@@ -47,10 +83,11 @@
         [document.managedObjectContext performBlock:^{
           for (NSDictionary *timelineInfo in self.timeline) {
             NSString *Id = [timelineInfo objectForKey:@"id"];
+            NSLog(@"%@", Id);
             if(self.maxId < Id)
               self.maxId = Id;
             [Tweet tweetWithInfo:timelineInfo
-                inManagedObjectContext:document.managedObjectContext];
+          inManagedObjectContext:document.managedObjectContext];
             self.previousRequestDone = @"DONE";
           }
           [document saveToURL:document.fileURL
@@ -71,91 +108,11 @@
   }];
 }
 
-- (void)fetchPreviousTimelineDataIntoDocument:(UIManagedDocument *)document {
-  self.timeline = [[NSArray alloc] init];
-  NSString *urlString = nil;
-  NSString *done = @"DONE";
-  
-  if([self.previousRequestDone isEqualToString:done]) {
-    self.previousRequestDone = @"NOT DONE";
-    urlString = [[NSString alloc] initWithFormat:@"%@?max_id=%@", FETCH_HOME_TIMELINE_URL, self.maxId];
-  
-    NSURL *url = [NSURL URLWithString:urlString];
-    TWRequest *request = [[TWRequest alloc] initWithURL:url
-                                             parameters:nil
-                                          requestMethod:TWRequestMethodGET];
-    [request setAccount:self.account];
-  
-    [request performRequestWithHandler:^(NSData *responseData,
-                                       NSHTTPURLResponse *urlResponse,
-                                       NSError *error) {
-      if ([urlResponse statusCode] == 200) {
-        NSError *jsonError = nil;
-        NSArray *jsonResult = [NSJSONSerialization JSONObjectWithData:responseData
-                                                              options:0
-                                                                error:&jsonError];
-        if (jsonResult != nil) {
-          self.timeline = jsonResult;
-          [document.managedObjectContext performBlock:^{
-            for (NSDictionary *timelineInfo in self.timeline) {
-              NSString *Id = [timelineInfo objectForKey:@"id"];
-              if(self.maxId < Id)
-                self.maxId = Id;
-              [Tweet tweetWithInfo:timelineInfo
-            inManagedObjectContext:document.managedObjectContext];
-              self.previousRequestDone = @"DONE";
-            }
-            [document saveToURL:document.fileURL
-               forSaveOperation:UIDocumentSaveForOverwriting
-              completionHandler:^(BOOL success) {
-                if(success)
-                  NSLog(@"Document saved successfully");
-                else
-                  NSLog(@"Document is not saved");
-              }];
-          }];
-        }
-        else
-          NSLog(@"Could not parse your timeline: %@", [jsonError localizedDescription]);
-      }
-      else
-        NSLog(@"The response received an unexpected status code of %d", urlResponse.statusCode);
-    }];
-  }
-}
-
--(void)viewDidLoad
-{
-  [super viewDidLoad];
-  
-  UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-  refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"Pull to Refresh"];
-  [refreshControl addTarget:self action:@selector(refresh)
-           forControlEvents:UIControlEventValueChanged];
-  
-  self.refreshControl = refreshControl;
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-  [self setupFetchedResultsController];
-  [self fetchTimelineDataIntoDocument:self.newsFeedDatabase];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-  return YES;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   static NSString *CellIdentifier = @"TweetCell";
   
   TweetCell *cell = (TweetCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-  
-  if (cell == nil) {
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TweetCell" owner:self options:nil];
-    cell = [nib objectAtIndex:0];
-  }
   
   Tweet *tweet = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
@@ -163,21 +120,21 @@
   cell.detailTextLabel.text = tweet.whoWrote.username;
   
   NSTimeInterval interval = [tweet.timestamp doubleValue];
-  NSDate *date = [NSDate date];
-  date = [NSDate dateWithTimeIntervalSince1970:interval];
+  NSDate *date = [NSDate dateWithTimeIntervalSince1970:interval];
   NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
   [dateFormatter setDateFormat:@"dd/MM/yyyy HH:mm"];
   
   cell.timeLabel.text = [dateFormatter stringFromDate:date];
+  
   NSURL *url = [NSURL URLWithString:tweet.whoWrote.imageURL];
   UIImage *image = [self.imageCache objectForKey:url];
   
   if(image) {
     cell.imageView.image = image;
-    NSLog(@"image from cache");
+    //NSLog(@"image from cache");
   }
   else {
-    NSLog(@"image from network");
+    //NSLog(@"image from network");
     dispatch_queue_t imageLoader = dispatch_queue_create("imageLoader", NULL);
     dispatch_async(imageLoader, ^{
       NSData *imageData = [NSData dataWithContentsOfURL:url];
@@ -186,7 +143,7 @@
         [self.imageCache setObject:image forKey:url];
       }
       dispatch_async(dispatch_get_main_queue(), ^{
-        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        TweetCell *cell = (TweetCell *)[tableView cellForRowAtIndexPath:indexPath];
         cell.imageView.image = [UIImage imageWithData:imageData];
       });
     });
@@ -243,6 +200,10 @@
       [self.refreshControl endRefreshing];
     });
   });
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+  return YES;
 }
 
 @end

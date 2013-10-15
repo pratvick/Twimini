@@ -2,7 +2,7 @@
 #import <Twitter/Twitter.h>
 #import <Accounts/Accounts.h>
 #import "TMTweetComposeViewController.h"
-#import "CoreDataTableViewController.h"
+#import "TMCoreDataTableViewController.h"
 #import "TMFriendsListViewController.h"
 #import "TMFollowersViewController.h"
 #import "Constants.h"
@@ -10,7 +10,7 @@
 #import "TweetCell.h"
 #import <UIKit/UIRefreshControl.h>
 
-@interface TMHomeViewController : CoreDataTableViewController
+@interface TMHomeViewController : TMCoreDataTableViewController
 
 @property (nonatomic, strong) ACAccount *account;
 @property (nonatomic, strong) NSArray *timeline;

@@ -10,6 +10,101 @@
 
 @synthesize tweetDatabase = _tweetDatabase;
 
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  
+  if (!self.tweetDatabase) {
+    NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory
+                                                         inDomains:NSUserDomainMask]lastObject];
+    url = [url URLByAppendingPathComponent:@"Twitter Database"];
+    self.tweetDatabase = [[UIManagedDocument alloc] initWithFileURL:url];
+  }
+}
+
+- (void)setTweetDatabase:(UIManagedDocument *)tweetDatabase {
+  if (_tweetDatabase != tweetDatabase) {
+    _tweetDatabase = tweetDatabase;
+    [self useDocument];
+  }
+}
+
+- (void)useDocument {
+  if (![[NSFileManager defaultManager] fileExistsAtPath:[self.tweetDatabase.fileURL path]]) {
+    [self.tweetDatabase saveToURL:self.tweetDatabase.fileURL
+                 forSaveOperation:UIDocumentSaveForCreating
+                completionHandler:^(BOOL success) {
+                  if(success){
+                    [self setupFetchedResultsController];
+                    [self fetchTweetDataIntoDocument:self.tweetDatabase];
+                  }
+                }];
+  } else if (self.tweetDatabase.documentState == UIDocumentStateClosed) {
+    [self.tweetDatabase openWithCompletionHandler:^(BOOL success) {
+      if(success){
+        [self setupFetchedResultsController];
+        [self fetchTweetDataIntoDocument:self.tweetDatabase];
+      }
+    }];
+  } else {
+    [self setupFetchedResultsController];
+    [self fetchTweetDataIntoDocument:self.tweetDatabase];
+  }
+}
+
+- (void)setupFetchedResultsController {
+  NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tweet"];
+  request.predicate = [NSPredicate predicateWithFormat:@"whoWrote.username = %@", self.account.username];
+  request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"timestamp"
+                                                                                   ascending:NO
+                                                                                    selector:nil]];
+  
+  self.fetchedResultsController = [[NSFetchedResultsController alloc]
+                                   initWithFetchRequest:request
+                                   managedObjectContext:self.tweetDatabase.managedObjectContext
+                                   sectionNameKeyPath:nil
+                                   cacheName:nil];
+}
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  
+  self.imageCache = [[NSCache alloc] init];
+  
+  UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+  refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"Pull to Refresh"];
+  [refreshControl addTarget:self action:@selector(refresh)
+           forControlEvents:UIControlEventValueChanged];
+  self.refreshControl = refreshControl;
+  
+  UIBarButtonItem *compose = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
+                                                                           target:self
+                                                                           action:@selector(composeTweet)];
+  
+  UIImage *image = [UIImage imageNamed:@"friends.png"];
+  UIBarButtonItem *friends = [[UIBarButtonItem alloc] initWithImage:image
+                                                              style:UIBarButtonItemStylePlain
+                                                             target:self
+                                                             action:@selector(getFriends)];
+  
+  UIImage *followersImage = [UIImage imageNamed:@"friends@2x.png"];
+  UIBarButtonItem *followers = [[UIBarButtonItem alloc] initWithImage:followersImage
+                                                                style:UIBarButtonItemStylePlain
+                                                               target:self
+                                                               action:@selector(getFollowers)];
+  
+  UIImage *homeImage = [UIImage imageNamed:@"home.png"];
+  UIBarButtonItem *home = [[UIBarButtonItem alloc] initWithImage:homeImage
+                                                           style:UIBarButtonItemStylePlain
+                                                          target:self
+                                                          action:@selector(getHome)];
+  
+  self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:friends,
+                                             compose,
+                                             followers,
+                                             home,
+                                             nil];
+}
+
 - (void)composeTweet {
   TMTweetComposeViewController *tweetComposeViewController = [[TMTweetComposeViewController alloc]
                                                               init];
@@ -53,65 +148,26 @@
   [self.navigationController pushViewController:followersViewController animated:TRUE];
 }
 
-- (void)viewDidLoad {
-  [super viewDidLoad];
-  
-  self.imageCache = [[NSCache alloc] init];
-
-  UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-  refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"Pull to Refresh"];
-  [refreshControl addTarget:self action:@selector(refresh)
-           forControlEvents:UIControlEventValueChanged];
-  self.refreshControl = refreshControl;
-  
-  UIBarButtonItem *compose = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose
-                                                                           target:self
-                                                                           action:@selector(composeTweet)];
-  
-  UIImage *image = [UIImage imageNamed:@"friends.png"];
-  UIBarButtonItem *friends = [[UIBarButtonItem alloc] initWithImage:image
-                                                              style:UIBarButtonItemStylePlain
-                                                             target:self
-                                                             action:@selector(getFriends)];
-  
-  UIImage *followersImage = [UIImage imageNamed:@"friends@2x.png"];
-  UIBarButtonItem *followers = [[UIBarButtonItem alloc] initWithImage:followersImage
-                                                                style:UIBarButtonItemStylePlain
-                                                               target:self
-                                                               action:@selector(getFollowers)];
-  
-  UIImage *homeImage = [UIImage imageNamed:@"home.png"];
-  UIBarButtonItem *home = [[UIBarButtonItem alloc] initWithImage:homeImage
-                                                           style:UIBarButtonItemStylePlain
-                                                          target:self
-                                                          action:@selector(getHome)];
-  
-  self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:friends,
-                                             compose,
-                                             followers,
-                                             home,
-                                             nil];
-}
-
-- (void)setupFetchedResultsController {
-  NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tweet"];
-  request.predicate = [NSPredicate predicateWithFormat:@"whoWrote.username = %@", self.account.username];
-  request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"timestamp"
-                                                                                   ascending:NO
-                                                                                    selector:nil]];
-    
-  self.fetchedResultsController = [[NSFetchedResultsController alloc]
-                                   initWithFetchRequest:request
-                                   managedObjectContext:self.tweetDatabase.managedObjectContext
-                                   sectionNameKeyPath:nil
-                                   cacheName:nil];
-}
-
 - (void)fetchTweetDataIntoDocument:(UIManagedDocument *)document {
-  self.tweets = [[NSArray alloc] init];
-  NSString *urlString = nil;
+  NSString *urlString = [[NSString alloc] initWithFormat:@"%@", FETCH_USER_PROFILE_URL];
+  [self fetchTweetsFromURL:urlString
+              withDocument:document];
+}
+
+- (void)fetchPreviousTweetDataIntoDocument:(UIManagedDocument *)document {
+  NSString *done = @"DONE";
   
-  urlString = [[NSString alloc] initWithFormat:@"%@", FETCH_USER_PROFILE_URL];
+  if([self.previousRequestDone isEqualToString:done]){
+    self.previousRequestDone = @"NOT DONE";
+    NSString *urlString = [[NSString alloc] initWithFormat:@"%@?max_id=%@", FETCH_USER_PROFILE_URL, self.maxId];
+    [self fetchTweetsFromURL:urlString
+                withDocument:document];
+  }
+}
+
+- (void)fetchTweetsFromURL:(NSString *)urlString
+              withDocument:(UIManagedDocument *)document {
+  self.tweets = [[NSArray alloc] init];
   NSURL *url = [NSURL URLWithString:urlString];
   
   TWRequest *request = [[TWRequest alloc] initWithURL:url
@@ -158,102 +214,6 @@
   }];
 }
 
-- (void)fetchPreviousTweetDataIntoDocument:(UIManagedDocument *)document {
-  self.tweets = [[NSArray alloc] init];
-  NSString *urlString = nil;
-  NSString *done = @"DONE";
-  NSLog(@"%@", self.previousRequestDone);
-  if([self.previousRequestDone isEqualToString:done]){
-    self.previousRequestDone = @"NOT DONE";
-    urlString = [[NSString alloc] initWithFormat:@"%@?max_id=%@", FETCH_USER_PROFILE_URL, self.maxId];
-    
-    NSURL *url = [NSURL URLWithString:urlString];
-    TWRequest *request = [[TWRequest alloc] initWithURL:url
-                                             parameters:nil
-                                          requestMethod:TWRequestMethodGET];
-    [request setAccount:self.account];
-    [request performRequestWithHandler:^(NSData *responseData,
-                                         NSHTTPURLResponse *urlResponse,
-                                         NSError *error) {
-      if ([urlResponse statusCode] == 200) {
-        NSError *jsonError = nil;
-        NSArray *jsonResult = [NSJSONSerialization JSONObjectWithData:responseData
-                                                              options:0
-                                                                error:&jsonError];
-        if (jsonResult != nil) {
-          self.tweets = jsonResult;
-          [document.managedObjectContext performBlock:^{
-            for (NSDictionary *tweetInfo in self.tweets) {
-              NSString *Id = [tweetInfo objectForKey:@"id"];
-              if(self.maxId < Id)
-                self.maxId = Id;
-              self.username = [[tweetInfo objectForKey:@"user"] objectForKey:@"screen_name"];
-              self.name = [[tweetInfo objectForKey:@"user"] objectForKey:@"name"];
-              self.imageURL = [[tweetInfo objectForKey:@"user"] objectForKey:@"profile_image_url"];
-              [Tweet tweetWithInfo:tweetInfo
-            inManagedObjectContext:document.managedObjectContext];
-              self.previousRequestDone = @"DONE";
-            }
-            [document saveToURL:document.fileURL
-               forSaveOperation:UIDocumentSaveForOverwriting
-              completionHandler:^(BOOL success){
-                if(success)
-                  NSLog(@"Document saved successfully");
-                else
-                  NSLog(@"Document is not saved");
-              }];
-          }];
-        }
-        else
-          NSLog(@"Could not parse your timeline: %@", [jsonError localizedDescription]);
-      }
-      else
-        NSLog(@"The response received an unexpected status code of %d", urlResponse.statusCode);
-    }];
-  }
-}
-
-- (void)useDocument {
-  if (![[NSFileManager defaultManager] fileExistsAtPath:[self.tweetDatabase.fileURL path]]) {
-    [self.tweetDatabase saveToURL:self.tweetDatabase.fileURL
-                 forSaveOperation:UIDocumentSaveForCreating
-                completionHandler:^(BOOL success) {
-                  if(success){
-                    [self setupFetchedResultsController];
-                    [self fetchTweetDataIntoDocument:self.tweetDatabase];
-                  }
-                }];
-  } else if (self.tweetDatabase.documentState == UIDocumentStateClosed) {
-    [self.tweetDatabase openWithCompletionHandler:^(BOOL success) {
-      if(success){
-        [self setupFetchedResultsController];
-        [self fetchTweetDataIntoDocument:self.tweetDatabase];
-      }
-    }];
-  } else {
-    [self setupFetchedResultsController];
-    [self fetchTweetDataIntoDocument:self.tweetDatabase];
-  }
-}
-
-- (void)setTweetDatabase:(UIManagedDocument *)tweetDatabase {
-  if (_tweetDatabase != tweetDatabase) {
-    _tweetDatabase = tweetDatabase;
-    [self useDocument];
-  }
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-  
-  if (!self.tweetDatabase) {
-    NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory
-                                                         inDomains:NSUserDomainMask]lastObject];
-    url = [url URLByAppendingPathComponent:@"Twitter Database"];
-    self.tweetDatabase = [[UIManagedDocument alloc] initWithFileURL:url];
-  }
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   static NSString *CellIdentifier = @"TweetCell";
@@ -271,8 +231,7 @@
   cell.detailTextLabel.text = tweet.whoWrote.username;
   
   NSTimeInterval interval = [tweet.timestamp doubleValue];
-  NSDate *date = [NSDate date];
-  date = [NSDate dateWithTimeIntervalSince1970:interval];
+  NSDate *date = [NSDate dateWithTimeIntervalSince1970:interval];
   NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
   [dateFormatter setDateFormat:@"dd/MM/yyyy HH:mm"];
   

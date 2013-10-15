@@ -37,14 +37,13 @@
                           initWithURL:url
                           parameters:params
                           requestMethod:TWRequestMethodPOST];
-  
   sendTweet.account = self.account;
   
   [sendTweet performRequestWithHandler:^(NSData *responseData,
                                          NSHTTPURLResponse *urlResponse,
                                          NSError *error) {
     if ([urlResponse statusCode] == 200) {
-      dispatch_sync(dispatch_get_main_queue(), ^{
+      dispatch_async(dispatch_get_main_queue(), ^{
         [self.tweetComposeDelegate tweetComposeViewController:self
                                           didFinishWithResult:TweetComposeResultSent];
       });

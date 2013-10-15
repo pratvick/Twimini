@@ -1,10 +1,10 @@
-#import "CoreDataTableViewController.h"
+#import "TMCoreDataTableViewController.h"
 
-@interface CoreDataTableViewController()
+@interface TMCoreDataTableViewController()
 @property (nonatomic) BOOL beganUpdates;
 @end
 
-@implementation CoreDataTableViewController
+@implementation TMCoreDataTableViewController
 
 #pragma mark - Properties
 

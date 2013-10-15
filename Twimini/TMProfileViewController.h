@@ -3,7 +3,7 @@
 #import <Twitter/Twitter.h>
 #import <Accounts/Accounts.h>
 #import "TMTweetComposeViewController.h"
-#import "CoreDataTableViewController.h"
+#import "TMCoreDataTableViewController.h"
 #import "TMTweetComposeViewController.h"
 #import "TMFriendsListViewController.h"
 #import "TMFollowersViewController.h"
@@ -13,7 +13,7 @@
 #import "Constants.h"
 #import "TweetCell.h"
 
-@interface TMProfileViewController : CoreDataTableViewController <TMTweetComposeViewControllerDelegate>
+@interface TMProfileViewController : TMCoreDataTableViewController <TMTweetComposeViewControllerDelegate>
 
 @property (nonatomic, strong) ACAccount *account;
 @property (nonatomic, strong) NSArray *tweets;
