@@ -16,12 +16,8 @@
 @interface TMProfileViewController : TMCoreDataTableViewController <TMTweetComposeViewControllerDelegate>
 
 @property (nonatomic, strong) ACAccount *account;
-@property (nonatomic, strong) NSArray *tweets;
-@property (nonatomic, strong) NSString *maxId;
 @property (nonatomic, strong) UIManagedDocument *tweetDatabase;
-@property (nonatomic, strong) NSString *username;
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *imageURL;
-@property (nonatomic, strong) NSString *previousRequestDone;
+@property (nonatomic, strong) User *user;
+@property (nonatomic, strong) NSCache *imageCache;
 
 @end

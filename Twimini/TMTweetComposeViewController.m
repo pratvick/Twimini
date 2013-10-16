@@ -15,28 +15,15 @@
   [textView becomeFirstResponder];
 }
 
-- (void)viewDidUnload {
-  [self setCloseButton:nil];
-  [self setSendButton:nil];
-  [self setTextView:nil];
-  [self setTitleView:nil];
-  [super viewDidUnload];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-  return YES;
-}
-
 - (IBAction)sendTweet:(id)sender {
   NSString *status = self.textView.text;
   
   NSURL *url = [NSURL URLWithString:POST_TWEET_URL];
   NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:status, @"status", nil];
   
-  TWRequest *sendTweet = [[TWRequest alloc]
-                          initWithURL:url
-                          parameters:params
-                          requestMethod:TWRequestMethodPOST];
+  TWRequest *sendTweet = [[TWRequest alloc] initWithURL:url
+                                             parameters:params
+                                          requestMethod:TWRequestMethodPOST];
   sendTweet.account = self.account;
   
   [sendTweet performRequestWithHandler:^(NSData *responseData,
@@ -49,14 +36,28 @@
       });
     }
     else {
+      [self.tweetComposeDelegate tweetComposeViewController:self
+                                        didFinishWithResult:TweetComposeResultFailed];
       NSLog(@"Problem sending tweet: %@", error);
     }
   }];
+  
+  [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)cancel:(id)sender {
   [self.tweetComposeDelegate tweetComposeViewController:self
                                     didFinishWithResult:TweetComposeResultCancelled];
+
+  [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)viewDidUnload {
+  [self setCloseButton:nil];
+  [self setSendButton:nil];
+  [self setTextView:nil];
+  [self setTitleView:nil];
+  [super viewDidUnload];
 }
 
 @end

@@ -2,6 +2,10 @@
 
 @interface TMHomeViewController ()
 
+@property (nonatomic, strong) NSArray *timeline;
+@property (nonatomic, strong) NSString *maxId;
+@property (nonatomic, assign) NSString *previousRequestDone;
+
 @end
 
 @implementation TMHomeViewController
@@ -15,7 +19,7 @@
   [self.tableView registerNib:tweetNib forCellReuseIdentifier:@"TweetCell"];
   
   UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-  refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"Pull to Refresh"];
+  refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"Pull down to refresh"];
   [refreshControl addTarget:self action:@selector(refresh)
            forControlEvents:UIControlEventValueChanged];
   
@@ -35,7 +39,8 @@
   request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"timestamp"
                                                                                    ascending:NO
                                                                                     selector:nil]];
-
+  [request setFetchLimit:20];
+  
   self.fetchedResultsController = [[NSFetchedResultsController alloc]
                                    initWithFetchRequest:request
                                    managedObjectContext:self.newsFeedDatabase.managedObjectContext
@@ -50,13 +55,12 @@
 }
 
 - (void)fetchPreviousTimelineDataIntoDocument:(UIManagedDocument *)document {
-  NSString *done = @"DONE";
-  
-  NSLog(@"%@  %@", self.previousRequestDone, self.maxId);
-  
+  static NSString *done = @"DONE";
+
   if([self.previousRequestDone isEqualToString:done]) {
     self.previousRequestDone = @"NOT DONE";
-    NSString *urlString = [[NSString alloc] initWithFormat:@"%@?max_id=%@&count=%d", FETCH_HOME_TIMELINE_URL, self.maxId, 20];
+    NSString *urlString = [[NSString alloc] initWithFormat:@"%@?max_id=%@&count=%d",
+                                                          FETCH_HOME_TIMELINE_URL, self.maxId, 20];
     [self fetchTimelineFromURL:urlString withDocument:document];
   }
 }
@@ -83,7 +87,6 @@
         [document.managedObjectContext performBlock:^{
           for (NSDictionary *timelineInfo in self.timeline) {
             NSString *Id = [timelineInfo objectForKey:@"id"];
-            NSLog(@"%@", Id);
             if(self.maxId < Id)
               self.maxId = Id;
             [Tweet tweetWithInfo:timelineInfo
@@ -129,12 +132,9 @@
   NSURL *url = [NSURL URLWithString:tweet.whoWrote.imageURL];
   UIImage *image = [self.imageCache objectForKey:url];
   
-  if(image) {
+  if(image)
     cell.imageView.image = image;
-    //NSLog(@"image from cache");
-  }
   else {
-    //NSLog(@"image from network");
     dispatch_queue_t imageLoader = dispatch_queue_create("imageLoader", NULL);
     dispatch_async(imageLoader, ^{
       NSData *imageData = [NSData dataWithContentsOfURL:url];
@@ -200,10 +200,6 @@
       [self.refreshControl endRefreshing];
     });
   });
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-  return YES;
 }
 
 @end

@@ -2,7 +2,7 @@
 
 @interface TMFriendsListViewController ()
 
-@property (strong, nonatomic) UIActivityIndicatorView *spinner;
+@property (strong, nonatomic) NSMutableArray *friends;
 
 @end
 
@@ -12,21 +12,23 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  
   self.title = @"Friends";
-  /*
-   self.spinner = [[UIActivityIndicatorView alloc]
-   initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-   self.spinner.center = CGPointMake(160, 240);
-   [self.view addSubview:self.spinner];
-   [self.spinner startAnimating];
-   */
+
   [self setupFetchedResultsController];
   [self fetchFriendsDataIntoDocument:self.friendsDatabase];
 }
 
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  
+  UINib *tweetNib = [UINib nibWithNibName:@"UserCell" bundle:nil];
+  [self.tableView registerNib:tweetNib forCellReuseIdentifier:@"UserCell"];
+}
+
 - (void)setupFetchedResultsController {
   NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-  request.predicate = [NSPredicate predicateWithFormat:@"username != %@ AND friendOf.username = %@", self.username, self.username];
+  request.predicate = [NSPredicate predicateWithFormat:@"username != %@ AND friendOf.username = %@", self.user.username, self.user.username];
   request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"username"
                                                                                    ascending:YES
                                                                                     selector:@selector(localizedCaseInsensitiveCompare:)]];
@@ -53,13 +55,12 @@
       id jsonResult = [NSJSONSerialization JSONObjectWithData:responseData
                                                       options:0
                                                         error:&jsonError];
-      //[self.spinner stopAnimating];
       if (jsonResult != nil) {
         [self.friends addObjectsFromArray:[jsonResult objectForKey:@"users"]];
         [document.managedObjectContext performBlock:^{
-          User *user = [User userWithUsername:self.username
-                                         name:nil
-                                     imageURL:nil
+          User *user = [User userWithUsername:self.user.username
+                                         name:self.user.name
+                                     imageURL:self.user.imageURL
                                    followerOf:Nil
                                      friendOf:Nil
                        inManagedObjectContext:document.managedObjectContext];
@@ -91,11 +92,6 @@
   
   UserCell *cell = (UserCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
   
-  if (cell == nil) {
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"UserCell" owner:self options:nil];
-    cell = [nib objectAtIndex:0];
-  }
-  
   User *friend = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   cell.name.text = friend.name;
@@ -116,7 +112,7 @@
         [self.imageCache setObject:image forKey:url];
       }
       dispatch_async(dispatch_get_main_queue(), ^{
-        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        UserCell *cell = (UserCell *)[tableView cellForRowAtIndexPath:indexPath];
         cell.imageView.image = [UIImage imageWithData:imageData];
       });
     });

@@ -10,9 +10,8 @@
 @interface TMFriendsListViewController : TMCoreDataTableViewController
 
 @property (strong, nonatomic) ACAccount *account;
-@property (strong, nonatomic) NSMutableArray *friends;
 @property (strong, nonatomic) UIManagedDocument *friendsDatabase;
-@property (strong, nonatomic) NSString *username;
+@property (strong, nonatomic) User *user;
 @property (nonatomic, strong) NSCache *imageCache;
 
 @end

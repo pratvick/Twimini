@@ -10,9 +10,8 @@
 @interface TMFollowersViewController : TMCoreDataTableViewController
 
 @property (strong, nonatomic) ACAccount *account;
-@property (strong, nonatomic) NSMutableArray *followers;
 @property (strong, nonatomic) UIManagedDocument *followersDatabase;
-@property (strong, nonatomic) NSString *username;
+@property (strong, nonatomic) User *user;
 @property (nonatomic, strong) NSCache *imageCache;
 
 @end

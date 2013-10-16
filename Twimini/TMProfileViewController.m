@@ -2,7 +2,9 @@
 
 @interface TMProfileViewController()
 
-@property (nonatomic, strong) NSCache *imageCache;
+@property (nonatomic, strong) NSArray *tweets;
+@property (nonatomic, strong) NSString *maxId;
+@property (nonatomic, strong) NSString *previousRequestDone;
 
 @end
 
@@ -57,7 +59,8 @@
   request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"timestamp"
                                                                                    ascending:NO
                                                                                     selector:nil]];
-  
+  [request setFetchLimit:20];
+
   self.fetchedResultsController = [[NSFetchedResultsController alloc]
                                    initWithFetchRequest:request
                                    managedObjectContext:self.tweetDatabase.managedObjectContext
@@ -70,8 +73,11 @@
   
   self.imageCache = [[NSCache alloc] init];
   
+  UINib *tweetNib = [UINib nibWithNibName:@"TweetCell" bundle:nil];
+  [self.tableView registerNib:tweetNib forCellReuseIdentifier:@"TweetCell"];
+  
   UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-  refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"Pull to Refresh"];
+  refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"Pull down to refresh"];
   [refreshControl addTarget:self action:@selector(refresh)
            forControlEvents:UIControlEventValueChanged];
   self.refreshControl = refreshControl;
@@ -80,8 +86,8 @@
                                                                            target:self
                                                                            action:@selector(composeTweet)];
   
-  UIImage *image = [UIImage imageNamed:@"friends.png"];
-  UIBarButtonItem *friends = [[UIBarButtonItem alloc] initWithImage:image
+  UIImage *friendsImage = [UIImage imageNamed:@"friends.png"];
+  UIBarButtonItem *friends = [[UIBarButtonItem alloc] initWithImage:friendsImage
                                                               style:UIBarButtonItemStylePlain
                                                              target:self
                                                              action:@selector(getFriends)];
@@ -115,7 +121,19 @@
 
 - (void)tweetComposeViewController:(TMTweetComposeViewController *)controller
                didFinishWithResult:(TweetComposeResult)result {
-  [self dismissViewControllerAnimated:YES completion:nil];
+  if(result == TweetComposeResultFailed) {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
+      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failed"
+                                                      message:@"Error in posting your tweet"
+                                                     delegate:self
+                                            cancelButtonTitle:@"Delete"
+                                            otherButtonTitles:@"Cancel", nil];
+      dispatch_async(dispatch_get_main_queue(), ^{
+        [alert show];
+      });
+    });
+  }
+  
   [self fetchTweetDataIntoDocument:self.tweetDatabase];
 }
 
@@ -123,7 +141,7 @@
   TMFriendsListViewController *friendsListViewController = [[TMFriendsListViewController alloc]
                                                             init];
   friendsListViewController.account = self.account;
-  friendsListViewController.username = self.username;
+  friendsListViewController.user = self.user;
   friendsListViewController.friendsDatabase = self.tweetDatabase;
   friendsListViewController.imageCache = self.imageCache;
   [self.navigationController pushViewController:friendsListViewController animated:TRUE];
@@ -132,8 +150,7 @@
 - (void)getHome {
   TMHomeViewController *homeViewController = [[TMHomeViewController alloc] init];
   homeViewController.account = self.account;
-  homeViewController.name = self.name;
-  homeViewController.username = self.username;
+  homeViewController.user = self.user;
   homeViewController.imageCache = self.imageCache;
   homeViewController.newsFeedDatabase = self.tweetDatabase;
   [self.navigationController pushViewController:homeViewController animated:TRUE];
@@ -142,7 +159,7 @@
 -(void)getFollowers {
   TMFollowersViewController *followersViewController = [[TMFollowersViewController alloc] init];
   followersViewController.account = self.account;
-  followersViewController.username = self.username;
+  followersViewController.user = self.user;
   followersViewController.imageCache = self.imageCache;
   followersViewController.followersDatabase = self.tweetDatabase;
   [self.navigationController pushViewController:followersViewController animated:TRUE];
@@ -155,7 +172,7 @@
 }
 
 - (void)fetchPreviousTweetDataIntoDocument:(UIManagedDocument *)document {
-  NSString *done = @"DONE";
+  static NSString *done = @"DONE";
   
   if([self.previousRequestDone isEqualToString:done]){
     self.previousRequestDone = @"NOT DONE";
@@ -189,9 +206,14 @@
             NSString *Id = [tweetInfo objectForKey:@"id"];
             if(self.maxId < Id)
               self.maxId = Id;
-            self.username = [[tweetInfo objectForKey:@"user"] objectForKey:@"screen_name"];
-            self.name = [[tweetInfo objectForKey:@"user"] objectForKey:@"name"];
-            self.imageURL = [[tweetInfo objectForKey:@"user"] objectForKey:@"profile_image_url"];
+            
+            self.user = [User userWithUsername:[[tweetInfo objectForKey:@"user"] objectForKey:@"screen_name"]
+                                          name:[[tweetInfo objectForKey:@"user"] objectForKey:@"name"]
+                                      imageURL:[[tweetInfo objectForKey:@"user"] objectForKey:@"profile_image_url"]
+                                    followerOf:Nil
+                                      friendOf:Nil
+                        inManagedObjectContext:document.managedObjectContext];
+            
             [Tweet tweetWithInfo:tweetInfo
           inManagedObjectContext:document.managedObjectContext];
             self.previousRequestDone = @"DONE";
@@ -220,11 +242,6 @@
   
   TweetCell *cell = (TweetCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
   
-  if (cell == nil) {
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TweetCell" owner:self options:nil];
-    cell = [nib objectAtIndex:0];
-  }
-  
   Tweet *tweet = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   cell.textLabel.text = tweet.text;
@@ -252,7 +269,7 @@
         [self.imageCache setObject:image forKey:url];
       }
       dispatch_async(dispatch_get_main_queue(), ^{
-        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        TweetCell *cell = (TweetCell *)[tableView cellForRowAtIndexPath:indexPath];
         cell.imageView.image = [UIImage imageWithData:imageData];
       });
     });
