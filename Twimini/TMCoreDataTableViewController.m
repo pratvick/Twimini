@@ -9,7 +9,8 @@
 #pragma mark - Properties
 
 @synthesize fetchedResultsController = _fetchedResultsController;
-@synthesize suspendAutomaticTrackingOfChangesInManagedObjectContext = _suspendAutomaticTrackingOfChangesInManagedObjectContext;
+@synthesize suspendAutomaticTrackingOfChangesInManagedObjectContext =
+                                            _suspendAutomaticTrackingOfChangesInManagedObjectContext;
 @synthesize debug = _debug;
 @synthesize beganUpdates = _beganUpdates;
 
@@ -43,14 +44,16 @@
   if (newfrc != oldfrc) {
     _fetchedResultsController = newfrc;
     newfrc.delegate = self;
-    if ((!self.title || [self.title isEqualToString:oldfrc.fetchRequest.entity.name]) && (!self.navigationController || !self.navigationItem.title)) {
-      //self.title = newfrc.fetchRequest.entity.name;
+    if ((!self.title || [self.title isEqualToString:oldfrc.fetchRequest.entity.name])
+        && (!self.navigationController || !self.navigationItem.title)) {
     }
     if (newfrc) {
-      if (self.debug) NSLog(@"[%@ %@] %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), oldfrc ? @"updated" : @"set");
+      if (self.debug) NSLog(@"[%@ %@] %@", NSStringFromClass([self class]),
+                                          NSStringFromSelector(_cmd), oldfrc ? @"updated" : @"set");
       [self performFetch];
     } else {
-      if (self.debug) NSLog(@"[%@ %@] reset to nil", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+      if (self.debug) NSLog(@"[%@ %@] reset to nil",
+                                        NSStringFromClass([self class]), NSStringFromSelector(_cmd));
       [self.tableView reloadData];
     }
   }
@@ -103,11 +106,13 @@
     switch(type)
     {
       case NSFetchedResultsChangeInsert:
-        [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+                      withRowAnimation:UITableViewRowAnimationFade];
         break;
         
       case NSFetchedResultsChangeDelete:
-        [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+                      withRowAnimation:UITableViewRowAnimationFade];
         break;
     }
   }
@@ -125,20 +130,25 @@
     switch(type)
     {
       case NSFetchedResultsChangeInsert:
-        [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                              withRowAnimation:UITableViewRowAnimationFade];
         break;
         
       case NSFetchedResultsChangeDelete:
-        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                              withRowAnimation:UITableViewRowAnimationFade];
         break;
         
       case NSFetchedResultsChangeUpdate:
-        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                              withRowAnimation:UITableViewRowAnimationFade];
         break;
         
       case NSFetchedResultsChangeMove:
-        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                              withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                              withRowAnimation:UITableViewRowAnimationFade];
         break;
     }
   }
@@ -159,7 +169,9 @@
   if (suspend) {
     _suspendAutomaticTrackingOfChangesInManagedObjectContext = YES;
   } else {
-    [self performSelector:@selector(endSuspensionOfUpdatesDueToContextChanges) withObject:0 afterDelay:0];
+    [self performSelector:@selector(endSuspensionOfUpdatesDueToContextChanges)
+               withObject:0
+               afterDelay:0];
   }
 }
 

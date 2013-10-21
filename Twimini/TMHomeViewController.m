@@ -39,8 +39,6 @@
   request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"timestamp"
                                                                                    ascending:NO
                                                                                     selector:nil]];
-  [request setFetchLimit:20];
-  
   self.fetchedResultsController = [[NSFetchedResultsController alloc]
                                    initWithFetchRequest:request
                                    managedObjectContext:self.newsFeedDatabase.managedObjectContext
@@ -60,15 +58,17 @@
   if([self.previousRequestDone isEqualToString:done]) {
     self.previousRequestDone = @"NOT DONE";
     NSString *urlString = [[NSString alloc] initWithFormat:@"%@?max_id=%@&count=%d",
-                                                          FETCH_HOME_TIMELINE_URL, self.maxId, 20];
+                                                          FETCH_HOME_TIMELINE_URL, self.maxId, 30];
     [self fetchTimelineFromURL:urlString withDocument:document];
   }
 }
 
 - (void)fetchTimelineFromURL:(NSString *)urlString withDocument:(UIManagedDocument *)document {
-  self.timeline = [[NSArray alloc] init];
-  NSURL *url = [NSURL URLWithString:urlString];
+  __block NSString *maxId = nil;
   
+  self.timeline = [[NSArray alloc] init];
+  
+  NSURL *url = [NSURL URLWithString:urlString];
   TWRequest *request = [[TWRequest alloc] initWithURL:url
                                            parameters:nil
                                         requestMethod:TWRequestMethodGET];
@@ -86,13 +86,12 @@
         self.timeline = jsonResult;
         [document.managedObjectContext performBlock:^{
           for (NSDictionary *timelineInfo in self.timeline) {
-            NSString *Id = [timelineInfo objectForKey:@"id"];
-            if(self.maxId < Id)
-              self.maxId = Id;
+            maxId = [timelineInfo objectForKey:@"id"];
             [Tweet tweetWithInfo:timelineInfo
           inManagedObjectContext:document.managedObjectContext];
-            self.previousRequestDone = @"DONE";
           }
+          self.previousRequestDone = @"DONE";
+          self.maxId = maxId;
           [document saveToURL:document.fileURL
              forSaveOperation:UIDocumentSaveForOverwriting
             completionHandler:^(BOOL success) {
@@ -166,20 +165,12 @@
   return cellHeight;
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scroll {
-  CGPoint offset = scroll.contentOffset;
-  CGRect bounds = scroll.bounds;
-  CGSize size = scroll.contentSize;
-  UIEdgeInsets inset = scroll.contentInset;
-  float y = offset.y + bounds.size.height - inset.bottom;
-  float h = size.height;
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scroll {
+  CGFloat bottomEdge = scroll.contentOffset.y + scroll.frame.size.height;
   
-  float reload_distance = 3.0;
-  
-  if(y > h + reload_distance) {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
-      [self fetchPreviousTimelineDataIntoDocument:self.newsFeedDatabase];
-    });
+  if(bottomEdge >= scroll.contentSize.height) {
+    [self setupFetchedResultsController];
+    [self fetchPreviousTimelineDataIntoDocument:self.newsFeedDatabase];
   }
 }
 
@@ -200,6 +191,15 @@
       [self.refreshControl endRefreshing];
     });
   });
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+                                            forRowAtIndexPath:(NSIndexPath *)indexPath {
+  if (editingStyle == UITableViewCellEditingStyleDelete)
+  {
+    Tweet *tweet = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [self.newsFeedDatabase.managedObjectContext deleteObject:tweet];
+  }
 }
 
 @end

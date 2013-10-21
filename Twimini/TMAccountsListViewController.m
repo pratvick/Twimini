@@ -1,6 +1,6 @@
 #import "TMAccountsListViewController.h"
 
-@interface TMAccountsListViewController () // <FHSTwitterEngineAccessTokenDelegate>
+@interface TMAccountsListViewController ()
 
 @property (nonatomic, strong) NSString *previousRequestDone;
 
@@ -8,23 +8,9 @@
 
 @implementation TMAccountsListViewController
 
-/*
-- (void)storeAccessToken:(NSString *)accessToken {
- [[NSUserDefaults standardUserDefaults]setObject:accessToken forKey:@"SavedAccessHTTPBody"];
-}
- 
-- (NSString *)loadAccessToken {
- return [[NSUserDefaults standardUserDefaults]objectForKey:@"SavedAccessHTTPBody"];
-}
- */
 
 - (void)viewDidLoad {
   [self fetchData];
-  /*
-   [[FHSTwitterEngine sharedEngine]permanentlySetConsumerKey:@"2arkQ9UTBOa79fdcgaig" 
-                                                   andSecret:@"X5N00w9MsEgXTj59hJpAfSgBMLpFD73vXhq0ZtnQA"];
-   [[FHSTwitterEngine sharedEngine]setDelegate:self];
-   */
 }
 
 - (void)fetchData {
@@ -41,23 +27,9 @@
                                               dispatch_async(dispatch_get_main_queue(), ^{
                                                 [self.tableView reloadData];
                                               });
-                                            }else
-                                            {
+                                            } else
                                               NSLog(@"No access granted");
-                                            }
                                           }];
-  /*
-   [[FHSTwitterEngine sharedEngine] showOAuthLoginControllerFromViewController:self
-                                                                withCompletion:^(BOOL success) {
-    NSLog(success?@"L0L success":@"O noes!!! Loggen faylur!!!");
-    [[FHSTwitterEngine sharedEngine] getHomeTimelineWithSuccessBlock:^(BOOL success, id json){
-      self.tweets = json;
-      dispatch_async(dispatch_get_main_queue(), ^{
-        [self.tableView reloadData];
-      });
-    } count:20];
-   }];
-   */
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

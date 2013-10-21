@@ -135,4 +135,14 @@
   return cellHeight;
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+                                            forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  if (editingStyle == UITableViewCellEditingStyleDelete)
+  {
+    User *friend = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [self.friendsDatabase.managedObjectContext deleteObject:friend];
+  }
+}
+
 @end

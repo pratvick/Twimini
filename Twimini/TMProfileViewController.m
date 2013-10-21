@@ -59,7 +59,6 @@
   request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"timestamp"
                                                                                    ascending:NO
                                                                                     selector:nil]];
-  [request setFetchLimit:20];
 
   self.fetchedResultsController = [[NSFetchedResultsController alloc]
                                    initWithFetchRequest:request
@@ -70,11 +69,12 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
+
   self.imageCache = [[NSCache alloc] init];
   
   UINib *tweetNib = [UINib nibWithNibName:@"TweetCell" bundle:nil];
   [self.tableView registerNib:tweetNib forCellReuseIdentifier:@"TweetCell"];
+  
   
   UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
   refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"Pull down to refresh"];
@@ -126,8 +126,8 @@
       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failed"
                                                       message:@"Error in posting your tweet"
                                                      delegate:self
-                                            cancelButtonTitle:@"Delete"
-                                            otherButtonTitles:@"Cancel", nil];
+                                            cancelButtonTitle:@"Cancel"
+                                            otherButtonTitles:@"Ok", nil];
       dispatch_async(dispatch_get_main_queue(), ^{
         [alert show];
       });
@@ -167,16 +167,15 @@
 
 - (void)fetchTweetDataIntoDocument:(UIManagedDocument *)document {
   NSString *urlString = [[NSString alloc] initWithFormat:@"%@", FETCH_USER_PROFILE_URL];
-  [self fetchTweetsFromURL:urlString
-              withDocument:document];
+  [self fetchTweetsFromURL:urlString withDocument:document];
 }
 
 - (void)fetchPreviousTweetDataIntoDocument:(UIManagedDocument *)document {
   static NSString *done = @"DONE";
-  
   if([self.previousRequestDone isEqualToString:done]){
     self.previousRequestDone = @"NOT DONE";
-    NSString *urlString = [[NSString alloc] initWithFormat:@"%@?max_id=%@", FETCH_USER_PROFILE_URL, self.maxId];
+    NSString *urlString = [[NSString alloc] initWithFormat:@"%@?max_id=%@",
+                                                                FETCH_USER_PROFILE_URL, self.maxId];
     [self fetchTweetsFromURL:urlString
                 withDocument:document];
   }
@@ -184,9 +183,12 @@
 
 - (void)fetchTweetsFromURL:(NSString *)urlString
               withDocument:(UIManagedDocument *)document {
-  self.tweets = [[NSArray alloc] init];
-  NSURL *url = [NSURL URLWithString:urlString];
+  __block NSString *maxId = nil;
+  __block BOOL userAssigned = FALSE;
   
+  self.tweets = [[NSArray alloc] init];
+  
+  NSURL *url = [NSURL URLWithString:urlString];
   TWRequest *request = [[TWRequest alloc] initWithURL:url
                                            parameters:nil
                                         requestMethod:TWRequestMethodGET];
@@ -203,21 +205,21 @@
         self.tweets = jsonResult;
         [document.managedObjectContext performBlock:^{
           for (NSDictionary *tweetInfo in self.tweets) {
-            NSString *Id = [tweetInfo objectForKey:@"id"];
-            if(self.maxId < Id)
-              self.maxId = Id;
-            
-            self.user = [User userWithUsername:[[tweetInfo objectForKey:@"user"] objectForKey:@"screen_name"]
-                                          name:[[tweetInfo objectForKey:@"user"] objectForKey:@"name"]
-                                      imageURL:[[tweetInfo objectForKey:@"user"] objectForKey:@"profile_image_url"]
-                                    followerOf:Nil
-                                      friendOf:Nil
-                        inManagedObjectContext:document.managedObjectContext];
-            
+            maxId = [tweetInfo objectForKey:@"id"];
             [Tweet tweetWithInfo:tweetInfo
           inManagedObjectContext:document.managedObjectContext];
-            self.previousRequestDone = @"DONE";
+            if(userAssigned == FALSE) {
+              self.user = [User userWithUsername:[[tweetInfo objectForKey:@"user"] objectForKey:@"screen_name"]
+                                            name:[[tweetInfo objectForKey:@"user"] objectForKey:@"name"]
+                                        imageURL:[[tweetInfo objectForKey:@"user"] objectForKey:@"profile_image_url"]
+                                      followerOf:Nil
+                                        friendOf:Nil
+                          inManagedObjectContext:document.managedObjectContext];
+              userAssigned = TRUE;
+            }
           }
+          self.previousRequestDone = @"DONE";
+          self.maxId = maxId;
           [document saveToURL:document.fileURL
              forSaveOperation:UIDocumentSaveForOverwriting
             completionHandler:^(BOOL success){
@@ -292,7 +294,7 @@
   return cellHeight;
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scroll {
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scroll {
   CGPoint offset = scroll.contentOffset;
   CGRect bounds = scroll.bounds;
   CGSize size = scroll.contentSize;
@@ -326,6 +328,16 @@
       [self.refreshControl endRefreshing];
     });
   });
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+                                            forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  if (editingStyle == UITableViewCellEditingStyleDelete)
+  {
+    Tweet *tweet = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [self.tweetDatabase.managedObjectContext deleteObject:tweet];
+  }
 }
 
 @end
