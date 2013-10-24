@@ -12,7 +12,7 @@
 #import "User+Info.h"
 #import "Constants.h"
 #import "TweetCell.h"
-#import "UIView+Explode.h"
+#import "GmailLikeLoadingView.h"
 
 @interface TMProfileViewController : TMCoreDataTableViewController <TMTweetComposeViewControllerDelegate>
 

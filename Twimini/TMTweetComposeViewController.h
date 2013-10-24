@@ -2,7 +2,6 @@
 #import <Accounts/Accounts.h>
 #import <Twitter/Twitter.h>
 #import "Constants.h"
-#import "UIView+Explode.h"
 
 @class TMTweetComposeViewController;
 

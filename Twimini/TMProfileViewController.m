@@ -5,6 +5,7 @@
 @property (nonatomic, strong) NSArray *tweets;
 @property (nonatomic, strong) NSString *maxId;
 @property (nonatomic, strong) NSString *previousRequestDone;
+@property (nonatomic, strong) GmailLikeLoadingView *loadingView;
 
 @end
 
@@ -77,6 +78,12 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  self.loadingView = [[GmailLikeLoadingView alloc] initWithFrame:CGRectMake(
+                              self.view.center.x - 30, self.view.center.y - 40, 40, 40
+                                                                            )];
+  [self.view addSubview:self.loadingView];
+  [self.loadingView startAnimating];
 
   self.imageCache = [[NSCache alloc] init];
   
@@ -94,7 +101,7 @@
                                                                            target:self
                                                                            action:@selector(composeTweet)];
   
-  UIImage *friendsImage = [UIImage imageNamed:@"friends.png"];
+  UIImage *friendsImage = [UIImage imageNamed:@"user.png"];
   UIBarButtonItem *friends = [[UIBarButtonItem alloc] initWithImage:friendsImage
                                                               style:UIBarButtonItemStylePlain
                                                              target:self
@@ -231,6 +238,7 @@
           }
           self.previousRequestDone = @"DONE";
           self.maxId = maxId;
+          [self.loadingView stopAnimating];
           [document saveToURL:document.fileURL
              forSaveOperation:UIDocumentSaveForOverwriting
             completionHandler:^(BOOL success){

@@ -13,6 +13,8 @@
 		6E1E766517E8A46E0050F25E /* User+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E1E766417E8A46E0050F25E /* User+Info.m */; };
 		6E1E766817E8A9830050F25E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1E766617E8A9660050F25E /* CoreData.framework */; };
 		6E3653B317FD5A7800FC085B /* Images-5.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E3653B217FD5A7800FC085B /* Images-5.xcassets */; };
+		6E4480F5181903C3008A6077 /* GmailLikeLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E4480F4181903C3008A6077 /* GmailLikeLoadingView.m */; };
+		6E4480F7181910DD008A6077 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E4480F6181910DD008A6077 /* user.png */; };
 		6E6795E717E72EB70077D857 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E6795E617E72EB70077D857 /* Social.framework */; };
 		6E732F6F180B2F6F00660746 /* defaultAvatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E732F6E180B2F6F00660746 /* defaultAvatar.png */; };
 		6E74FC5F17EED79800832BB5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E74FC5E17EED79800832BB5 /* CFNetwork.framework */; };
@@ -22,7 +24,6 @@
 		6E74FC6B17EED9E400832BB5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E74FC6917EED9C200832BB5 /* Security.framework */; };
 		6E753C311804395C00351098 /* TweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E753C301804395C00351098 /* TweetCell.m */; };
 		6E753C3318043DEF00351098 /* TweetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E753C3218043DEF00351098 /* TweetCell.xib */; };
-		6E89CDF31816A09700D724BA /* UIView+Explode.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E89CDE11816A09700D724BA /* UIView+Explode.m */; };
 		6E91464D17E1BCDA00F28269 /* TMCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E91464C17E1BCDA00F28269 /* TMCoreDataTableViewController.m */; };
 		6E91464F17E1CD5B00F28269 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E91464E17E1CD5B00F28269 /* home.png */; };
 		6EDDC0921806C511001509DF /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EDDC0911806C511001509DF /* icon.png */; };
@@ -45,7 +46,6 @@
 		6EE9F87C17DC64450087E19F /* TMTweetComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE9F87617DC64450087E19F /* TMTweetComposeViewController.m */; };
 		6EE9F87D17DC64450087E19F /* TMProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE9F87817DC64450087E19F /* TMProfileViewController.m */; };
 		6EE9F87F17DC72E30087E19F /* TMTweetComposeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6EE9F87E17DC72E30087E19F /* TMTweetComposeViewController.xib */; };
-		6EE9F88117DC87E40087E19F /* friends.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EE9F88017DC87E40087E19F /* friends.png */; };
 		6EE9F88317DC87EA0087E19F /* friends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EE9F88217DC87EA0087E19F /* friends@2x.png */; };
 		6EE9F88817DC8BE00087E19F /* TMHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE9F88717DC8BE00087E19F /* TMHomeViewController.m */; };
 		6EEE81D61807FC1D0086EDB8 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EEE81D51807FC1D0086EDB8 /* Reveal.framework */; };
@@ -64,6 +64,9 @@
 		6E1E766417E8A46E0050F25E /* User+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+Info.m"; sourceTree = "<group>"; };
 		6E1E766617E8A9660050F25E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		6E3653B217FD5A7800FC085B /* Images-5.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Images-5.xcassets"; sourceTree = "<group>"; };
+		6E4480F3181903C3008A6077 /* GmailLikeLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GmailLikeLoadingView.h; sourceTree = "<group>"; };
+		6E4480F4181903C3008A6077 /* GmailLikeLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GmailLikeLoadingView.m; sourceTree = "<group>"; };
+		6E4480F6181910DD008A6077 /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user.png; sourceTree = "<group>"; };
 		6E6795E617E72EB70077D857 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		6E732F6E180B2F6F00660746 /* defaultAvatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultAvatar.png; sourceTree = "<group>"; };
 		6E74FC5E17EED79800832BB5 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -74,8 +77,6 @@
 		6E753C2F1804395C00351098 /* TweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetCell.h; sourceTree = "<group>"; };
 		6E753C301804395C00351098 /* TweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetCell.m; sourceTree = "<group>"; };
 		6E753C3218043DEF00351098 /* TweetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetCell.xib; sourceTree = "<group>"; };
-		6E89CDE01816A09700D724BA /* UIView+Explode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Explode.h"; path = "../LetterPressExplosion/Categories/UIView+Explode.h"; sourceTree = "<group>"; };
-		6E89CDE11816A09700D724BA /* UIView+Explode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Explode.m"; path = "../LetterPressExplosion/Categories/UIView+Explode.m"; sourceTree = "<group>"; };
 		6E91464B17E1BCDA00F28269 /* TMCoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMCoreDataTableViewController.h; sourceTree = "<group>"; };
 		6E91464C17E1BCDA00F28269 /* TMCoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMCoreDataTableViewController.m; sourceTree = "<group>"; };
 		6E91464E17E1CD5B00F28269 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home.png; path = ../home.png; sourceTree = "<group>"; };
@@ -109,7 +110,6 @@
 		6EE9F87717DC64450087E19F /* TMProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMProfileViewController.h; sourceTree = "<group>"; };
 		6EE9F87817DC64450087E19F /* TMProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMProfileViewController.m; sourceTree = "<group>"; };
 		6EE9F87E17DC72E30087E19F /* TMTweetComposeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TMTweetComposeViewController.xib; path = ../TMTweetComposeViewController.xib; sourceTree = "<group>"; };
-		6EE9F88017DC87E40087E19F /* friends.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = friends.png; path = ../friends.png; sourceTree = "<group>"; };
 		6EE9F88217DC87EA0087E19F /* friends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "friends@2x.png"; path = "../friends@2x.png"; sourceTree = "<group>"; };
 		6EE9F88617DC8BE00087E19F /* TMHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMHomeViewController.h; sourceTree = "<group>"; };
 		6EE9F88717DC8BE00087E19F /* TMHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMHomeViewController.m; sourceTree = "<group>"; };
@@ -150,9 +150,9 @@
 		6E753C2E180422CF00351098 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				6E4480F6181910DD008A6077 /* user.png */,
 				6E732F6E180B2F6F00660746 /* defaultAvatar.png */,
 				6EDDC0911806C511001509DF /* icon.png */,
-				6EE9F88017DC87E40087E19F /* friends.png */,
 				6E91464E17E1CD5B00F28269 /* home.png */,
 				6EE9F88217DC87EA0087E19F /* friends@2x.png */,
 			);
@@ -162,8 +162,8 @@
 		6EDDE4BB17FC05D600D3A1AA /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				6E89CDE01816A09700D724BA /* UIView+Explode.h */,
-				6E89CDE11816A09700D724BA /* UIView+Explode.m */,
+				6E4480F3181903C3008A6077 /* GmailLikeLoadingView.h */,
+				6E4480F4181903C3008A6077 /* GmailLikeLoadingView.m */,
 				6EE9F86017DC5D510087E19F /* MainStoryboard.storyboard */,
 				6E753C3218043DEF00351098 /* TweetCell.xib */,
 				6EF878A4180AE83F0059DCB9 /* UserCell.xib */,
@@ -356,8 +356,8 @@
 				6E3653B317FD5A7800FC085B /* Images-5.xcassets in Resources */,
 				6EE9F86217DC5D510087E19F /* MainStoryboard.storyboard in Resources */,
 				6EE9F87F17DC72E30087E19F /* TMTweetComposeViewController.xib in Resources */,
-				6EE9F88117DC87E40087E19F /* friends.png in Resources */,
 				6EE9F88317DC87EA0087E19F /* friends@2x.png in Resources */,
+				6E4480F7181910DD008A6077 /* user.png in Resources */,
 				6E91464F17E1CD5B00F28269 /* home.png in Resources */,
 				6E753C3318043DEF00351098 /* TweetCell.xib in Resources */,
 				6E732F6F180B2F6F00660746 /* defaultAvatar.png in Resources */,
@@ -375,7 +375,6 @@
 				6EF878B1180B04B90059DCB9 /* Tweet.m in Sources */,
 				6EF878B4180B04B90059DCB9 /* User.m in Sources */,
 				6EE9F85917DC5D510087E19F /* AppDelegate.m in Sources */,
-				6E89CDF31816A09700D724BA /* UIView+Explode.m in Sources */,
 				6EE9F87917DC64450087E19F /* TMAccountsListViewController.m in Sources */,
 				6EE9F87A17DC64450087E19F /* TMFollowersViewController.m in Sources */,
 				6EE9F87B17DC64450087E19F /* TMFriendsListViewController.m in Sources */,
@@ -388,6 +387,7 @@
 				6EF878A8180AEAF50059DCB9 /* UserCell.m in Sources */,
 				6E1E766517E8A46E0050F25E /* User+Info.m in Sources */,
 				6EE7F4801803F14800F2570B /* Constants.m in Sources */,
+				6E4480F5181903C3008A6077 /* GmailLikeLoadingView.m in Sources */,
 				6E753C311804395C00351098 /* TweetCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
