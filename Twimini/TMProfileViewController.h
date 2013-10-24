@@ -12,6 +12,7 @@
 #import "User+Info.h"
 #import "Constants.h"
 #import "TweetCell.h"
+#import "UIView+Explode.h"
 
 @interface TMProfileViewController : TMCoreDataTableViewController <TMTweetComposeViewControllerDelegate>
 

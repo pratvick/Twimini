@@ -23,6 +23,14 @@
   }
 }
 
+- (void)flipViewsFromView:initialView toView:finalView {
+  [UIView transitionFromView:initialView
+                      toView:finalView
+                    duration:1
+                     options:UIViewAnimationOptionTransitionFlipFromBottom
+                  completion:nil];
+}
+
 - (void)setTweetDatabase:(UIManagedDocument *)tweetDatabase {
   if (_tweetDatabase != tweetDatabase) {
     _tweetDatabase = tweetDatabase;
@@ -144,6 +152,7 @@
   friendsListViewController.user = self.user;
   friendsListViewController.friendsDatabase = self.tweetDatabase;
   friendsListViewController.imageCache = self.imageCache;
+  [self flipViewsFromView:self.view toView:friendsListViewController.view];
   [self.navigationController pushViewController:friendsListViewController animated:TRUE];
 }
 
@@ -153,6 +162,7 @@
   homeViewController.user = self.user;
   homeViewController.imageCache = self.imageCache;
   homeViewController.newsFeedDatabase = self.tweetDatabase;
+  [self flipViewsFromView:self.view toView:homeViewController.view];
   [self.navigationController pushViewController:homeViewController animated:TRUE];
 }
 
@@ -162,6 +172,7 @@
   followersViewController.user = self.user;
   followersViewController.imageCache = self.imageCache;
   followersViewController.followersDatabase = self.tweetDatabase;
+  [self flipViewsFromView:self.view toView:followersViewController.view];
   [self.navigationController pushViewController:followersViewController animated:TRUE];
 }
 
@@ -309,6 +320,12 @@
       [self fetchPreviousTweetDataIntoDocument:self.tweetDatabase];
     });
   }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  //[UIView animateWithDuration:0.3 animations:^{
+  //  [scrollView setFrame:CGRectMake(50, scrollView.frame.origin.y, scrollView.frame.size.width, scrollView.frame.size.height)];
+  //}];
 }
 
 - (void)refresh {

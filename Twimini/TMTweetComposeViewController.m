@@ -42,7 +42,23 @@
     }
   }];
   
-  [self dismissViewControllerAnimated:YES completion:nil];
+  CGAffineTransform transform = self.view.transform;
+  [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+    self.view.transform = CGAffineTransformRotate(CGAffineTransformScale(transform, 0.7, 0.7), 2*M_PI/3);
+  } completion:^(BOOL finished){
+    if(finished)
+      [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        self.view.transform = CGAffineTransformRotate(CGAffineTransformScale(transform, 0.4, 0.4), -2*M_PI/3);
+      } completion:^(BOOL finished){
+        if(finished)
+        [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+          self.view.transform = CGAffineTransformScale(transform, 0.1, 0.1);
+        } completion:^(BOOL finished){
+          if(finished) 
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+      }];
+  }];
 }
 
 - (IBAction)cancel:(id)sender {
