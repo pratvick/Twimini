@@ -227,9 +227,9 @@
             [Tweet tweetWithInfo:tweetInfo
           inManagedObjectContext:document.managedObjectContext];
             if(userAssigned == FALSE) {
-              self.user = [User userWithUsername:[[tweetInfo objectForKey:@"user"] objectForKey:@"screen_name"]
-                                            name:[[tweetInfo objectForKey:@"user"] objectForKey:@"name"]
-                                        imageURL:[[tweetInfo objectForKey:@"user"] objectForKey:@"profile_image_url"]
+              self.user = [User userWithUsername:[tweetInfo valueForKeyPath:@"user.screen_name"]
+                                            name:[tweetInfo valueForKeyPath:@"user.name"]
+                                        imageURL:[tweetInfo valueForKeyPath:@"user.profile_image_url"]
                                       followerOf:Nil
                                         friendOf:Nil
                           inManagedObjectContext:document.managedObjectContext];
@@ -328,12 +328,6 @@
       [self fetchPreviousTweetDataIntoDocument:self.tweetDatabase];
     });
   }
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  //[UIView animateWithDuration:0.3 animations:^{
-  //  [scrollView setFrame:CGRectMake(50, scrollView.frame.origin.y, scrollView.frame.size.width, scrollView.frame.size.height)];
-  //}];
 }
 
 - (void)refresh {
